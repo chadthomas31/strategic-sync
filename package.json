@@ -1,0 +1,20 @@
+{
+  "name": "strategic-sync",
+  "version": "1.0.0",
+  "description": "Strategic Sync - AI Consulting Website \"The official AI consulting platform for Strategic Sync. Built with Next.js, Tailwind CSS, and AI-powered features like Eleven Labs voice AI and a conversational chatbot. Hosted on Vercel.\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chadthomas31/strategic-sync.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chadthomas31/strategic-sync/issues"
+  },
+  "homepage": "https://github.com/chadthomas31/strategic-sync#readme"
+}
