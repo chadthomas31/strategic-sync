@@ -31,32 +31,32 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-6">
           <li>
-            <Link href="/">
+            <Link href="/" legacyBehavior>
               <span className="cursor-pointer hover:text-blue-400 text-white">Home</span>
             </Link>
           </li>
           <li>
-            <Link href="/services">
+            <Link href="/services" legacyBehavior>
               <span className="cursor-pointer hover:text-blue-400 text-white">Services</span>
             </Link>
           </li>
           <li>
-            <Link href="/blog">
+            <Link href="/blog" legacyBehavior>
               <span className="cursor-pointer hover:text-blue-400 text-white">Blog</span>
             </Link>
           </li>
           <li>
-            <Link href="/contact">
+            <Link href="/contact" legacyBehavior>
               <span className="cursor-pointer hover:text-blue-400 text-white">Contact</span>
             </Link>
           </li>
           <li>
-            <Link href="/booking">
+            <Link href="/booking" legacyBehavior>
               <span className="cursor-pointer hover:text-blue-400 text-white">Booking</span>
             </Link>
           </li>
           <li>
-            <Link href="/client-login">
+            <Link href="/client-login" legacyBehavior>
               <span className="cursor-pointer hover:text-blue-400 text-white">Client Login</span>
             </Link>
           </li>
@@ -67,38 +67,37 @@ export default function Navbar() {
           {isOpen ? <FiX /> : <FiMenu />}
         </button>
       </div>
-
       {/* Mobile Menu Dropdown */}
       {isOpen && (
         <div className="md:hidden bg-gray-900 absolute top-16 left-0 w-full py-4 shadow-lg">
           <ul className="flex flex-col space-y-4 text-center">
             <li>
-              <Link href="/" passHref>
+              <Link href="/" passHref legacyBehavior>
                 <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Home</span>
               </Link>
             </li>
             <li>
-              <Link href="/services" passHref>
+              <Link href="/services" passHref legacyBehavior>
                 <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Services</span>
               </Link>
             </li>
             <li>
-              <Link href="/blog" passHref>
+              <Link href="/blog" passHref legacyBehavior>
                 <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Blog</span>
               </Link>
             </li>
             <li>
-              <Link href="/contact" passHref>
+              <Link href="/contact" passHref legacyBehavior>
                 <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Contact</span>
               </Link>
             </li>
             <li>
-              <Link href="/booking" passHref>
+              <Link href="/booking" passHref legacyBehavior>
                 <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Booking</span>
               </Link>
             </li>
             <li>
-              <Link href="/client-login" passHref>
+              <Link href="/client-login" passHref legacyBehavior>
                 <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Client Login</span>
               </Link>
             </li>

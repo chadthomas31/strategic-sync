@@ -5,12 +5,10 @@ export default function Booking() {
     <div className="max-w-6xl mx-auto p-6">
       {/* Page Title */}
       <h1 className="text-3xl font-bold text-center mb-6">Book an AI Consultation</h1>
-
       {/* Description */}
       <p className="text-lg text-center text-gray-600 mb-8">
         Choose the AI consulting session that best fits your needs.
       </p>
-
       {/* Booking Options */}
       <div className="grid md:grid-cols-3 gap-6">
         {/* Free AI Consult */}
@@ -55,7 +53,6 @@ export default function Booking() {
           </a>
         </div>
       </div>
-
       {/* Embedded Calendar for Quick Booking */}
       <div className="mt-10">
         <h2 className="text-2xl font-bold text-center mb-4">Quick Book a Session</h2>
@@ -67,11 +64,10 @@ export default function Booking() {
           ></iframe>
         </div>
       </div>
-
       {/* Back to Home */}
       <div className="text-center mt-8">
-        <Link href="/">
-          <a className="text-blue-500 hover:underline">← Back to Home</a>
+        <Link href="/" className="text-blue-500 hover:underline">
+          ← Back to Home
         </Link>
       </div>
     </div>

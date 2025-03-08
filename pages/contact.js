@@ -33,14 +33,12 @@ export default function Contact() {
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-center mb-6">Contact Us</h1>
-      
       {/* Contact Info */}
       <div className="bg-gray-100 p-6 rounded-lg text-center mb-6">
         <p className="text-lg">📍 Location: San Clemente, CA</p>
         <p className="text-lg">📧 Email: contact@strategicsync.com</p>
         <p className="text-lg">📞 Phone: (949) 529-2424</p>
       </div>
-      
       {/* Contact Form */}
       <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
         <label className="block mb-2">Name:</label>
@@ -75,7 +73,6 @@ export default function Contact() {
 
         <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg">Send Message</button>
       </form>
-      
       {/* FAQ Section */}
       <div className="mt-10">
         <h2 className="text-2xl font-bold text-center mb-4">Frequently Asked Questions</h2>
@@ -99,10 +96,9 @@ export default function Contact() {
           <p><strong>A:</strong> Yes, we offer ongoing support plans to ensure your AI solutions stay optimized and up-to-date.</p>
         </div>
       </div>
-      
       {/* Back to Home Button */}
       <div className="text-center mt-10">
-        <Link href="/">
+        <Link href="/" legacyBehavior>
           <button className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700">
             Back to Home
           </button>
