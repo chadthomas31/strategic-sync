@@ -21,11 +21,14 @@
     "react-scroll": "^1.9.3"
   },
   "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
     "autoprefixer": "^10.4.20",
     "eslint": "latest",
     "eslint-config-next": "latest",
     "postcss": "^8.5.3",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.2"
   },
   "repository": {
     "type": "git",
