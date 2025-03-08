@@ -1,22 +1,17 @@
 import { useState, useEffect } from "react";
-import { Link as ScrollLink } from "react-scroll";
+import Link from "next/link"; // ✅ Next.js routing
+import { Link as ScrollLink } from "react-scroll"; // ✅ For in-page scrolling
 import { FiMenu, FiX } from "react-icons/fi";
 
 export default function Navbar() {
-  const [active, setActive] = useState("Home");
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // Function to handle scroll effect
+  // Handle scrolling effect
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) { // Apply effect sooner
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 10);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -29,33 +24,46 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto flex justify-between items-center px-6">
         {/* Logo */}
-        <h1 className="text-2xl font-bold text-white">Strategic Sync</h1>
+        <Link href="/" className="text-2xl font-bold text-white">
+          Strategic Sync
+        </Link>
 
-        {/* Desktop Menu with Hover Animation */}
+        {/* Desktop Menu */}
         <ul className="hidden md:flex space-x-6">
-          {["Home", "Services", "Blog", "Contact"].map((item) => (
-            <li key={item} className="relative">
-              <ScrollLink
-                to={item.toLowerCase()}
-                smooth={true}
-                duration={500}
-                offset={-70} // Fixes navbar covering section titles
-                className={`relative text-white transition-all duration-300 ease-in-out cursor-pointer ${
-                  active === item ? "text-blue-400 font-semibold" : "hover:text-blue-400"
-                }`}
-                onClick={() => setActive(item)}
-              >
-                {item}
-              </ScrollLink>
-            </li>
-          ))}
+          <li>
+            <Link href="/">
+              <span className="cursor-pointer hover:text-blue-400 text-white">Home</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/services">
+              <span className="cursor-pointer hover:text-blue-400 text-white">Services</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/blog">
+              <span className="cursor-pointer hover:text-blue-400 text-white">Blog</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/contact">
+              <span className="cursor-pointer hover:text-blue-400 text-white">Contact</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/booking">
+              <span className="cursor-pointer hover:text-blue-400 text-white">Booking</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/client-login">
+              <span className="cursor-pointer hover:text-blue-400 text-white">Client Login</span>
+            </Link>
+          </li>
         </ul>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-white text-2xl"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <button className="md:hidden text-white text-2xl" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <FiX /> : <FiMenu />}
         </button>
       </div>
@@ -64,23 +72,36 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-gray-900 absolute top-16 left-0 w-full py-4 shadow-lg">
           <ul className="flex flex-col space-y-4 text-center">
-            {["Home", "Services", "Blog", "Contact"].map((item) => (
-              <li key={item}>
-                <ScrollLink
-                  to={item.toLowerCase()}
-                  smooth={true}
-                  duration={500}
-                  offset={-70} // Fixes section alignment on mobile
-                  className="block py-2 text-white hover:text-blue-400 transition-all duration-300 cursor-pointer"
-                  onClick={() => {
-                    setActive(item);
-                    setIsOpen(false);
-                  }}
-                >
-                  {item}
-                </ScrollLink>
-              </li>
-            ))}
+            <li>
+              <Link href="/" passHref>
+                <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Home</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/services" passHref>
+                <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Services</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/blog" passHref>
+                <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Blog</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" passHref>
+                <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Contact</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/booking" passHref>
+                <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Booking</span>
+              </Link>
+            </li>
+            <li>
+              <Link href="/client-login" passHref>
+                <span className="block py-2 text-white hover:text-blue-400" onClick={() => setIsOpen(false)}>Client Login</span>
+              </Link>
+            </li>
           </ul>
         </div>
       )}
