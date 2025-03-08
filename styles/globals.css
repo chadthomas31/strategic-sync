@@ -1,3 +1,55 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure the body has enough padding to avoid content being cut off under the navbar */
+body {
+  @apply bg-gray-100 text-gray-900;
+  padding-top: 80px; /* Adjust based on the navbar height */
+}
+
+/* Navbar styles */
+nav {
+  @apply fixed top-0 left-0 w-full bg-white shadow-md z-50;
+}
+
+/* Fix padding for pages to prevent navbar overlap */
+.page-container {
+  @apply pt-20; /* Ensures space below the navbar */
+}
+
+/* Global styles for headings */
+h1 {
+  @apply text-3xl font-bold text-center text-gray-900 mt-6;
+}
+
+h2 {
+  @apply text-2xl font-semibold text-gray-800 mt-4;
+}
+
+p {
+  @apply text-gray-600 text-lg;
+}
+
+/* Grid layout adjustments */
+.service-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6;
+}
+
+.service-card {
+  @apply bg-white shadow-md rounded-lg p-6 text-center transition transform hover:scale-105 duration-300;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-top: 60px; /* Reduce top padding on smaller screens */
+  }
+  .page-container {
+    @apply pt-16;
+  }
+}

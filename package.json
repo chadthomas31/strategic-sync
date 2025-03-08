@@ -46,5 +46,6 @@
   "bugs": {
     "url": "https://github.com/chadthomas31/strategic-sync/issues"
   },
-  "homepage": "https://github.com/chadthomas31/strategic-sync#readme"
+  "homepage": "https://github.com/chadthomas31/strategic-sync#readme",
+  "packageManager": "pnpm@8.15.5"
 }
