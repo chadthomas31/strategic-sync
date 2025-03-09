@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 
-// ✅ Fix: Extend JSX Intrinsic Elements to allow the custom tag
+// ✅ Fix: Declare the Eleven Labs custom element globally
 declare global {
   namespace JSX {
     interface IntrinsicElements {
-      "elevenlabs-convai": any; // ✅ Declare custom element
+      "elevenlabs-convai": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
     }
   }
 }
@@ -20,6 +20,7 @@ const ConvAI = () => {
 
   return (
     <div style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 1000 }}>
+      {/* ✅ Now TypeScript will recognize this */}
       <elevenlabs-convai agent-id="DShUANzXt9aoVDvosGTp"></elevenlabs-convai>
     </div>
   );
