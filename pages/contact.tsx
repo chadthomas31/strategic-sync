@@ -2,13 +2,19 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  // ✅ Explicitly define formData type
+  const [formData, setFormData] = useState<{ name: string; email: string; message: string }>({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-  const handleChange = (e) => {
+  // ✅ Correctly type handleChange to prevent TypeScript errors
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await fetch('/api/contact', {
@@ -16,7 +22,7 @@ export default function Contact() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -67,7 +73,7 @@ export default function Contact() {
           value={formData.message} 
           onChange={handleChange} 
           className="w-full p-2 border rounded mb-4" 
-          rows="4" 
+          rows={4}  // ✅ Fixed: Changed rows="4" to rows={4}
           required 
         />
 

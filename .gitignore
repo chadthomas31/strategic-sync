@@ -131,3 +131,5 @@ dist
 
 # Turborepo
 .turbo
+
+.vercel
