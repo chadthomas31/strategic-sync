@@ -1,5 +1,14 @@
 import { useEffect } from "react";
 
+// ✅ Fix: Extend JSX Intrinsic Elements to allow the custom tag
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      "elevenlabs-convai": any; // ✅ Declare custom element
+    }
+  }
+}
+
 const ConvAI = () => {
   useEffect(() => {
     const script = document.createElement("script");
@@ -16,4 +25,4 @@ const ConvAI = () => {
   );
 };
 
-export default ConvAI; // ✅ Make sure this is present!
+export default ConvAI;
