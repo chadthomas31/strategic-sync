@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react"; // ✅ Import React
 
 const ConvAI = () => {
   useEffect(() => {
@@ -11,7 +11,7 @@ const ConvAI = () => {
 
   return (
     <div style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 1000 }}>
-      {/* ✅ Fix: Render the chatbot dynamically to bypass TypeScript issues */}
+      {/* ✅ Fix: Render the chatbot dynamically while avoiding TypeScript issues */}
       {typeof window !== "undefined" &&
         React.createElement("elevenlabs-convai", { "agent-id": "DShUANzXt9aoVDvosGTp" })}
     </div>
