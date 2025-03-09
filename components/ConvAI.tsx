@@ -1,14 +1,5 @@
 import { useEffect } from "react";
 
-// ✅ Fix: Declare the Eleven Labs custom element globally
-declare global {
-  namespace JSX {
-    interface IntrinsicElements {
-      "elevenlabs-convai": React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
-    }
-  }
-}
-
 const ConvAI = () => {
   useEffect(() => {
     const script = document.createElement("script");
@@ -20,8 +11,9 @@ const ConvAI = () => {
 
   return (
     <div style={{ position: "fixed", bottom: "20px", right: "20px", zIndex: 1000 }}>
-      {/* ✅ Now TypeScript will recognize this */}
-      <elevenlabs-convai agent-id="DShUANzXt9aoVDvosGTp"></elevenlabs-convai>
+      {/* ✅ Fix: Render the chatbot dynamically to bypass TypeScript issues */}
+      {typeof window !== "undefined" &&
+        React.createElement("elevenlabs-convai", { "agent-id": "DShUANzXt9aoVDvosGTp" })}
     </div>
   );
 };
