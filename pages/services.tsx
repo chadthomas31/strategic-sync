@@ -31,7 +31,7 @@ const Services: React.FC = () => {
 interface Service {
   title: string;
   description: string;
-  icon: JSX.Element;
+  icon: React.ReactElement; // ✅ Fix: Use React.ReactElement instead of JSX.Element
 }
 
 // Example Services Data
