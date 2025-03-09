@@ -554,7 +554,7 @@ export default function Home() {
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
-                rows="4"
+                rows={4}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
                 placeholder="Your message here..."
                 required
