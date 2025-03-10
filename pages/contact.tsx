@@ -2,20 +2,32 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Contact() {
-  // ✅ Explicitly define formData type
-  const [formData, setFormData] = useState<{ name: string; email: string; message: string }>({
+  const [formData, setFormData] = useState<{
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  }>({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
 
-  // ✅ Correctly type handleChange to prevent TypeScript errors
+  const [status, setStatus] = useState({
+    isSubmitting: false,
+    isSubmitted: false,
+    error: null as string | null,
+  });
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setStatus({ isSubmitting: true, isSubmitted: false, error: null });
+
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -25,89 +37,165 @@ export default function Contact() {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error('Failed to send message');
+        throw new Error(data.message || 'Failed to send message');
       }
 
-      alert("Message sent! (This is a placeholder, integrate an email API)");
+      // Clear form and show success message
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setStatus({
+        isSubmitting: false,
+        isSubmitted: true,
+        error: null
+      });
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setStatus(prev => ({ ...prev, isSubmitted: false }));
+      }, 5000);
     } catch (error) {
       console.error("Error sending message:", error);
-      alert("Failed to send message. Please try again later.");
+      setStatus({
+        isSubmitting: false,
+        isSubmitted: false,
+        error: error instanceof Error ? error.message : 'Failed to send message'
+      });
     }
   };
 
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-center mb-6">Contact Us</h1>
+      
       {/* Contact Info */}
-      <div className="bg-gray-100 p-6 rounded-lg text-center mb-6">
-        <p className="text-lg">📍 Location: San Clemente, CA</p>
-        <p className="text-lg">📧 Email: contact@strategicsync.com</p>
-        <p className="text-lg">📞 Phone: (949) 529-2424</p>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <a href="https://maps.google.com/?q=San+Clemente,+CA" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center">
+          <div className="text-3xl mb-4">📍</div>
+          <h3 className="font-semibold mb-2">Location</h3>
+          <p>San Clemente, CA</p>
+        </a>
+
+        <a href="mailto:admin@2105.io" 
+           className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center">
+          <div className="text-3xl mb-4">📧</div>
+          <h3 className="font-semibold mb-2">Email</h3>
+          <p>admin@2105.io</p>
+        </a>
+
+        <a href="tel:949-529-2424" 
+           className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center">
+          <div className="text-3xl mb-4">📞</div>
+          <h3 className="font-semibold mb-2">Phone</h3>
+          <p>(949) 529-2424</p>
+        </a>
       </div>
+
       {/* Contact Form */}
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
-        <label className="block mb-2">Name:</label>
-        <input 
-          type="text" 
-          name="name" 
-          value={formData.name} 
-          onChange={handleChange} 
-          className="w-full p-2 border rounded mb-4" 
-          required 
-        />
+      <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8 max-w-2xl mx-auto relative">
+        {status.isSubmitted && (
+          <div className="absolute top-0 left-0 right-0 bg-green-500 text-white p-4 rounded-t-lg text-center">
+            Message sent successfully! We'll get back to you soon.
+          </div>
+        )}
+        {status.error && (
+          <div className="absolute top-0 left-0 right-0 bg-red-500 text-white p-4 rounded-t-lg text-center">
+            {status.error}
+          </div>
+        )}
 
-        <label className="block mb-2">Email:</label>
-        <input 
-          type="email" 
-          name="email" 
-          value={formData.email} 
-          onChange={handleChange} 
-          className="w-full p-2 border rounded mb-4" 
-          required 
-        />
+        <div className="space-y-6 mt-4">
+          <div>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Name</label>
+            <input 
+              type="text" 
+              name="name" 
+              value={formData.name} 
+              onChange={handleChange} 
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+              required 
+            />
+          </div>
 
-        <label className="block mb-2">Message:</label>
-        <textarea 
-          name="message" 
-          value={formData.message} 
-          onChange={handleChange} 
-          className="w-full p-2 border rounded mb-4" 
-          rows={4}  // ✅ Fixed: Changed rows="4" to rows={4}
-          required 
-        />
+          <div>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Email</label>
+            <input 
+              type="email" 
+              name="email" 
+              value={formData.email} 
+              onChange={handleChange} 
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+              required 
+            />
+          </div>
 
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg">Send Message</button>
+          <div>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Subject</label>
+            <input 
+              type="text" 
+              name="subject" 
+              value={formData.subject} 
+              onChange={handleChange} 
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+              required 
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-700 text-sm font-semibold mb-2">Message</label>
+            <textarea 
+              name="message" 
+              value={formData.message} 
+              onChange={handleChange} 
+              rows={4} 
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+              required 
+            />
+          </div>
+
+          <button 
+            type="submit" 
+            disabled={status.isSubmitting}
+            className={`w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-300 ${
+              status.isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+            }`}
+          >
+            {status.isSubmitting ? 'Sending...' : 'Send Message'}
+          </button>
+        </div>
       </form>
+
       {/* FAQ Section */}
-      <div className="mt-10">
-        <h2 className="text-2xl font-bold text-center mb-4">Frequently Asked Questions</h2>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <p><strong>Q:</strong> How quickly do you respond to inquiries?</p>
-          <p><strong>A:</strong> We aim to respond within 24 hours.</p>
-          <hr className="my-3" />
-          <p><strong>Q:</strong> Do you offer free consultations?</p>
-          <p><strong>A:</strong> Yes! Book one on our <Link href="/booking" className="text-blue-500 underline">Booking Page</Link>.</p>
-          <hr className="my-3" />
-          <p><strong>Q:</strong> What industries do you specialize in for AI consulting?</p>
-          <p><strong>A:</strong> We work with a wide range of industries, including finance, healthcare, e-commerce, and more.</p>
-          <hr className="my-3" />
-          <p><strong>Q:</strong> Can I get a custom AI solution for my business?</p>
-          <p><strong>A:</strong> Absolutely! We specialize in custom AI model development to align with your company's objectives.</p>
-          <hr className="my-3" />
-          <p><strong>Q:</strong> What is the typical timeline for implementing an AI solution?</p>
-          <p><strong>A:</strong> It depends on the complexity of the project, but most implementations take 4-12 weeks.</p>
-          <hr className="my-3" />
-          <p><strong>Q:</strong> Do you offer ongoing AI support and maintenance?</p>
-          <p><strong>A:</strong> Yes, we offer ongoing support plans to ensure your AI solutions stay optimized and up-to-date.</p>
+      <div className="mt-16">
+        <h2 className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h2>
+        <div className="bg-white p-6 rounded-lg shadow-md space-y-6">
+          <div>
+            <h3 className="font-semibold mb-2">How quickly do you respond to inquiries?</h3>
+            <p className="text-gray-600">We aim to respond to all inquiries within 24 business hours.</p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">Do you offer free consultations?</h3>
+            <p className="text-gray-600">Yes! You can book a free consultation through our <Link href="/booking" className="text-blue-600 hover:underline">booking page</Link>.</p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">What industries do you specialize in?</h3>
+            <p className="text-gray-600">We work with businesses across various sectors including finance, healthcare, e-commerce, and technology.</p>
+          </div>
+          <div>
+            <h3 className="font-semibold mb-2">What is your typical project timeline?</h3>
+            <p className="text-gray-600">Project timelines vary based on complexity, but most implementations take 4-12 weeks.</p>
+          </div>
         </div>
       </div>
-      {/* Back to Home Button */}
-      <div className="text-center mt-10">
-        <Link href="/" legacyBehavior>
-          <button className="bg-gray-800 text-white px-6 py-2 rounded-lg hover:bg-gray-700">
-            Back to Home
-          </button>
+
+      {/* Back to Home */}
+      <div className="text-center mt-12">
+        <Link href="/" className="inline-block bg-gray-800 text-white px-8 py-3 rounded-lg hover:bg-gray-700 transition duration-300">
+          Back to Home
         </Link>
       </div>
     </div>

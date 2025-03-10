@@ -48,15 +48,25 @@ export default function Home() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormStatus({ isSubmitting: true, isSubmitted: false, error: null });
 
     try {
-      // Here you would typically send the data to your backend
-      // For now, we'll simulate an API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send message');
+      }
+
       // Clear form after successful submission
       setFormData({ name: '', email: '', subject: '', message: '' });
       setFormStatus({
@@ -70,10 +80,11 @@ export default function Home() {
         setFormStatus(prev => ({ ...prev, isSubmitted: false }));
       }, 5000);
     } catch (error) {
+      console.error('Error sending message:', error);
       setFormStatus({
         isSubmitting: false,
         isSubmitted: false,
-        error: 'There was an error sending your message. Please try again.'
+        error: error instanceof Error ? error.message : 'Failed to send message. Please try again.'
       });
     }
   };
@@ -214,15 +225,15 @@ export default function Home() {
           <Navbar />
           <section id="home" className="flex flex-col items-center justify-center min-h-screen pt-24 text-center px-4">
             {renderSection(
-              <div className="space-y-6">
+              <div className="space-y-6 mx-auto max-w-4xl">
                 <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6">
                   Transform Your Business<br />with Strategic AI Solutions
                 </h1>
-                <p className="text-xl md:text-2xl text-white mt-4 max-w-2xl">
+                <p className="text-xl md:text-2xl text-white mt-4 mx-auto max-w-2xl">
                   Unlock the power of AI-driven solutions to streamline operations,
                   boost efficiency, and drive growth for your business.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center">
                   <button 
                     className="px-8 py-4 bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-gray-100 transition-all duration-300"
                     onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
@@ -473,13 +484,13 @@ export default function Home() {
       </section>
 
       <section id="contact" className="min-h-screen flex flex-col items-center justify-center bg-gray-300 pt-24 px-4 md:px-0">
-        <StaticContent className="max-w-3xl w-full">
+        <StaticContent className="max-w-5xl w-full">
           <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
           <p className="text-gray-600 text-center mb-8">
             Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
           </p>
           
-          <form className="space-y-6 bg-white p-8 rounded-lg shadow-lg relative" onSubmit={handleSubmit}>
+          <form className="space-y-6 bg-white p-8 rounded-lg shadow-lg relative max-w-3xl mx-auto" onSubmit={handleSubmit}>
             {formStatus.isSubmitted && (
               <div className="absolute top-0 left-0 right-0 bg-green-500 text-white p-3 rounded-t-lg text-center">
                 Message sent successfully!
@@ -565,13 +576,16 @@ export default function Home() {
             </button>
           </form>
           
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 place-items-center px-4">
             {renderSection(
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="text-blue-600 text-2xl mb-3">📍</div>
-                <h3 className="font-semibold mb-2">Company</h3>
-                <p className="text-gray-600">Strategic Sync</p>
-              </div>,
+              <a href="https://maps.google.com/?q=San+Clemente,+CA" target="_blank" rel="noopener noreferrer" className="cursor-pointer w-full">
+                <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-[300px] flex flex-col items-center text-center hover:shadow-xl transition-all duration-300">
+                  <div className="text-blue-600 text-2xl mb-3">📍</div>
+                  <h3 className="font-semibold mb-2">Company</h3>
+                  <p className="text-gray-600">Strategic Sync</p>
+                  <p className="text-gray-600">San Clemente, CA</p>
+                </div>
+              </a>,
               {
                 initial: { opacity: 0 },
                 whileInView: { opacity: 1 },
@@ -581,11 +595,14 @@ export default function Home() {
             )}
             
             {renderSection(
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="text-blue-600 text-2xl mb-3">📞</div>
-                <h3 className="font-semibold mb-2">Phone</h3>
-                <p className="text-gray-600">949-529-2424</p>
-              </div>,
+              <a href="tel:949-529-2424" className="cursor-pointer w-full">
+                <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-[300px] flex flex-col items-center text-center hover:shadow-xl transition-all duration-300">
+                  <div className="text-blue-600 text-2xl mb-3">📞</div>
+                  <h3 className="font-semibold mb-2">Phone</h3>
+                  <p className="text-gray-600">949-529-2424</p>
+                  <p className="text-blue-600 text-sm mt-2">Click to call</p>
+                </div>
+              </a>,
               {
                 initial: { opacity: 0 },
                 whileInView: { opacity: 1 },
@@ -595,11 +612,14 @@ export default function Home() {
             )}
             
             {renderSection(
-              <div className="bg-white p-6 rounded-lg shadow-md">
-                <div className="text-blue-600 text-2xl mb-3">✉️</div>
-                <h3 className="font-semibold mb-2">Email</h3>
-                <p className="text-gray-600">contact@strategicsync.com</p>
-              </div>,
+              <a href="mailto:contact@strategicsync.com" className="cursor-pointer w-full">
+                <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-[300px] flex flex-col items-center text-center hover:shadow-xl transition-all duration-300">
+                  <div className="text-blue-600 text-2xl mb-3">✉️</div>
+                  <h3 className="font-semibold mb-2">Email</h3>
+                  <p className="text-gray-600 break-words">contact@strategicsync.com</p>
+                  <p className="text-blue-600 text-sm mt-2">Click to email</p>
+                </div>
+              </a>,
               {
                 initial: { opacity: 0 },
                 whileInView: { opacity: 1 },
@@ -614,7 +634,7 @@ export default function Home() {
       {mounted && showScroll && (
         <ClientSideMotion
           animationProps={{
-            className: "fixed bottom-5 right-5 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300",
+            className: "fixed bottom-24 right-5 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300",
             initial: { opacity: 0, y: 50 },
             animate: { opacity: 1, y: 0 },
             transition: { duration: 0.5 },

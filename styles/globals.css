@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+}
 
-/* Ensure the body has enough padding to avoid content being cut off under the navbar */
 body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
   @apply bg-gray-100 text-gray-900;
   padding-top: 80px; /* Adjust based on the navbar height */
 }
