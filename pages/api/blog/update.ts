@@ -12,10 +12,10 @@ const openai = new OpenAI({
 
 // RSS feeds for AI news
 const RSS_FEEDS = [
-  'https://feeds.feedburner.com/artificial-intelligence-news',
   'https://blog.google/technology/ai/rss/',
-  'https://openai.com/blog/rss.xml',
-  'https://news.mit.edu/topic/artificial-intelligence2-rss.xml'
+  'https://blogs.microsoft.com/ai/feed/',
+  'https://aws.amazon.com/blogs/machine-learning/feed/',
+  'https://ai.googleblog.com/feeds/posts/default'
 ];
 
 async function generateBlogPost(title: string, content: string) {
@@ -48,25 +48,33 @@ async function fetchAndProcessFeeds() {
   for (const feed of RSS_FEEDS) {
     try {
       const feedContent = await parser.parseURL(feed);
+      console.log(`Successfully fetched feed: ${feed}`);
       
-      for (const item of feedContent.items.slice(0, 2)) { // Get latest 2 items from each feed
-        const content = await generateBlogPost(item.title || '', item.content || '');
-        
-        if (content) {
-          articles.push({
-            id: Buffer.from(item.title || '').toString('base64'),
-            title: item.title,
-            excerpt: content.substring(0, 150) + '...',
-            content: content,
-            date: item.pubDate || new Date().toISOString(),
-            category: 'AI News',
-            imageUrl: item.enclosure?.url || '/images/blog/ai-default.jpg',
-            tags: ['AI', 'Technology', 'Innovation'],
-          });
+      for (const item of feedContent.items.slice(0, 2)) {
+        try {
+          const content = await generateBlogPost(item.title || '', item.content || item.contentSnippet || '');
+          
+          if (content) {
+            articles.push({
+              id: Buffer.from(item.title || '').toString('base64'),
+              title: item.title,
+              excerpt: content.substring(0, 150) + '...',
+              content: content,
+              date: item.pubDate || new Date().toISOString(),
+              category: 'AI News',
+              imageUrl: item.enclosure?.url || '/images/blog/ai-default.jpg',
+              tags: ['AI', 'Technology', 'Innovation'],
+            });
+            console.log(`Generated blog post: ${item.title}`);
+          }
+        } catch (error) {
+          console.error(`Error processing item from feed ${feed}:`, error);
+          continue; // Skip this item but continue with others
         }
       }
     } catch (error) {
       console.error(`Error processing feed ${feed}:`, error);
+      continue; // Skip this feed but continue with others
     }
   }
 
@@ -85,7 +93,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const dataDirectory = path.join(process.cwd(), 'data');
+    // Use relative path from project root
+    const dataDirectory = path.join('data');
     const filePath = path.join(dataDirectory, 'blog-posts.json');
 
     // Create directory if it doesn't exist

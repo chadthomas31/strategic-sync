@@ -8,7 +8,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const dataDirectory = path.join(process.cwd(), 'data');
+    // Use relative path from project root
+    const dataDirectory = path.join('data');
     const filePath = path.join(dataDirectory, 'blog-posts.json');
 
     // Create directory if it doesn't exist

@@ -85,7 +85,7 @@ export default function BlogPost({ post }: Props) {
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
-    const dataDirectory = path.join(process.cwd(), 'data');
+    const dataDirectory = path.join('data');
     const filePath = path.join(dataDirectory, 'blog-posts.json');
 
     const fileContents = await fs.readFile(filePath, 'utf8');
