@@ -1,8 +1,9 @@
 import { GetServerSideProps } from 'next';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 interface BlogPost {
   id: string;
@@ -12,13 +13,34 @@ interface BlogPost {
   category: string;
   imageUrl: string;
   tags: string[];
+  formattedDate?: string;
 }
 
 interface Props {
-  post: BlogPost;
+  post: BlogPost & { formattedDate: string };
+}
+
+function formatDate(dateStr: string): string {
+  try {
+    const date = parseISO(dateStr);
+    return format(date, 'MMMM d, yyyy');
+  } catch (error) {
+    console.error('Error formatting date:', dateStr);
+    return 'Date unavailable';
+  }
 }
 
 export default function BlogPost({ post }: Props) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
+
   if (!post) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -57,7 +79,7 @@ export default function BlogPost({ post }: Props) {
                 {post.category}
               </span>
               <time className="text-gray-500">
-                {format(new Date(post.date), 'MMMM d, yyyy')}
+                {post.formattedDate}
               </time>
             </div>
             <h1 className="text-4xl font-bold text-gray-900 mb-4">{post.title}</h1>
@@ -99,9 +121,15 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       };
     }
 
+    // Format the date on the server side
+    const formattedPost = {
+      ...post,
+      formattedDate: formatDate(post.date)
+    };
+
     return {
       props: {
-        post,
+        post: formattedPost,
       },
     };
   } catch (error) {

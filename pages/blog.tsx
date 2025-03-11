@@ -1,7 +1,7 @@
 // pages/blog.tsx
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 
 interface BlogPost {
   id: string;
@@ -12,6 +12,29 @@ interface BlogPost {
   category: string;
   imageUrl: string;
   tags: string[];
+  formattedDate?: string;
+}
+
+function formatDate(dateStr: string): string {
+  try {
+    // Try parsing ISO format first
+    let date = parseISO(dateStr);
+    
+    // If invalid date, try parsing other formats
+    if (isNaN(date.getTime())) {
+      date = new Date(dateStr);
+    }
+    
+    // If still invalid, throw error
+    if (isNaN(date.getTime())) {
+      throw new Error('Invalid date');
+    }
+    
+    return format(date, 'MMM d, yyyy');
+  } catch (error) {
+    console.error('Error formatting date:', dateStr);
+    return 'Date unavailable';
+  }
 }
 
 export default function Blog() {
@@ -19,8 +42,10 @@ export default function Blog() {
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     fetchPosts();
   }, []);
 
@@ -28,7 +53,14 @@ export default function Blog() {
     try {
       const response = await fetch('/api/blog/posts');
       const data = await response.json();
-      setPosts(data);
+      
+      // Pre-format dates to ensure consistency
+      const formattedPosts = data.map((post: BlogPost) => ({
+        ...post,
+        formattedDate: formatDate(post.date)
+      }));
+      
+      setPosts(formattedPosts);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching posts:', error);
@@ -44,6 +76,11 @@ export default function Blog() {
                          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // Don't render anything until client-side hydration is complete
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -121,7 +158,7 @@ export default function Blog() {
                     <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-gray-500">
-                        {format(new Date(post.date), 'MMM d, yyyy')}
+                        {post.formattedDate}
                       </span>
                       <div className="flex gap-2">
                         {post.tags.slice(0, 2).map(tag => (
