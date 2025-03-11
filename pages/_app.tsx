@@ -3,6 +3,7 @@ import Head from "next/head";
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import ConvAI from "../components/ConvAI";
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,6 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <Navbar />
       <Component {...pageProps} />
       <ConvAI />
+      <Analytics />
     </>
   );
 }
