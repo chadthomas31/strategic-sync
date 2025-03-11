@@ -3,6 +3,8 @@ import { useState, useEffect, ReactNode } from "react";
 import { FiArrowUp, FiCpu, FiTrendingUp, FiShield, FiBarChart, FiDatabase, FiSettings, FiAward, FiUsers, FiTarget } from "react-icons/fi";
 import dynamic from 'next/dynamic';
 import { HTMLMotionProps } from "framer-motion";
+import { format, parseISO } from "date-fns";
+import Link from "next/link";
 
 // Client-side only components with NoSSR
 const ClientSideMotion = dynamic(
@@ -126,22 +128,22 @@ export default function Home() {
     {
       title: "The Future of AI in Business",
       excerpt: "Discover how artificial intelligence is reshaping the business landscape and what it means for your company.",
-      date: "March 15, 2024",
-      image: "/blog/ai-future.jpg",
+      date: "2024-03-15",
+      image: "/images/blog/ai-future.png",
       category: "AI Trends"
     },
     {
       title: "Maximizing ROI with AI Solutions",
       excerpt: "Learn how businesses are achieving remarkable returns on investment through strategic AI implementation.",
-      date: "March 10, 2024",
-      image: "/blog/roi.jpg",
+      date: "2024-03-10",
+      image: "/images/blog/roi.png",
       category: "Business Strategy"
     },
     {
       title: "AI Security Best Practices",
       excerpt: "Essential security measures to protect your AI implementations and maintain data integrity.",
-      date: "March 5, 2024",
-      image: "/blog/security.jpg",
+      date: "2024-03-05",
+      image: "/images/blog/security.png",
       category: "Security"
     }
   ];
@@ -456,16 +458,27 @@ export default function Home() {
               <div key={post.title}>
                 {renderSection(
                   <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                    <div className="h-48 bg-gray-200"></div>
+                    <div className="h-48 bg-gray-200 relative">
+                      {post.image && (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={post.image}
+                          alt={post.title}
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
                     <div className="p-6">
                       <div className="text-sm text-blue-600 mb-2">{post.category}</div>
                       <h3 className="text-xl font-semibold mb-3">{post.title}</h3>
                       <p className="text-gray-600 mb-4">{post.excerpt}</p>
                       <div className="flex justify-between items-center">
-                        <span className="text-sm text-gray-500">{post.date}</span>
-                        <button className="text-blue-600 hover:text-blue-800 font-semibold">
+                        <span className="text-sm text-gray-500">
+                          {format(parseISO(post.date), 'MMM d, yyyy')}
+                        </span>
+                        <Link href="/blog" className="text-blue-600 hover:text-blue-800 font-semibold">
                           Read More →
-                        </button>
+                        </Link>
                       </div>
                     </div>
                   </div>,

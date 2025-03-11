@@ -1,27 +1,36 @@
-import { ReactNode, useEffect, useState } from 'react';
-import { motion, HTMLMotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 
-interface ClientSideMotionProps extends HTMLMotionProps<"div"> {
+interface Props {
   children: ReactNode;
-  animationProps?: HTMLMotionProps<"div">;
+  className?: string;
+  animationProps: any;
 }
 
-const ClientSideMotion = ({ children, animationProps, className, ...rest }: ClientSideMotionProps) => {
+export default function ClientSideMotion({ children, className = '', animationProps }: Props) {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
+  // During SSR and initial client render, return a static div
   if (!isMounted) {
-    return <div className={className}>{children}</div>;
+    return (
+      <div className={className} style={{ opacity: 0 }}>
+        {children}
+      </div>
+    );
   }
 
+  // Once mounted on client, return the animated component
   return (
-    <motion.div className={className} {...animationProps} {...rest}>
+    <motion.div
+      className={className}
+      {...animationProps}
+    >
       {children}
     </motion.div>
   );
-};
-
-export default ClientSideMotion; 
+} 
