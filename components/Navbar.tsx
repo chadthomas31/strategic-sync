@@ -5,20 +5,27 @@ import { FiMenu, FiX } from "react-icons/fi";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
-  // Handle scrolling effect
+  // Handle scrolling effect only after component is mounted
   useEffect(() => {
+    setIsMounted(true);
+    
     const handleScroll = () => {
       setScrolled(window.scrollY > 10);
     };
+    
     window.addEventListener("scroll", handleScroll);
+    // Initial check for scroll position
+    handleScroll();
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
       className={`fixed top-0 w-full py-6 transition-all duration-300 shadow-lg ${
-        scrolled ? "bg-gray-800 shadow-md" : "bg-gray-900"
+        isMounted && scrolled ? "bg-gray-800 shadow-md" : "bg-gray-900"
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-8">
@@ -28,92 +35,63 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="hidden md:flex space-x-8">
-          <li>
-            <Link href="/" legacyBehavior>
-              <span className="cursor-pointer hover:text-blue-400 text-white text-2xl font-semibold">
-                Home
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/services" legacyBehavior>
-              <span className="cursor-pointer hover:text-blue-400 text-white text-2xl font-semibold">
-                Services
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/blog" legacyBehavior>
-              <span className="cursor-pointer hover:text-blue-400 text-white text-2xl font-semibold">
-                Blog
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/contact" legacyBehavior>
-              <span className="cursor-pointer hover:text-blue-400 text-white text-2xl font-semibold">
-                Contact
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/booking" legacyBehavior>
-              <span className="cursor-pointer hover:text-blue-400 text-white text-2xl font-semibold">
-                Booking
-              </span>
-            </Link>
-          </li>
-          <li>
-            <Link href="/client-login" legacyBehavior>
-              <span className="cursor-pointer hover:text-blue-400 text-white text-2xl font-semibold">
-                Client Login
-              </span>
-            </Link>
-          </li>
-        </ul>
+        <div className="hidden md:flex space-x-8">
+          <Link href="/" className="text-white hover:text-blue-400 text-lg font-semibold">
+            Home
+          </Link>
+          <Link href="/services" className="text-white hover:text-blue-400 text-lg font-semibold">
+            Services
+          </Link>
+          <Link href="/blog" className="text-white hover:text-blue-400 text-lg font-semibold">
+            Blog
+          </Link>
+          <Link href="/contact" className="text-white hover:text-blue-400 text-lg font-semibold">
+            Contact
+          </Link>
+        </div>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden text-white text-4xl" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <FiX /> : <FiMenu />}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden text-white focus:outline-none"
+        >
+          {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
       </div>
 
       {/* Mobile Menu Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-gray-900 absolute top-20 left-0 w-full py-6 shadow-lg">
-          <ul className="flex flex-col space-y-6 text-center">
-            <li>
-              <Link href="/" passHref legacyBehavior>
-                <span className="block py-3 text-white text-2xl font-semibold hover:text-blue-400" onClick={() => setIsOpen(false)}>Home</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/services" passHref legacyBehavior>
-                <span className="block py-3 text-white text-2xl font-semibold hover:text-blue-400" onClick={() => setIsOpen(false)}>Services</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog" passHref legacyBehavior>
-                <span className="block py-3 text-white text-2xl font-semibold hover:text-blue-400" onClick={() => setIsOpen(false)}>Blog</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" passHref legacyBehavior>
-                <span className="block py-3 text-white text-2xl font-semibold hover:text-blue-400" onClick={() => setIsOpen(false)}>Contact</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/booking" passHref legacyBehavior>
-                <span className="block py-3 text-white text-2xl font-semibold hover:text-blue-400" onClick={() => setIsOpen(false)}>Booking</span>
-              </Link>
-            </li>
-            <li>
-              <Link href="/client-login" passHref legacyBehavior>
-                <span className="block py-3 text-white text-2xl font-semibold hover:text-blue-400" onClick={() => setIsOpen(false)}>Client Login</span>
-              </Link>
-            </li>
-          </ul>
+        <div className="md:hidden bg-gray-800 mt-2 py-4 px-8">
+          <div className="flex flex-col space-y-4">
+            <Link
+              href="/"
+              className="text-white hover:text-blue-400 text-lg font-semibold"
+              onClick={() => setIsOpen(false)}
+            >
+              Home
+            </Link>
+            <Link
+              href="/services"
+              className="text-white hover:text-blue-400 text-lg font-semibold"
+              onClick={() => setIsOpen(false)}
+            >
+              Services
+            </Link>
+            <Link
+              href="/blog"
+              className="text-white hover:text-blue-400 text-lg font-semibold"
+              onClick={() => setIsOpen(false)}
+            >
+              Blog
+            </Link>
+            <Link
+              href="/contact"
+              className="text-white hover:text-blue-400 text-lg font-semibold"
+              onClick={() => setIsOpen(false)}
+            >
+              Contact
+            </Link>
+          </div>
         </div>
       )}
     </nav>

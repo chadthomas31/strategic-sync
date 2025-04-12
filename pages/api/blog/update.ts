@@ -6,6 +6,11 @@ import OpenAI from 'openai';
 import { format } from 'date-fns';
 import * as xml2js from 'xml2js';
 import { fetchTweets } from '../../../utils/twitterFeed';
+import crypto from 'crypto';
+import { generateWithOpenAI } from '../../../utils/openAI';
+import { generateWithGoogleAI } from '../../../utils/googleAI';
+import { generateWithAnthropic } from '../../../utils/anthropicAI';
+import { getCache, setCache } from '../../../utils/cache';
 
 const parser = new Parser();
 const xmlParser = new xml2js.Parser();
@@ -70,55 +75,175 @@ function sanitizeImageUrl(url: string, feedUrl: string): string {
   }
 }
 
-async function generateBlogPost(title: string, content: string) {
-  if (!process.env.OPENAI_API_KEY) {
-    console.log('No OpenAI API key found, using default content generation');
-    return `# ${title}\n\n${content}\n\nThis is a default blog post generated without OpenAI API. The original content has been preserved and formatted for readability.`;
-  }
-
+// Cache helper functions
+async function getCache() {
+  const cachePath = path.join(process.cwd(), 'data', 'content-cache.json');
   try {
-    // Validate API key format
-    if (!process.env.OPENAI_API_KEY.startsWith('sk-')) {
-      console.error('Invalid OpenAI API key format');
-      throw new Error('Invalid API key format');
-    }
+    const cache = await fs.readFile(cachePath, 'utf8');
+    return JSON.parse(cache);
+  } catch (error) {
+    return {};
+  }
+}
 
-    // Use Promise.race for timeout
-    const completionPromise = openai.chat.completions.create({
-      model: "gpt-4",
+async function setCache(key: string, value: string) {
+  const cachePath = path.join(process.cwd(), 'data', 'content-cache.json');
+  const cache = await getCache();
+  cache[key] = {
+    content: value,
+    timestamp: Date.now()
+  };
+  await fs.writeFile(cachePath, JSON.stringify(cache));
+}
+
+// Cost tracking
+const costTracker = {
+  dailySpent: 0,
+  dailyLimit: 5, // $5 daily limit
+  lastReset: new Date().toDateString(),
+  
+  async checkAndUpdateCost(cost: number): Promise<boolean> {
+    // Reset daily spent if it's a new day
+    const today = new Date().toDateString();
+    if (today !== this.lastReset) {
+      this.dailySpent = 0;
+      this.lastReset = today;
+    }
+    
+    // Check if adding this cost would exceed daily limit
+    if (this.dailySpent + cost > this.dailyLimit) {
+      return false;
+    }
+    
+    this.dailySpent += cost;
+    return true;
+  }
+};
+
+// AI Provider interface
+interface AIProvider {
+  name: string;
+  generateContent: (title: string, content: string) => Promise<string>;
+  costPerToken: number;
+}
+
+// OpenAI Provider
+const openAIProvider: AIProvider = {
+  name: 'openai',
+  costPerToken: 0.000002, // $0.002 per 1K tokens for GPT-3.5-turbo
+  async generateContent(title: string, content: string) {
+    if (!process.env.OPENAI_API_KEY) throw new Error('OpenAI API key not configured');
+    
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
       messages: [
         {
           role: "system",
-          content: "You are an AI technology expert writing a blog post. Convert the provided content into an engaging, well-structured article with proper formatting and technical accuracy."
+          content: "You are a tech news editor. Summarize the provided content into a concise, well-structured article. Focus on key points and technical accuracy."
         },
         {
           role: "user",
-          content: `Please write a blog post about: ${title}\n\nBased on this content:\n${content}`
+          content: `Title: ${title}\n\nContent: ${content}\n\nCreate a concise summary focusing on the main points.`
         }
       ],
-      max_tokens: 1000,
+      max_tokens: 500,
       temperature: 0.7
     });
 
-    const completion = await Promise.race([
-      completionPromise,
-      new Promise((_, reject) => setTimeout(() => reject(new Error('OpenAI API timeout')), 120000))
-    ]) as Awaited<typeof completionPromise>;
-
-    if (!completion.choices[0]?.message?.content) {
-      throw new Error('No content generated');
-    }
-
-    return completion.choices[0].message.content;
-  } catch (error: any) {
-    console.error('Error generating blog post:', error);
-    if (error.code === 'invalid_api_key') {
-      return `# ${title}\n\n${content}\n\nThis is a default blog post. The original content has been preserved due to an API key error.`;
-    }
-    // Fallback to default content if OpenAI fails
-    return `# ${title}\n\n${content}\n\nThis is a default blog post. The original content has been preserved due to an error in the AI processing.`;
+    return completion.choices[0]?.message?.content || '';
   }
+};
+
+// Google AI Provider (placeholder for now)
+const googleAIProvider: AIProvider = {
+  name: 'google',
+  costPerToken: 0.000001, // Placeholder cost
+  async generateContent(title: string, content: string) {
+    // TODO: Implement Google AI integration
+    throw new Error('Google AI not yet implemented');
+  }
+};
+
+// Claude Provider (placeholder for now)
+const claudeProvider: AIProvider = {
+  name: 'claude',
+  costPerToken: 0.000008, // Placeholder cost
+  async generateContent(title: string, content: string) {
+    // TODO: Implement Claude integration
+    throw new Error('Claude not yet implemented');
+  }
+};
+
+// Provider manager
+const aiProviders = [openAIProvider, googleAIProvider, claudeProvider];
+
+// Function to generate a cache key from content
+function generateCacheKey(content: string): string {
+  return crypto.createHash('md5').update(content).digest('hex');
 }
+
+// Function to check if cached content is still valid (less than 7 days old)
+function isCacheValid(cachedData: any): boolean {
+  if (!cachedData || !cachedData.timestamp) return false;
+  const age = Date.now() - cachedData.timestamp;
+  return age < 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+}
+
+async function generateBlogPost(title: string, content: string): Promise<string> {
+  // Check cache first
+  const cacheKey = generateCacheKey(content);
+  const cachedContent = await getCache(cacheKey);
+  
+  if (cachedContent && isCacheValid(cachedContent)) {
+    console.log('Using cached content');
+    return cachedContent.content;
+  }
+
+  // Try each AI provider in sequence
+  const providers = [
+    { name: 'OpenAI', generate: generateWithOpenAI },
+    { name: 'Google AI', generate: generateWithGoogleAI },
+    { name: 'Anthropic', generate: generateWithAnthropic }
+  ];
+
+  let lastError = null;
+  for (const provider of providers) {
+    try {
+      console.log(`Attempting to generate content with ${provider.name}`);
+      const generatedContent = await provider.generate(title, content);
+      
+      // Cache the successful result
+      await setCache(cacheKey, {
+        content: generatedContent,
+        timestamp: Date.now(),
+        provider: provider.name
+      });
+
+      return generatedContent;
+    } catch (error) {
+      console.error(`Error with ${provider.name}:`, error);
+      lastError = error;
+      continue; // Try next provider
+    }
+  }
+
+  // If all providers fail, throw the last error
+  throw lastError || new Error('All AI providers failed to generate content');
+}
+
+// Rate limiting helper
+const rateLimiter = {
+  lastCall: 0,
+  minInterval: 2000, // 2 seconds between API calls
+  async wait() {
+    const now = Date.now();
+    const timeToWait = Math.max(0, this.lastCall + this.minInterval - now);
+    if (timeToWait > 0) {
+      await new Promise(resolve => setTimeout(resolve, timeToWait));
+    }
+    this.lastCall = Date.now();
+  }
+};
 
 async function processFeed(feed: string) {
   try {
@@ -149,7 +274,7 @@ async function processFeed(feed: string) {
 
     const xml = await response.text();
     const result = await xmlParser.parseStringPromise(xml);
-    const items = (result.rss?.channel?.[0]?.item || []).slice(0, 2); // Only process 2 posts per feed
+    const items = (result.rss?.channel?.[0]?.item || []).slice(0, 1); // Only process 1 post per feed
 
     const articles = [];
     for (const item of items) {
@@ -159,6 +284,9 @@ async function processFeed(feed: string) {
         
         // Always use default image for now
         const imageUrl = getDefaultImage(feed);
+
+        // Wait for rate limiting
+        await rateLimiter.wait();
 
         // Generate blog post with increased timeout (120 seconds)
         const generatedPost = await Promise.race([
@@ -188,9 +316,6 @@ async function processFeed(feed: string) {
 
         articles.push(article);
         console.log(`Generated blog post: ${title}`);
-        
-        // Add a longer delay between posts to avoid rate limits
-        await new Promise(resolve => setTimeout(resolve, 5000));
       } catch (error) {
         console.error(`Error processing item from feed ${feed}:`, error);
         continue;
