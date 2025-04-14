@@ -1,16 +1,9 @@
 {
-  "crons": [{
-    "path": "/api/blog/update",
-    "schedule": "0 0 * * 1"
-  }],
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
   "env": {
-    "OPENAI_API_KEY": "@openai_api_key",
-    "CRON_SECRET_TOKEN": "@cron_secret_token",
-    "SMTP_HOST": "@smtp_host",
-    "SMTP_PORT": "@smtp_port",
-    "SMTP_USER": "@smtp_user",
-    "SMTP_PASSWORD": "@smtp_password",
-    "SMTP_FROM_EMAIL": "@smtp_from_email",
-    "ADMIN_EMAIL": "@admin_email"
+    "OPENAI_API_KEY": "@openai_api_key"
   }
 } 
