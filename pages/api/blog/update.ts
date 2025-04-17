@@ -10,7 +10,7 @@ import crypto from 'crypto';
 import { generateWithOpenAI } from '../../../utils/openAI';
 import { generateWithGoogleAI } from '../../../utils/googleAI';
 import { generateWithAnthropic } from '../../../utils/anthropicAI';
-import { getCache, setCache } from '../../../utils/cache';
+import { getCache, setCache, CacheEntry } from '../../../utils/cache';
 
 const parser = new Parser();
 const xmlParser = new xml2js.Parser();

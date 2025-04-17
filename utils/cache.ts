@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 // Define the cache entry interface
-interface CacheEntry {
+export interface CacheEntry {
   content: string;
   timestamp: number;
   provider?: string;
@@ -48,20 +48,31 @@ const saveCache = (cache: Cache) => {
   }
 };
 
-// Get a value from the cache by key
+/**
+ * Get a value from the cache by key
+ * @param key The cache key
+ * @returns The cache entry or null if not found
+ */
 export async function getCache(key: string): Promise<CacheEntry | null> {
   const cache = loadCache();
   return cache[key] || null;
 }
 
-// Set a value in the cache by key
+/**
+ * Set a value in the cache by key
+ * @param key The cache key
+ * @param entry The cache entry to store
+ */
 export async function setCache(key: string, entry: CacheEntry): Promise<void> {
   const cache = loadCache();
   cache[key] = entry;
   saveCache(cache);
 }
 
-// Clear expired entries from the cache (older than specified days)
+/**
+ * Clear expired entries from the cache
+ * @param maxAgeDays Maximum age in days (default: 7)
+ */
 export async function clearExpiredCache(maxAgeDays: number = 7): Promise<void> {
   const cache = loadCache();
   const now = Date.now();
@@ -74,4 +85,11 @@ export async function clearExpiredCache(maxAgeDays: number = 7): Promise<void> {
   }
 
   saveCache(cache);
-} 
+}
+
+// Default export with all functions
+export default {
+  getCache,
+  setCache,
+  clearExpiredCache
+}; 
