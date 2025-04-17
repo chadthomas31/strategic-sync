@@ -75,8 +75,10 @@ function sanitizeImageUrl(url: string, feedUrl: string): string {
   }
 }
 
-// Cache helper functions
-async function getCache() {
+// Legacy cache functions - DEPRECATED
+// These are kept for backward compatibility but should not be used in new code
+// Use imported getCache and setCache from cache.ts instead
+async function _getLegacyCache() {
   const cachePath = path.join(process.cwd(), 'data', 'content-cache.json');
   try {
     const cache = await fs.readFile(cachePath, 'utf8');
@@ -86,9 +88,9 @@ async function getCache() {
   }
 }
 
-async function setCache(key: string, value: string) {
+async function _setLegacyCache(key: string, value: string) {
   const cachePath = path.join(process.cwd(), 'data', 'content-cache.json');
-  const cache = await getCache();
+  const cache = await _getLegacyCache();
   cache[key] = {
     content: value,
     timestamp: Date.now()
@@ -227,8 +229,9 @@ async function generateBlogPost(title: string, content: string): Promise<string>
     }
   }
 
-  // If all providers fail, throw the last error
-  throw lastError || new Error('All AI providers failed to generate content');
+  // If all providers fail, return a default message
+  console.error('All providers failed:', lastError);
+  return `# ${title}\n\n${content}\n\nThis content could not be processed by AI due to technical limitations.`;
 }
 
 // Rate limiting helper
