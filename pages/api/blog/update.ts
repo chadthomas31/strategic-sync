@@ -18,21 +18,47 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY
 });
 
-// RSS feeds for AI news
+// RSS feeds for AI news - expanded for more diversity
 const RSS_FEEDS = [
   'https://blog.google/technology/ai/rss/',
   'https://blogs.microsoft.com/ai/feed/',
   'https://aws.amazon.com/blogs/machine-learning/feed/',
-  'https://www.forwardfuture.ai/rss.xml'  // Forward Future AI feed
+  'https://www.forwardfuture.ai/rss.xml',
+  'https://openai.com/blog/rss.xml',
+  'https://ai.meta.com/blog/rss/',
+  'https://machinelearningmastery.com/feed/',
+  'https://jack-clark.net/feed/', // Import AI newsletter
+  'https://www.technologyreview.com/topic/artificial-intelligence/feed/'
 ];
 
+// Enhanced default images with high-quality images
 const defaultImages = {
   'blog.google': '/images/blog/google-ai.png',
   'blogs.microsoft.com': '/images/blog/microsoft-ai.png',
   'aws.amazon.com': '/images/blog/aws-ai.png',
   'forwardfuture.ai': '/images/blog/forward-future.png',
   'twitter.com': '/images/blog/twitter.png',
+  'openai.com': '/images/blog/openai.png',
+  'ai.meta.com': '/images/blog/meta-ai.png',
+  'machinelearningmastery.com': '/images/blog/ml-mastery.png',
+  'jack-clark.net': '/images/blog/import-ai.png',
+  'technologyreview.com': '/images/blog/mit-tech-review.png',
   'default': '/images/blog/ai-default.png'
+};
+
+// Expanded categories for better classification
+const CATEGORIES = {
+  'blog.google': 'Tech Trends',
+  'blogs.microsoft.com': 'Industry Updates',
+  'aws.amazon.com': 'Tech Trends',
+  'forwardfuture.ai': 'AI News',
+  'twitter.com': 'AI News',
+  'openai.com': 'AI News',
+  'ai.meta.com': 'Industry Updates',
+  'machinelearningmastery.com': 'Tutorials',
+  'jack-clark.net': 'AI News',
+  'technologyreview.com': 'Tech Trends',
+  'default': 'AI News'
 };
 
 // Add authentication for Forward Future AI
@@ -48,6 +74,51 @@ function getDefaultImage(feedUrl: string): string {
   } catch (e) {
     return defaultImages['default'];
   }
+}
+
+function getCategory(feedUrl: string): string {
+  try {
+    const hostname = new URL(feedUrl).hostname;
+    return CATEGORIES[hostname] || CATEGORIES['default'];
+  } catch (e) {
+    return CATEGORIES['default'];
+  }
+}
+
+function generateTags(title: string, category: string): string[] {
+  // Base tags that should be included in all posts
+  const baseTags = ['AI', 'Technology'];
+  
+  // Add category-specific tags
+  if (category === 'AI News') {
+    return [...baseTags, 'Innovation', 'Research'];
+  } else if (category === 'Industry Updates') {
+    return [...baseTags, 'Business', 'Innovation'];
+  } else if (category === 'Tech Trends') {
+    return [...baseTags, 'Trends', 'Future'];
+  } else if (category === 'Tutorials') {
+    return [...baseTags, 'Learning', 'Guide'];
+  } else if (category === 'Use Cases') {
+    return [...baseTags, 'Applications', 'Solutions'];
+  }
+  
+  // Add title-specific tags
+  const titleLower = title.toLowerCase();
+  if (titleLower.includes('openai') || titleLower.includes('gpt')) {
+    baseTags.push('OpenAI');
+  } else if (titleLower.includes('google') || titleLower.includes('gemini')) {
+    baseTags.push('Google');
+  } else if (titleLower.includes('microsoft') || titleLower.includes('azure')) {
+    baseTags.push('Microsoft');
+  } else if (titleLower.includes('meta') || titleLower.includes('llama')) {
+    baseTags.push('Meta');
+  } else if (titleLower.includes('healthcare') || titleLower.includes('medical')) {
+    baseTags.push('Healthcare');
+  } else if (titleLower.includes('finance') || titleLower.includes('banking')) {
+    baseTags.push('Finance');
+  }
+  
+  return baseTags;
 }
 
 function sanitizeImageUrl(url: string, feedUrl: string): string {
@@ -277,7 +348,10 @@ async function processFeed(feed: string) {
 
     const xml = await response.text();
     const result = await xmlParser.parseStringPromise(xml);
-    const items = (result.rss?.channel?.[0]?.item || []).slice(0, 1); // Only process 1 post per feed
+    
+    // Increase the number of posts to process per feed for better weekly updates
+    // Since we're now running weekly instead of daily, we'll process more posts
+    const items = (result.rss?.channel?.[0]?.item || []).slice(0, 3); // Process 3 posts per feed
 
     const articles = [];
     for (const item of items) {
@@ -287,6 +361,12 @@ async function processFeed(feed: string) {
         
         // Always use default image for now
         const imageUrl = getDefaultImage(feed);
+        
+        // Get category for this feed
+        const category = getCategory(feed);
+        
+        // Generate tags based on title and category
+        const tags = generateTags(title, category);
 
         // Wait for rate limiting
         await rateLimiter.wait();
@@ -311,9 +391,9 @@ async function processFeed(feed: string) {
           excerpt: (generatedPost as string).substring(0, 200) + '...',
           content: generatedPost,
           date,
-          category: 'AI News',
+          category,
           imageUrl,
-          tags: ['AI', 'Technology', 'Innovation'],
+          tags,
           source: new URL(feed).hostname
         };
 
@@ -332,17 +412,22 @@ async function processFeed(feed: string) {
 }
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
+  // Support both POST (from cron) and GET (for manual triggering)
+  if (req.method !== 'POST' && req.method !== 'GET') {
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
   // Check token from query parameter
   const { token } = req.query;
-  if (!token || token !== process.env.CRON_SECRET_TOKEN) {
+  const isManualRun = req.method === 'GET' && process.env.NODE_ENV === 'development';
+  
+  if (!isManualRun && (!token || token !== process.env.CRON_SECRET_TOKEN)) {
     return res.status(401).json({ message: 'Unauthorized' });
   }
 
   try {
+    console.log(`Starting blog update process at ${new Date().toISOString()}`);
+    
     // Process RSS feeds
     const articles = [];
     for (const feed of RSS_FEEDS) {
@@ -375,13 +460,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Sort by date descending
     uniqueArticles.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
+    // Limit to a reasonable number (e.g., 100 most recent posts)
+    const limitedArticles = uniqueArticles.slice(0, 100);
+
     // Save to file
-    await fs.writeFile(blogPostsPath, JSON.stringify(uniqueArticles, null, 2));
+    await fs.writeFile(blogPostsPath, JSON.stringify(limitedArticles, null, 2));
+
+    console.log(`Blog update process completed at ${new Date().toISOString()}`);
 
     return res.status(200).json({
       message: 'Blog posts updated successfully',
       newPosts: articles.length,
-      totalPosts: uniqueArticles.length
+      totalPosts: limitedArticles.length
     });
   } catch (error) {
     console.error('Error updating blog posts:', error);

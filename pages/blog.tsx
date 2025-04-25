@@ -116,14 +116,14 @@ export default function Blog() {
             <div className="mb-16">
               <h2 className="text-2xl font-bold mb-8 text-gray-800">Featured Post</h2>
               <Link href={`/blog/${featuredPost.id}`} key={featuredPost.id}>
-                <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col md:flex-row">
-                  <div className="md:w-1/2 h-64 md:h-auto bg-gray-200 relative">
+                <div className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row">
+                  <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
                     {featuredPost.imageUrl && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
                         src={featuredPost.imageUrl}
                         alt={featuredPost.title}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     )}
                     <div className="absolute top-4 left-4">
@@ -134,7 +134,7 @@ export default function Blog() {
                   </div>
                   <div className="p-8 md:w-1/2 flex flex-col justify-between">
                     <div>
-                      <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                      <h3 className="text-2xl font-bold mb-4 text-gray-900 group-hover:text-blue-600 transition-colors">
                         {featuredPost.title}
                       </h3>
                       <p className="text-gray-600 mb-6 line-clamp-3">{featuredPost.excerpt}</p>
@@ -148,7 +148,7 @@ export default function Blog() {
                         )}
                         {featuredPost.formattedDate}
                       </span>
-                      <span className="text-blue-600 font-medium">Read more →</span>
+                      <span className="text-blue-600 font-medium group-hover:translate-x-1 transition-transform">Read more →</span>
                     </div>
                   </div>
                 </div>
@@ -215,14 +215,14 @@ export default function Blog() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map(post => (
                 <Link href={`/blog/${post.id}`} key={post.id}>
-                  <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1">
-                    <div className="h-48 bg-gray-200 relative">
+                  <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1">
+                    <div className="h-48 overflow-hidden rounded-t-xl relative">
                       {post.imageUrl && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                           src={post.imageUrl}
                           alt={post.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       )}
                       <div className="absolute top-4 left-4">
@@ -232,7 +232,7 @@ export default function Blog() {
                       </div>
                     </div>
                     <div className="p-6 flex-grow flex flex-col">
-                      <h2 className="text-xl font-bold mb-3 text-gray-900 line-clamp-2">
+                      <h2 className="text-xl font-bold mb-3 text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors">
                         {post.title}
                       </h2>
                       <p className="text-gray-600 mb-4 line-clamp-3 flex-grow">{post.excerpt}</p>
