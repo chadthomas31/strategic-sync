@@ -1,0 +1,14 @@
+[Unit]
+Description=MCP (Memory Control Protocol) Server
+After=network.target
+
+[Service]
+Type=simple
+User=mcpadmin
+WorkingDirectory=/home/mcpadmin/mcp
+ExecStart=/usr/bin/node /home/mcpadmin/mcp/mcp-server.js
+Restart=always
+Environment=PORT=4001
+
+[Install]
+WantedBy=multi-user.target 
