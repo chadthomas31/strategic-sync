@@ -48,6 +48,9 @@ export default function Navbar() {
           <Link href="/contact" className="text-white hover:text-blue-400 text-lg font-semibold">
             Contact
           </Link>
+          <Link href="/seo-dashboard" className="text-white hover:text-blue-400 text-lg font-semibold">
+            SEO
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -90,6 +93,13 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               Contact
+            </Link>
+            <Link
+              href="/seo-dashboard"
+              className="text-white hover:text-blue-400 text-lg font-semibold"
+              onClick={() => setIsOpen(false)}
+            >
+              SEO
             </Link>
           </div>
         </div>
