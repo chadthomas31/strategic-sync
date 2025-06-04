@@ -1,8 +1,16 @@
 import React from "react";
+import SEO from '../components/SEO'
+import { siteUrl } from '../seo.config'
 
 const Services: React.FC = () => {
   return (
-    <div className="pt-20"> {/* Fix navbar overlap */}
+    <>
+      <SEO
+        title="Our AI Consulting Services | Strategic Sync"
+        description="Innovative AI solutions tailored for your business success."
+        path="/services"
+      />
+      <div className="pt-20"> {/* Fix navbar overlap */}
       <h1 className="text-3xl font-bold text-center">
         Our AI Consulting Services
       </h1>
@@ -23,7 +31,8 @@ const Services: React.FC = () => {
           </div>
         ))}
       </div>
-    </div>
+      </div>
+    </>
   );
 };
 
