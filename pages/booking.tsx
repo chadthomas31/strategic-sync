@@ -1,8 +1,16 @@
 import Link from "next/link";
+import SEO from '../components/SEO'
+import { siteUrl } from '../seo.config'
 
 export default function Booking() {
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <>
+      <SEO
+        title="Book an AI Consultation | Strategic Sync"
+        description="Choose the AI consulting session that best fits your needs."
+        path="/booking"
+      />
+      <div className="max-w-6xl mx-auto p-6">
       {/* Page Title */}
       <h1 className="text-3xl font-bold text-center mb-6">Book an AI Consultation</h1>
       {/* Description */}
@@ -70,7 +78,8 @@ export default function Booking() {
           ← Back to Home
         </Link>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
