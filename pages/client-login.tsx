@@ -1,5 +1,7 @@
 // pages/client_login.tsx
 import React, { useState } from "react";
+import SEO from '../components/SEO'
+import { siteUrl } from '../seo.config'
 
 const ClientLogin = () => {
   const [email, setEmail] = useState("");
@@ -11,7 +13,13 @@ const ClientLogin = () => {
   };
 
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
+    <>
+      <SEO
+        title="Client Login | Strategic Sync"
+        description="Access the Strategic Sync client portal to manage your AI projects and view your consultation history."
+        path="/client-login"
+      />
+      <div style={{ padding: "20px", textAlign: "center" }}>
       <h1>Client Login</h1>
       <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", maxWidth: "300px", margin: "auto" }}>
         <input
@@ -34,7 +42,8 @@ const ClientLogin = () => {
           Login
         </button>
       </form>
-    </div>
+      </div>
+    </>
   );
 };
 
