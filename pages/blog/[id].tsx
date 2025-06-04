@@ -5,6 +5,7 @@ import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { siteUrl } from '../../seo.config';
 
 interface BlogPost {
   id: string;
@@ -83,10 +84,52 @@ export default function BlogPost({ post, relatedPosts }: Props) {
   return (
     <>
       <Head>
-        <title>{post.title} | Strategic Sync</title>
-        <meta 
-          name="description" 
-          content={post.content.substring(0, 160).replace(/\n/g, ' ')} 
+        <title>{`${post.title} | Strategic Sync`}</title>
+        <meta
+          name="description"
+          content={post.content.substring(0, 160).replace(/\n/g, ' ')}
+        />
+        {/* Open Graph */}
+        <meta property="og:title" content={post.title} />
+        <meta
+          property="og:description"
+          content={post.content.substring(0, 160).replace(/\n/g, ' ')}
+        />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={`${siteUrl}/blog/${post.id}`} />
+        {post.imageUrl && <meta property="og:image" content={post.imageUrl} />}
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={post.title} />
+        <meta
+          name="twitter:description"
+          content={post.content.substring(0, 160).replace(/\n/g, ' ')}
+        />
+        {post.imageUrl && <meta name="twitter:image" content={post.imageUrl} />}
+        {/* Canonical URL */}
+        <link rel="canonical" href={`${siteUrl}/blog/${post.id}`} />
+        {/* Schema.org JSON-LD for Article */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: post.title,
+              image: post.imageUrl ? [post.imageUrl] : undefined,
+              datePublished: post.date,
+              author: post.author || undefined,
+              publisher: {
+                '@type': 'Organization',
+                name: 'Strategic Sync',
+                logo: {
+                  '@type': 'ImageObject',
+                  url: `${siteUrl}/images/logo.png`,
+                },
+              },
+              description: post.content.substring(0, 160).replace(/\n/g, ' '),
+            }),
+          }}
         />
       </Head>
       
