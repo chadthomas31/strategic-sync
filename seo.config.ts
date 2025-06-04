@@ -1,7 +1,7 @@
 import { DefaultSeoProps } from 'next-seo'
 
 // Default SEO configuration for all pages
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://strategicsync.com'
+export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://strategicsync.com'
 
 const defaultSEO: DefaultSeoProps = {
   defaultTitle: 'Strategic Sync – AI Consulting & Implementation Services',
