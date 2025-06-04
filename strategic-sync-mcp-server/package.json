@@ -1,0 +1,36 @@
+{
+  "name": "strategic-sync-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP Server for Strategic Sync React website management",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "bin": {
+    "strategic-sync-mcp": "./dist/index.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "react",
+    "website-management",
+    "seo",
+    "ai"
+  ],
+  "author": "Strategic Sync",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
