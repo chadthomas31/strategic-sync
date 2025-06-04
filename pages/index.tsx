@@ -1,4 +1,6 @@
 import Navbar from "../components/Navbar";
+import SEO from '../components/SEO'
+import { siteUrl } from '../seo.config'
 import { useState, useEffect, ReactNode } from "react";
 import { FiArrowUp, FiCpu, FiTrendingUp, FiShield, FiBarChart, FiDatabase, FiSettings, FiAward, FiUsers, FiTarget } from "react-icons/fi";
 import dynamic from 'next/dynamic';
@@ -211,7 +213,14 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen">
+    <>
+      <SEO
+        title="Home – Strategic Sync AI Consulting & Implementation Services"
+        description="Unlock the power of AI-driven solutions to streamline operations, boost efficiency, and drive growth for your business."
+        path="/"
+        image="/images/og-image.jpg"
+      />
+      <div className="min-h-screen">
       <div className="relative min-h-screen">
         <div 
           className="absolute inset-0 z-0"
@@ -658,6 +667,7 @@ export default function Home() {
         </ClientSideMotion>
       )}
     </div>
+    </>
   );
 }
 
