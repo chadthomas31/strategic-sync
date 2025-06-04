@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
+import SEO from '../components/SEO'
+import { siteUrl } from '../seo.config'
 
 export default function Contact() {
   const [formData, setFormData] = useState<{
@@ -66,7 +68,13 @@ export default function Contact() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <>
+      <SEO
+        title="Contact Us | Strategic Sync"
+        description="Get in touch with Strategic Sync for AI consulting, implementation, and support services."
+        path="/contact"
+      />
+      <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-3xl font-bold text-center mb-6">Contact Us</h1>
       
       {/* Contact Info */}
@@ -198,6 +206,7 @@ export default function Contact() {
           Back to Home
         </Link>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
