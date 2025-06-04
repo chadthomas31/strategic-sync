@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { format, parseISO } from 'date-fns';
 import Head from 'next/head';
+import { siteUrl } from '../seo.config';
 
 interface BlogPost {
   id: string;
@@ -94,7 +95,42 @@ export default function Blog() {
     <>
       <Head>
         <title>Blog | Strategic Sync - AI Insights & Updates</title>
-        <meta name="description" content="Stay informed with the latest in AI technology and industry trends" />
+        <meta
+          name="description"
+          content="Stay informed with the latest in AI technology and industry trends"
+        />
+        {/* Open Graph */}
+        <meta property="og:title" content="Blog | Strategic Sync - AI Insights & Updates" />
+        <meta
+          property="og:description"
+          content="Stay informed with the latest in AI technology and industry trends"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${siteUrl}/blog`} />
+        <meta property="og:image" content={`${siteUrl}/images/og-image.jpg`} />
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Blog | Strategic Sync - AI Insights & Updates" />
+        <meta
+          name="twitter:description"
+          content="Stay informed with the latest in AI technology and industry trends"
+        />
+        <meta name="twitter:image" content={`${siteUrl}/images/og-image.jpg`} />
+        {/* Canonical URL */}
+        <link rel="canonical" href={`${siteUrl}/blog`} />
+        {/* Schema.org JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'CollectionPage',
+              name: 'AI Insights & Updates',
+              description: 'Stay informed with the latest in AI technology and industry trends',
+              url: `${siteUrl}/blog`,
+            }),
+          }}
+        />
       </Head>
       
       <div className="min-h-screen bg-gray-50">
