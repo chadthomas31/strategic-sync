@@ -107,7 +107,7 @@ export default function Contact() {
       <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8 max-w-2xl mx-auto relative">
         {status.isSubmitted && (
           <div className="absolute top-0 left-0 right-0 bg-green-500 text-white p-4 rounded-t-lg text-center">
-            Message sent successfully! We'll get back to you soon.
+            Message sent successfully! We&apos;ll get back to you soon.
           </div>
         )}
         {status.error && (

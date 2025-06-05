@@ -1,12 +1,13 @@
+import React, { useState, useEffect, ReactNode } from "react";
 import Navbar from "../components/Navbar";
 import SEO from '../components/SEO'
 import { siteUrl } from '../seo.config'
-import { useState, useEffect, ReactNode } from "react";
 import { FiArrowUp, FiCpu, FiTrendingUp, FiShield, FiBarChart, FiDatabase, FiSettings, FiAward, FiUsers, FiTarget } from "react-icons/fi";
 import dynamic from 'next/dynamic';
 import { HTMLMotionProps } from "framer-motion";
 import { format, parseISO } from "date-fns";
 import Link from "next/link";
+import Image from 'next/image';
 
 // Client-side only components with NoSSR
 const ClientSideMotion = dynamic(
@@ -14,8 +15,43 @@ const ClientSideMotion = dynamic(
   { ssr: false }
 );
 
+interface FormStatus {
+  isSubmitting: boolean;
+  isSubmitted: boolean;
+  error: string | null;
+}
+
+interface Service {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+interface CaseStudy {
+  company: string;
+  challenge: string;
+  solution: string;
+  results: string;
+  icon: React.ReactNode;
+}
+
+interface BlogPost {
+  title: string;
+  excerpt: string;
+  date: string;
+  image: string;
+  category: string;
+}
+
+interface Testimonial {
+  name: string;
+  role: string;
+  content: string;
+  image: string;
+}
+
 // Static components for server-side rendering
-const StaticContent = ({ children, className = "" }: { children: ReactNode; className?: string }) => (
+const StaticContent: React.FC<{ children: ReactNode; className?: string }> = ({ children, className = "" }) => (
   <div className={className}>{children}</div>
 );
 
@@ -28,7 +64,7 @@ export default function Home() {
     subject: '',
     message: ''
   });
-  const [formStatus, setFormStatus] = useState({
+  const [formStatus, setFormStatus] = useState<FormStatus>({
     isSubmitting: false,
     isSubmitted: false,
     error: null
@@ -93,7 +129,7 @@ export default function Home() {
     }
   };
 
-  const services = [
+  const services: Service[] = [
     {
       icon: <FiCpu className="w-8 h-8 mb-4 text-blue-500" />,
       title: "AI Integration",
@@ -126,7 +162,7 @@ export default function Home() {
     }
   ];
 
-  const blogPosts = [
+  const blogPosts: BlogPost[] = [
     {
       title: "The Future of AI in Business",
       excerpt: "Discover how artificial intelligence is reshaping the business landscape and what it means for your company.",
@@ -150,7 +186,7 @@ export default function Home() {
     }
   ];
 
-  const testimonials = [
+  const testimonials: Testimonial[] = [
     {
       name: "Sarah Johnson",
       role: "CTO, TechCorp",
@@ -171,7 +207,7 @@ export default function Home() {
     }
   ];
 
-  const caseStudies = [
+  const caseStudies: CaseStudy[] = [
     {
       company: "Global Retail Corp",
       challenge: "Inventory Management",
@@ -380,7 +416,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Success Stories</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              See how we've helped businesses achieve remarkable results with AI solutions.
+              See how we&apos;ve helped businesses achieve remarkable results with AI solutions.
             </p>
           </div>
 
@@ -431,7 +467,7 @@ export default function Home() {
                         <span className="text-3xl">❝</span>
                       </div>
                     </div>
-                    <p className="text-gray-600 mb-6 mt-6 italic">"{testimonial.content}"</p>
+                    <p className="text-gray-600 mb-6 mt-6 italic">&ldquo;{testimonial.content}&rdquo;</p>
                     <div className="flex items-center">
                       <div className="flex-1">
                         <h4 className="font-semibold">{testimonial.name}</h4>
@@ -469,11 +505,11 @@ export default function Home() {
                   <div className="bg-white rounded-xl shadow-lg overflow-hidden">
                     <div className="h-48 bg-gray-200 relative">
                       {post.image && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={post.image}
                           alt={post.title}
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
                         />
                       )}
                     </div>
@@ -508,9 +544,9 @@ export default function Home() {
       <section id="contact" className="min-h-screen flex flex-col items-center justify-center bg-gray-300 pt-24 px-4 md:px-0">
         <StaticContent className="max-w-5xl w-full">
           <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
-          <p className="text-gray-600 text-center mb-8">
-            Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-          </p>
+                    <p className="text-gray-600 text-center mb-8">
+              Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
+            </p>
           
           <form className="space-y-6 bg-white p-8 rounded-lg shadow-lg relative max-w-3xl mx-auto" onSubmit={handleSubmit}>
             {formStatus.isSubmitted && (

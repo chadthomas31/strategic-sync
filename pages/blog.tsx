@@ -1,6 +1,7 @@
 // pages/blog.tsx
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { format, parseISO } from 'date-fns';
 import Head from 'next/head';
 import { siteUrl } from '../seo.config';
@@ -155,11 +156,11 @@ export default function Blog() {
                 <div className="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row">
                   <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
                     {featuredPost.imageUrl && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={featuredPost.imageUrl}
                         alt={featuredPost.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                     )}
                     <div className="absolute top-4 left-4">
@@ -254,11 +255,11 @@ export default function Blog() {
                   <div className="group bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1">
                     <div className="h-48 overflow-hidden rounded-t-xl relative">
                       {post.imageUrl && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={post.imageUrl}
                           alt={post.title}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-105"
                         />
                       )}
                       <div className="absolute top-4 left-4">

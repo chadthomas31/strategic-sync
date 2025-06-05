@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { format, parseISO } from 'date-fns';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { siteUrl } from '../../seo.config';
@@ -137,11 +138,11 @@ export default function BlogPost({ post, relatedPosts }: Props) {
         {/* Hero Section with Image */}
         <div className="w-full h-96 bg-gray-800 relative overflow-hidden">
           {post.imageUrl ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
+            <Image
               src={post.imageUrl}
               alt={post.title}
-              className="w-full h-full object-cover opacity-70"
+              fill
+              className="object-cover opacity-70"
             />
           ) : (
             <div className="w-full h-full bg-gradient-to-r from-blue-900 to-indigo-800"></div>
@@ -210,11 +211,11 @@ export default function BlogPost({ post, relatedPosts }: Props) {
                     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col transform hover:-translate-y-1">
                       <div className="h-40 bg-gray-200 relative">
                         {relatedPost.imageUrl && (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img
+                          <Image
                             src={relatedPost.imageUrl}
                             alt={relatedPost.title}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
                           />
                         )}
                       </div>
