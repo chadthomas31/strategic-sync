@@ -16,11 +16,6 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
 
-  // Performance optimizations
-  experimental: {
-    optimizeCss: true,
-  },
-
   // Compiler options
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
