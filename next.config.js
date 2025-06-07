@@ -13,6 +13,11 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
+  // Ensure proper route manifest generation
+  output: 'standalone',
+  generateBuildId: async () => {
+    return 'build-' + Date.now();
+  },
 };
 
 module.exports = nextConfig;

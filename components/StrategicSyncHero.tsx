@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 interface CommandOutput {
   text: string;
@@ -19,50 +19,53 @@ interface TerminalItem {
   typing?: boolean;
 }
 
+const TERMINAL_COMMANDS: Command[] = [
+  {
+    command: 'strategicsync --analyze-operations --client="Fortune500Retail"',
+    delay: 1000,
+    output: [
+      { text: 'Analyzing operational inefficiencies...', delay: 800, class: 'text-blue-300' },
+      { text: '|-- Inventory management: 23% waste reduction opportunity', delay: 600, class: 'text-yellow-400 font-semibold' },
+      { text: '|-- Customer service: 40% response time improvement potential', delay: 600, class: 'text-yellow-400 font-semibold' },
+      { text: '\\-- Supply chain: $2.3M annual cost savings identified', delay: 600, class: 'text-yellow-400 font-semibold' }
+    ]
+  },
+  {
+    command: 'strategicsync --implement-ai-strategy --focus="customer-experience"',
+    delay: 2000,
+    output: [
+      { text: 'Deploying AI strategy framework...', delay: 800, class: 'text-blue-300' },
+      { text: '✓ Chatbot integration: +35% customer satisfaction', delay: 700, class: 'text-green-400 font-semibold' },
+      { text: '✓ Predictive analytics: +28% retention rate', delay: 700, class: 'text-green-400 font-semibold' },
+      { text: '✓ Personalization engine: +42% conversion rate', delay: 700, class: 'text-green-400 font-semibold' }
+    ]
+  },
+  {
+    command: 'strategicsync --roi-report --timeframe="6months"',
+    delay: 2500,
+    output: [
+      { text: 'Strategic AI Implementation Results:', delay: 800, class: 'text-green-300 font-bold text-lg' },
+      { text: '• Cost Reduction: $5.2M annually', delay: 600, class: 'text-yellow-400 font-semibold' },
+      { text: '• Efficiency Gains: 34% average improvement', delay: 600, class: 'text-yellow-400 font-semibold' },
+      { text: '• Revenue Growth: +18% quarter-over-quarter', delay: 600, class: 'text-yellow-400 font-semibold' },
+      { text: '• Time-to-Market: 50% faster product launches', delay: 600, class: 'text-yellow-400 font-semibold' }
+    ]
+  },
+  {
+    command: 'strategicsync --status',
+    delay: 2000,
+    output: [
+      { text: 'Ready to transform your business? Contact Strategic Sync...', delay: 1000, class: 'text-green-400 font-semibold animate-pulse' }
+    ]
+  }
+];
+
 const StrategicSyncHero: React.FC = () => {
   const [terminalContent, setTerminalContent] = useState<TerminalItem[]>([]);
   const [showCursor, setShowCursor] = useState(true);
 
-  const commands: Command[] = [
-    {
-      command: 'strategicsync --analyze-operations --client="Fortune500Retail"',
-      delay: 1000,
-      output: [
-        { text: 'Analyzing operational inefficiencies...', delay: 800, class: 'text-blue-300' },
-        { text: '|-- Inventory management: 23% waste reduction opportunity', delay: 600, class: 'text-yellow-400 font-semibold' },
-        { text: '|-- Customer service: 40% response time improvement potential', delay: 600, class: 'text-yellow-400 font-semibold' },
-        { text: '\\-- Supply chain: $2.3M annual cost savings identified', delay: 600, class: 'text-yellow-400 font-semibold' }
-      ]
-    },
-    {
-      command: 'strategicsync --implement-ai-strategy --focus="customer-experience"',
-      delay: 2000,
-      output: [
-        { text: 'Deploying AI strategy framework...', delay: 800, class: 'text-blue-300' },
-        { text: '✓ Chatbot integration: +35% customer satisfaction', delay: 700, class: 'text-green-400 font-semibold' },
-        { text: '✓ Predictive analytics: +28% retention rate', delay: 700, class: 'text-green-400 font-semibold' },
-        { text: '✓ Personalization engine: +42% conversion rate', delay: 700, class: 'text-green-400 font-semibold' }
-      ]
-    },
-    {
-      command: 'strategicsync --roi-report --timeframe="6months"',
-      delay: 2500,
-      output: [
-        { text: 'Strategic AI Implementation Results:', delay: 800, class: 'text-green-300 font-bold text-lg' },
-        { text: '• Cost Reduction: $5.2M annually', delay: 600, class: 'text-yellow-400 font-semibold' },
-        { text: '• Efficiency Gains: 34% average improvement', delay: 600, class: 'text-yellow-400 font-semibold' },
-        { text: '• Revenue Growth: +18% quarter-over-quarter', delay: 600, class: 'text-yellow-400 font-semibold' },
-        { text: '• Time-to-Market: 50% faster product launches', delay: 600, class: 'text-yellow-400 font-semibold' }
-      ]
-    },
-    {
-      command: 'strategicsync --status',
-      delay: 2000,
-      output: [
-        { text: 'Ready to transform your business? Contact Strategic Sync...', delay: 1000, class: 'text-green-400 font-semibold animate-pulse' }
-      ]
-    }
-  ];
+  // Use useMemo to memoize the commands array
+  const commands = useMemo(() => TERMINAL_COMMANDS, []);
 
   useEffect(() => {
     const runAnimation = async () => {
@@ -101,7 +104,7 @@ const StrategicSyncHero: React.FC = () => {
 
     const timer = setTimeout(runAnimation, 1000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [commands]);
 
   useEffect(() => {
     const interval = setInterval(() => {
