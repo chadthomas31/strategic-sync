@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   
+  // Explicit output configuration for Vercel
+  output: 'standalone',
+  
   // Image optimization settings
   images: {
     domains: [
@@ -19,6 +22,11 @@ const nextConfig = {
   // Compiler options
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // Disable static optimization for better Vercel compatibility
+  experimental: {
+    forceSwcTransforms: true,
   },
 
   // Custom webpack config for optimizations
