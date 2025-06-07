@@ -55,7 +55,7 @@ const StrategicSyncSEO: React.FC = () => {
     },
     {
       name: 'og:description',
-      content: 'Transform your business with expert AI consulting and implementation services. Drive measurable results with Strategic Sync\'s proven AI solutions.',
+      content: 'Transform your business with expert AI consulting and implementation services. Drive measurable results with Strategic Sync&apos;s proven AI solutions.',
       type: 'og',
       priority: 'medium'
     },
@@ -71,7 +71,7 @@ const StrategicSyncSEO: React.FC = () => {
     {
       type: 'error',
       title: 'Missing Meta Description Length Optimization',
-      description: 'Current meta description is too short and doesn\'t include compelling CTAs',
+      description: 'Current meta description is too short and doesn&apos;t include compelling CTAs',
       fix: 'Expand to 150-155 characters with clear value proposition and call-to-action'
     },
     {
@@ -377,10 +377,10 @@ const StrategicSyncSEO: React.FC = () => {
               <div className="mt-6 p-4 bg-blue-50 rounded-lg">
                 <h4 className="font-medium text-blue-900 mb-2">Implementation Steps:</h4>
                 <ol className="list-decimal list-inside space-y-1 text-blue-800 text-sm">
-                  <li>Copy the code above and paste it into your website's &lt;head&gt; section</li>
+                  <li>Copy the code above and paste it into your website&apos;s &lt;head&gt; section</li>
                   <li>Replace placeholder image URLs with actual high-quality images</li>
                   <li>Update contact information and social media URLs</li>
-                  <li>Test the implementation using Google's Rich Results Test</li>
+                  <li>Test the implementation using Google&apos;s Rich Results Test</li>
                   <li>Submit your updated sitemap to Google Search Console</li>
                   <li>Monitor performance in Google Analytics and Search Console</li>
                 </ol>
@@ -418,4 +418,4 @@ const StrategicSyncSEO: React.FC = () => {
   );
 };
 
-export default StrategicSyncSEO; 
+export default StrategicSyncSEO;

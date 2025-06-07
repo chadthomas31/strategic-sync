@@ -29,9 +29,9 @@ const StrategicSyncHero: React.FC = () => {
       delay: 1000,
       output: [
         { text: 'Analyzing operational inefficiencies...', delay: 800, class: 'text-blue-300' },
-        { text: '├── Inventory management: 23% waste reduction opportunity', delay: 600, class: 'text-yellow-400 font-semibold' },
-        { text: '├── Customer service: 40% response time improvement potential', delay: 600, class: 'text-yellow-400 font-semibold' },
-        { text: '└── Supply chain: $2.3M annual cost savings identified', delay: 600, class: 'text-yellow-400 font-semibold' }
+        { text: '|-- Inventory management: 23% waste reduction opportunity', delay: 600, class: 'text-yellow-400 font-semibold' },
+        { text: '|-- Customer service: 40% response time improvement potential', delay: 600, class: 'text-yellow-400 font-semibold' },
+        { text: '\\-- Supply chain: $2.3M annual cost savings identified', delay: 600, class: 'text-yellow-400 font-semibold' }
       ]
     },
     {
@@ -150,7 +150,7 @@ const StrategicSyncHero: React.FC = () => {
               </h1>
               <p className="text-xl lg:text-2xl text-slate-300 leading-relaxed">
                 Transform your business with AI that delivers measurable results. 
-                We don't just implement technology—we architect strategic advantages.
+                We don&apos;t just implement technology—we architect strategic advantages.
               </p>
             </div>
             
@@ -203,7 +203,7 @@ const StrategicSyncHero: React.FC = () => {
                 if (item.type === 'command') {
                   return (
                     <div key={index} className="flex items-center mb-2">
-                      <span className="text-purple-400 mr-2 font-bold">></span>
+                      <span className="text-purple-400 mr-2 font-bold">{'>'}</span>
                       <span className="text-cyan-300 font-medium">
                         {item.typing ? (
                           <span className="animate-pulse">{item.text}</span>
@@ -224,7 +224,7 @@ const StrategicSyncHero: React.FC = () => {
                 } else if (item.type === 'prompt') {
                   return (
                     <div key={index} className="flex items-center">
-                      <span className="text-purple-400 mr-2 font-bold">></span>
+                      <span className="text-purple-400 mr-2 font-bold">{'>'}</span>
                       {showCursor && <span className="w-2 h-5 bg-purple-400 animate-pulse"></span>}
                     </div>
                   );
