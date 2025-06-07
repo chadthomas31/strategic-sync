@@ -477,7 +477,9 @@ export default function Home() {
                             src={post.image}
                             alt={post.title}
                             fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="object-cover"
+                            priority={index === 0}
                           />
                         )}
                       </div>
