@@ -6,7 +6,7 @@ const nextConfig = {
   images: {
     domains: [
       'images.unsplash.com',
-      'via.placeholder.com',
+      'via.placeholder.com', 
       'picsum.photos',
       'source.unsplash.com'
     ],
@@ -26,15 +26,13 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
-  // ESLint configuration for build
-  eslint: {
-    dirs: ['pages', 'components', 'lib'],
-  },
-
+  // Custom webpack config for optimizations
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Optimize bundle size
     if (!dev && !isServer) {
       config.optimization.splitChunks.chunks = 'all';
     }
+    
     return config;
   },
 };
