@@ -70,7 +70,7 @@ const forwardFutureAuth = {
 function getDefaultImage(feedUrl: string): string {
   try {
     const hostname = new URL(feedUrl).hostname;
-    return defaultImages[hostname] || defaultImages['default'];
+    return (defaultImages as any)[hostname] || defaultImages['default'];
   } catch (e) {
     return defaultImages['default'];
   }
