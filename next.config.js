@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   
   // Image optimization settings
   images: {
@@ -27,13 +26,15 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
-  // Custom webpack config for optimizations
+  // ESLint configuration for build
+  eslint: {
+    dirs: ['pages', 'components', 'lib'],
+  },
+
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Optimize bundle size
     if (!dev && !isServer) {
       config.optimization.splitChunks.chunks = 'all';
     }
-    
     return config;
   },
 };
