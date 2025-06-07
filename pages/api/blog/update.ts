@@ -79,7 +79,7 @@ function getDefaultImage(feedUrl: string): string {
 function getCategory(feedUrl: string): string {
   try {
     const hostname = new URL(feedUrl).hostname;
-    return CATEGORIES as any[hostname] || CATEGORIES['default'];
+    return (CATEGORIES as any)[hostname] || CATEGORIES['default'];
   } catch (e) {
     return CATEGORIES['default'];
   }
