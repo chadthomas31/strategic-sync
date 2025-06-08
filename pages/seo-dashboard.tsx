@@ -19,7 +19,7 @@ const SEODashboard: NextPage = () => {
               SEO Dashboard
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Analyze your page's SEO performance and get actionable insights to improve your search rankings.
+              Analyze your page&apos;s SEO performance and get actionable insights to improve your search rankings.
             </p>
           </div>
           

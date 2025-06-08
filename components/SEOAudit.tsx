@@ -269,9 +269,9 @@ const SEOAudit: React.FC<SEOAuditProps> = ({ url = window?.location?.href }) => 
       )}
 
       {auditResults.length === 0 && !isLoading && (
-        <div className="text-center text-gray-500 py-8">
-          Click "Run Audit" to analyze this page's SEO
-        </div>
+                 <div className="text-center text-gray-500 py-8">
+           Click &quot;Run Audit&quot; to analyze this page&apos;s SEO
+         </div>
       )}
 
       {isLoading && (
