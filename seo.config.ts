@@ -45,7 +45,7 @@ const defaultSEO: DefaultSeoProps = {
   defaultTitle: 'Strategic Sync – AI Consulting & Implementation Services',
   titleTemplate: '%s | Strategic Sync',
   description:
-    'Expert AI consulting and implementation services to drive measurable business impact. Transform your operations with cutting-edge AI solutions that deliver real ROI.',
+    'Expert AI consulting and implementation services to drive measurable business impact. Transform operations with cutting-edge solutions.',
   canonical: siteUrl,
   additionalMetaTags: [
     {
@@ -87,7 +87,7 @@ const defaultSEO: DefaultSeoProps = {
     url: siteUrl,
     site_name: businessInfo.name,
     title: 'Strategic Sync – AI Consulting & Implementation Services',
-    description: 'Expert AI consulting and implementation services to drive measurable business impact. Transform your operations with cutting-edge AI solutions.',
+    description: 'Expert AI consulting and implementation services to drive measurable business impact. Transform operations with AI solutions.',
     images: [
       {
         url: `${siteUrl}/images/og-image.jpg`,
