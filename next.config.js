@@ -13,11 +13,12 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
   },
-  // Ensure proper route manifest generation
-  output: 'standalone',
-  generateBuildId: async () => {
-    return 'build-' + Date.now();
-  },
+  // Configure output for Vercel deployment
+  distDir: '.next',
+  generateEtags: false,
+  poweredByHeader: false,
+  trailingSlash: false,
+  productionBrowserSourceMaps: false,
 };
 
 module.exports = nextConfig;
