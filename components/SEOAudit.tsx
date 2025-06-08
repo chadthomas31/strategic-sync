@@ -11,12 +11,22 @@ interface AuditResult {
   score?: number
 }
 
-const SEOAudit: React.FC<SEOAuditProps> = ({ url = window?.location?.href }) => {
+const SEOAudit: React.FC<SEOAuditProps> = ({ url }) => {
   const [auditResults, setAuditResults] = useState<AuditResult[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [overallScore, setOverallScore] = useState(0)
+  const [currentUrl, setCurrentUrl] = useState('')
+
+  // Set URL on client side
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentUrl(url || window.location.href)
+    }
+  }, [url])
 
   const runAudit = async () => {
+    if (typeof window === 'undefined') return
+    
     setIsLoading(true)
     const results: AuditResult[] = []
 
@@ -207,9 +217,11 @@ const SEOAudit: React.FC<SEOAuditProps> = ({ url = window?.location?.href }) => 
   }
 
   useEffect(() => {
-    // Run audit on component mount
-    const timer = setTimeout(runAudit, 1000)
-    return () => clearTimeout(timer)
+    // Run audit on component mount, but only on client side
+    if (typeof window !== 'undefined') {
+      const timer = setTimeout(runAudit, 1000)
+      return () => clearTimeout(timer)
+    }
   }, [])
 
   const getStatusColor = (status: string) => {
@@ -269,9 +281,9 @@ const SEOAudit: React.FC<SEOAuditProps> = ({ url = window?.location?.href }) => 
       )}
 
       {auditResults.length === 0 && !isLoading && (
-                 <div className="text-center text-gray-500 py-8">
-           Click &quot;Run Audit&quot; to analyze this page&apos;s SEO
-         </div>
+        <div className="text-center text-gray-500 py-8">
+          Click &quot;Run Audit&quot; to analyze this page&apos;s SEO
+        </div>
       )}
 
       {isLoading && (
