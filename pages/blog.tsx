@@ -181,7 +181,7 @@ export default function Blog() {
           {featuredPost && !loading && (
             <div className="mb-16 -mt-20 relative z-10">
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-                <Link href={`/blog/${featuredPost.id}`}>
+                <Link href={`/blog/${encodeURIComponent(featuredPost.id)}`}>
                   <div className="group flex flex-col lg:flex-row cursor-pointer">
                     <div className="lg:w-1/2 h-64 lg:h-auto relative overflow-hidden">
                       {featuredPost.imageUrl ? (
@@ -212,7 +212,11 @@ export default function Blog() {
                           {featuredPost.title}
                         </h2>
                         <p className="text-gray-600 mb-6 text-lg leading-relaxed">
-                          {featuredPost.excerpt.replace(/[#*]/g, '').substring(0, 200)}...
+                          {featuredPost.excerpt
+                            ? featuredPost.excerpt.replace(/[#*]/g, '').substring(0, 200) + '...'
+                            : featuredPost.content
+                              ? featuredPost.content.replace(/[#*]/g, '').substring(0, 200) + '...'
+                              : 'No summary available.'}
                         </p>
                       </div>
                       <div className="space-y-4">
@@ -323,7 +327,7 @@ export default function Blog() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map(post => (
-                <Link href={`/blog/${post.id}`} key={post.id}>
+                <Link href={`/blog/${encodeURIComponent(post.id)}`} key={post.id}>
                   <article className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col transform hover:-translate-y-2 cursor-pointer">
                     <div className="h-48 overflow-hidden rounded-t-2xl relative">
                       {post.imageUrl ? (
@@ -348,7 +352,11 @@ export default function Blog() {
                         {post.title}
                       </h2>
                       <p className="text-gray-600 mb-4 flex-grow leading-relaxed">
-                        {post.excerpt.replace(/[#*]/g, '').substring(0, 150)}...
+                        {post.excerpt
+                          ? post.excerpt.replace(/[#*]/g, '').substring(0, 150) + '...'
+                          : post.content
+                            ? post.content.replace(/[#*]/g, '').substring(0, 150) + '...'
+                            : 'No summary available.'}
                       </p>
                       <div className="mt-auto space-y-4">
                         <div className="flex items-center gap-4 text-sm text-gray-500">

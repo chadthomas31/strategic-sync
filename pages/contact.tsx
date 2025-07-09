@@ -88,11 +88,11 @@ export default function Contact() {
           <p>San Clemente, CA</p>
         </a>
 
-        <a href="mailto:admin@2105.io" 
+        <a href="mailto:info@strategicsync.com" 
            className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow text-center">
           <div className="text-3xl mb-4">📧</div>
           <h3 className="font-semibold mb-2">Email</h3>
-          <p>admin@2105.io</p>
+          <p>info@strategicsync.com</p>
         </a>
 
         <a href="tel:949-529-2424" 

@@ -11,6 +11,7 @@ import { siteUrl } from '../../seo.config';
 interface BlogPost {
   id: string;
   title: string;
+  excerpt: string;
   content: string;
   date: string;
   category: string;
@@ -18,6 +19,7 @@ interface BlogPost {
   tags: string[];
   author?: string;
   source?: string;
+  link?: string;
   formattedDate?: string;
 }
 
@@ -154,6 +156,9 @@ export default function BlogPost({ post, relatedPosts }: Props) {
                 {post.category}
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 shadow-text">{post.title}</h1>
+              {post.excerpt && (
+                <p className="text-lg text-white/80 mb-2 max-w-2xl mx-auto">{post.excerpt}</p>
+              )}
               <div className="flex items-center justify-center text-white gap-2">
                 {post.author && (
                   <span className="font-medium">By {post.author}</span>
@@ -190,11 +195,25 @@ export default function BlogPost({ post, relatedPosts }: Props) {
           <article className="bg-white rounded-xl shadow-md p-8">
             <div 
               className="prose prose-lg max-w-none prose-headings:text-gray-800 prose-p:text-gray-700 prose-a:text-blue-600"
-              dangerouslySetInnerHTML={{ __html: processContent(post.content) }}
+              dangerouslySetInnerHTML={{ __html: processContent(post.content || post.excerpt || 'No article content available.') }}
             />
             
+            {(post.link && (
+              (!post.content || post.content.trim() === '' || post.content.trim() === post.excerpt.trim())
+            )) && (
+              <div className="mt-8 pt-6 border-t border-gray-200 text-center">
+                <a
+                  href={post.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Read the full article at {post.source || 'original source'}
+                </a>
+              </div>
+            )}
             {post.source && (
-              <div className="mt-8 pt-6 border-t border-gray-200">
+              <div className="mt-4">
                 <p className="text-gray-500 text-sm">
                   Source: {post.source}
                 </p>
@@ -273,12 +292,14 @@ export default function BlogPost({ post, relatedPosts }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const dataDirectory = path.join('data');
-    const filePath = path.join(dataDirectory, 'blog-posts.json');
+    const filePath = path.join(dataDirectory, 'blog-cache.json');
 
     const fileContents = await fs.readFile(filePath, 'utf8');
-    const posts = JSON.parse(fileContents);
+    const { posts } = JSON.parse(fileContents);
 
-    const post = posts.find((p: BlogPost) => p.id === params?.id);
+    const idParam = params?.id;
+    const postId = Array.isArray(idParam) ? decodeURIComponent(idParam[0]) : decodeURIComponent(idParam ?? '');
+    const post = posts.find((p: BlogPost) => p.id === postId);
 
     if (!post) {
       return {
