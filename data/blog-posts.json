@@ -1,5 +1,326 @@
 [
   {
+    "id": "SG93IEx1c2ggYW5kIEdvb2dsZSBDbG91ZCBBSSBhcmUgcmVpbnZlbnRpbmcgcmV0YWlsIGNoZWNrb3V0",
+    "title": "How Lush and Google Cloud AI are reinventing retail checkout",
+    "excerpt": "<img src=\"https://storage.googleapis.com/gweb-uniblog-publish-prod/images/lush_lens_storyboard_photo__2_1.max-600x600.format-webp.webp\">Cosmetics company Lush is embracing Google Cloud AI to improve h...",
+    "content": "<img src=\"https://storage.googleapis.com/gweb-uniblog-publish-prod/images/lush_lens_storyboard_photo__2_1.max-600x600.format-webp.webp\">Cosmetics company Lush is embracing Google Cloud AI to improve how they work.",
+    "date": "Wed, 09 Jul 2025 08:00:00 +0000",
+    "category": "Tech Trends",
+    "imageUrl": "/images/blog/google-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Trends",
+      "Future"
+    ],
+    "source": "blog.google"
+  },
+  {
+    "id": "QWNjZWxlcmF0ZSBBSSBkZXZlbG9wbWVudCB3aXRoIEFtYXpvbiBCZWRyb2NrIEFQSSBrZXlz",
+    "title": "Accelerate AI development with Amazon Bedrock API keys",
+    "excerpt": "Today, we’re excited to announce a significant improvement to the developer experience of Amazon Bedrock: API keys. API keys provide quick access to the Amazon Bedrock APIs, streamlining the authentic...",
+    "content": "Today, we’re excited to announce a significant improvement to the developer experience of Amazon Bedrock: API keys. API keys provide quick access to the Amazon Bedrock APIs, streamlining the authentication process so that developers can focus on building rather than configuration.",
+    "date": "Tue, 08 Jul 2025 20:04:11 +0000",
+    "category": "Tech Trends",
+    "imageUrl": "/images/blog/aws-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Trends",
+      "Future"
+    ],
+    "source": "aws.amazon.com"
+  },
+  {
+    "id": "QWNjZWxlcmF0aW5nIGRhdGEgc2NpZW5jZSBpbm5vdmF0aW9uOiBIb3cgQmF5ZXIgQ3JvcCBTY2llbmNlIHVzZWQgQVdTIEFJL01MIHNlcnZpY2VzIHRvIGJ1aWxkIHRoZWlyIG5leHQtZ2VuZXJhdGlvbiBNTE9wcyBzZXJ2aWNl",
+    "title": "Accelerating data science innovation: How Bayer Crop Science used AWS AI/ML services to build their next-generation MLOps service",
+    "excerpt": "In this post, we show how Bayer Crop Science manages large-scale data science operations by training models for their data analytics needs and maintaining high-quality code documentation to support de...",
+    "content": "In this post, we show how Bayer Crop Science manages large-scale data science operations by training models for their data analytics needs and maintaining high-quality code documentation to support developers. Through these solutions, Bayer Crop Science projects up to a 70% reduction in developer onboarding time and up to a 30% improvement in developer productivity.",
+    "date": "Tue, 08 Jul 2025 16:12:54 +0000",
+    "category": "Tech Trends",
+    "imageUrl": "/images/blog/aws-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Trends",
+      "Future"
+    ],
+    "source": "aws.amazon.com"
+  },
+  {
+    "id": "Q29tYmF0IGZpbmFuY2lhbCBmcmF1ZCB3aXRoIEdyYXBoUkFHIG9uIEFtYXpvbiBCZWRyb2NrIEtub3dsZWRnZSBCYXNlcw==",
+    "title": "Combat financial fraud with GraphRAG on Amazon Bedrock Knowledge Bases",
+    "excerpt": "In this post, we show how to use Amazon Bedrock Knowledge Bases GraphRAG with Amazon Neptune Analytics to build a financial fraud detection solution....",
+    "content": "In this post, we show how to use Amazon Bedrock Knowledge Bases GraphRAG with Amazon Neptune Analytics to build a financial fraud detection solution.",
+    "date": "Tue, 08 Jul 2025 16:10:13 +0000",
+    "category": "Tech Trends",
+    "imageUrl": "/images/blog/aws-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Trends",
+      "Future"
+    ],
+    "source": "aws.amazon.com"
+  },
+  {
+    "id": "QmF0dGxpbmcgbmV4dC1nZW4gZmluYW5jaWFsIGZyYXVkwqA=",
+    "title": "Battling next-gen financial fraud ",
+    "excerpt": "From a cluster of call centers in Canada, a criminal network defrauded elderly victims in the US out of $21 million in total between 2021 and 2024. The fraudsters used voice over internet protocol tec...",
+    "content": "From a cluster of call centers in Canada, a criminal network defrauded elderly victims in the US out of $21 million in total between 2021 and 2024. The fraudsters used voice over internet protocol technology to&#160;dupe victims into believing the calls came from their grandchildren in the US, customizing conversations using banks of personal data,&#8230;",
+    "date": "Tue, 08 Jul 2025 13:24:29 +0000",
+    "category": "AI News",
+    "imageUrl": "/images/blog/ai-default.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "www.technologyreview.com"
+  },
+  {
+    "id": "MTAgTnVtUHkgT25lLUxpbmVycyB0byBTaW1wbGlmeSBGZWF0dXJlIEVuZ2luZWVyaW5n",
+    "title": "10 NumPy One-Liners to Simplify Feature Engineering",
+    "excerpt": "When building machine learning models, most developers focus on model architectures and hyperparameter tuning....",
+    "content": "When building machine learning models, most developers focus on model architectures and hyperparameter tuning.",
+    "date": "Tue, 08 Jul 2025 12:00:29 +0000",
+    "category": "Tutorials",
+    "imageUrl": "/images/blog/ml-mastery.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Learning",
+      "Guide"
+    ],
+    "source": "machinelearningmastery.com"
+  },
+  {
+    "id": "SG93IHNjaWVudGlzdHMgYXJlIHRyeWluZyB0byB1c2UgQUkgdG8gdW5sb2NrIHRoZSBodW1hbiBtaW5kwqA=",
+    "title": "How scientists are trying to use AI to unlock the human mind ",
+    "excerpt": "Today’s AI landscape is defined by the ways in which neural networks are unlike human brains. A toddler learns how to communicate effectively with only a thousand calories a day and regular conversati...",
+    "content": "Today’s AI landscape is defined by the ways in which neural networks are unlike human brains. A toddler learns how to communicate effectively with only a thousand calories a day and regular conversation; meanwhile, tech companies are reopening nuclear power plants, polluting marginalized communities, and pirating terabytes of books in order to train and run&#8230;",
+    "date": "Tue, 08 Jul 2025 09:30:00 +0000",
+    "category": "AI News",
+    "imageUrl": "/images/blog/ai-default.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "www.technologyreview.com"
+  },
+  {
+    "id": "V29ya2luZyB3aXRoIDQwMCwwMDAgdGVhY2hlcnMgdG8gc2hhcGUgdGhlIGZ1dHVyZSBvZiBBSSBpbiBzY2hvb2xz",
+    "title": "Working with 400,000 teachers to shape the future of AI in schools",
+    "excerpt": "OpenAI partners with the American Federation of Teachers to launch a 5-year initiative equipping 400,000 K-12 educators to lead AI innovation in classrooms....",
+    "content": "OpenAI partners with the American Federation of Teachers to launch a 5-year initiative equipping 400,000 K-12 educators to lead AI innovation in classrooms.",
+    "date": "Tue, 08 Jul 2025 07:00:00 GMT",
+    "category": "AI News",
+    "imageUrl": "/images/blog/openai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "openai.com"
+  },
+  {
+    "id": "TmV3IEFJIHRvb2xzIGZvciBtZW50YWwgaGVhbHRoIHJlc2VhcmNoIGFuZCB0cmVhdG1lbnQ=",
+    "title": "New AI tools for mental health research and treatment",
+    "excerpt": "<img src=\"https://storage.googleapis.com/gweb-uniblog-publish-prod/images/AI_for_Mental_Health_hero.max-600x600.format-webp.webp\">This field guide and investment support AI’s potential in evidence-bas...",
+    "content": "<img src=\"https://storage.googleapis.com/gweb-uniblog-publish-prod/images/AI_for_Mental_Health_hero.max-600x600.format-webp.webp\">This field guide and investment support AI’s potential in evidence-based mental health interventions and research.",
+    "date": "Mon, 07 Jul 2025 19:00:00 +0000",
+    "category": "Tech Trends",
+    "imageUrl": "/images/blog/google-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Trends",
+      "Future"
+    ],
+    "source": "blog.google"
+  },
+  {
+    "id": "WW91ciBGaXJzdCBPcGVuQUkgQVBJIFByb2plY3QgaW4gUHl0aG9uIFN0ZXAtQnktU3RlcA==",
+    "title": "Your First OpenAI API Project in Python Step-By-Step",
+    "excerpt": "In a <a href=\"https://machinelearningmastery....",
+    "content": "In a <a href=\"https://machinelearningmastery.",
+    "date": "Mon, 07 Jul 2025 14:16:43 +0000",
+    "category": "Tutorials",
+    "imageUrl": "/images/blog/ml-mastery.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Learning",
+      "Guide"
+    ],
+    "source": "machinelearningmastery.com"
+  },
+  {
+    "id": "SW1wb3J0IEFJIDQxOTogQW1hem9u4oCZcyBtaWxsaW9udGggcm9ib3Q7IENyb3dkVHJhY2s7IGFuZCBpbmZpbml0ZSBnYW1lcw==",
+    "title": "Import AI 419: Amazon’s millionth robot; CrowdTrack; and infinite games",
+    "excerpt": "<img width=\"150\" height=\"150\" src=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258...",
+    "content": "<img width=\"150\" height=\"150\" src=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-NikNku.jpg?resize=150%2C150&amp;ssl=1\" class=\"attachment-thumbnail size-thumbnail wp-post-image\" alt=\"\" decoding=\"async\" srcset=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-NikNku.jpg?w=258&amp;ssl=1 258w, https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-NikNku.jpg?resize=150%2C150&amp;ssl=1 150w, https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-NikNku.jpg?resize=200%2C200&amp;ssl=1 200w\" sizes=\"(max-width: 150px) 100vw, 150px\" data-attachment-id=\"2863\" data-permalink=\"https://jack-clark.net/2025/07/07/import-ai-419-amazons-millionth-robot-crowdtrack-and-infinite-games/import-ai-419-amazons-millionth-robot-crowdtrack-and-infinite-games-2/\" data-orig-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-NikNku.jpg?fit=258%2C258&amp;ssl=1\" data-orig-size=\"258,258\" data-comments-opened=\"1\" data-image-meta=\"{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}\" data-image-title=\"Import AI 419: Amazon&#8217;s millionth robot; CrowdTrack; and infinite games\" data-image-description=\"\" data-image-caption=\"\" data-medium-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-NikNku.jpg?fit=258%2C258&amp;ssl=1\" data-large-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/07/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-NikNku.jpg?fit=258%2C258&amp;ssl=1\" />Welcome to Import AI, a newsletter about AI research. Import AI runs on lattes, ramen, and feedback from readers. If you’d like to support this, please subscribe. Subscribe now Tracking multiple people in crowded scenes with CrowdTrack:…Turnkey authoritarianism via AI…Researchers with Fudan University in China have built CrowdTrack, a dataset and benchmark for using AI [&#8230;]",
+    "date": "Mon, 07 Jul 2025 12:31:49 +0000",
+    "category": "AI News",
+    "imageUrl": "/images/blog/import-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "jack-clark.net"
+  },
+  {
+    "id": "U2VjdXJpbmcgRmFzdEFQSSBFbmRwb2ludHMgZm9yIE1MT3BzOiBBbiBBdXRoZW50aWNhdGlvbiBHdWlkZQ==",
+    "title": "Securing FastAPI Endpoints for MLOps: An Authentication Guide",
+    "excerpt": "In today's AI world, data scientists are not just focused on training and optimizing machine learning models....",
+    "content": "In today's AI world, data scientists are not just focused on training and optimizing machine learning models.",
+    "date": "Fri, 04 Jul 2025 12:14:51 +0000",
+    "category": "Tutorials",
+    "imageUrl": "/images/blog/ml-mastery.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Learning",
+      "Guide"
+    ],
+    "source": "machinelearningmastery.com"
+  },
+  {
+    "id": "SW5zaWRlIEluZGlh4oCZcyBzY3JhbWJsZSBmb3IgQUkgaW5kZXBlbmRlbmNl",
+    "title": "Inside India’s scramble for AI independence",
+    "excerpt": "In Bengaluru, India, Adithya Kolavi felt a mix of excitement and validation as he watched DeepSeek unleash its disruptive language model on the world earlier this year. The Chinese technology rivaled ...",
+    "content": "In Bengaluru, India, Adithya Kolavi felt a mix of excitement and validation as he watched DeepSeek unleash its disruptive language model on the world earlier this year. The Chinese technology rivaled the best of the West in terms of benchmarks, but it had been built with far less capital in far less time.&#160; “I thought:&#8230;",
+    "date": "Fri, 04 Jul 2025 08:15:07 +0000",
+    "category": "AI News",
+    "imageUrl": "/images/blog/ai-default.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "www.technologyreview.com"
+  },
+  {
+    "id": "VGhlIGxhdGVzdCBBSSBuZXdzIHdlIGFubm91bmNlZCBpbiBKdW5l",
+    "title": "The latest AI news we announced in June",
+    "excerpt": "<img src=\"https://storage.googleapis.com/gweb-uniblog-publish-prod/images/June_AI_Recap_social-share.max-600x600.format-webp.webp\">Here are Google’s latest AI updates from June 2025...",
+    "content": "<img src=\"https://storage.googleapis.com/gweb-uniblog-publish-prod/images/June_AI_Recap_social-share.max-600x600.format-webp.webp\">Here are Google’s latest AI updates from June 2025",
+    "date": "Wed, 02 Jul 2025 16:00:00 +0000",
+    "category": "Tech Trends",
+    "imageUrl": "/images/blog/google-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Trends",
+      "Future"
+    ],
+    "source": "blog.google"
+  },
+  {
+    "id": "Tm8tY29kZSBwZXJzb25hbCBhZ2VudHMsIHBvd2VyZWQgYnkgR1BULTQuMSBhbmQgUmVhbHRpbWUgQVBJ",
+    "title": "No-code personal agents, powered by GPT-4.1 and Realtime API",
+    "excerpt": "Learn how Genspark built a $36M ARR AI product in 45 days—with no-code agents powered by GPT-4.1 and OpenAI Realtime API....",
+    "content": "Learn how Genspark built a $36M ARR AI product in 45 days—with no-code agents powered by GPT-4.1 and OpenAI Realtime API.",
+    "date": "Tue, 01 Jul 2025 10:00:00 GMT",
+    "category": "AI News",
+    "imageUrl": "/images/blog/openai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "openai.com"
+  },
+  {
+    "id": "SW1wb3J0IEFJIDQxODogMTAwYiBkaXN0cmlidXRlZCB0cmFpbmluZyBydW47IGRlY2VudHJhbGl6ZWQgcm9ib3RzOyBBSSBteXRocw==",
+    "title": "Import AI 418: 100b distributed training run; decentralized robots; AI myths",
+    "excerpt": "<img width=\"150\" height=\"150\" src=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258...",
+    "content": "<img width=\"150\" height=\"150\" src=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-3gSwkA.jpg?resize=150%2C150&amp;ssl=1\" class=\"attachment-thumbnail size-thumbnail wp-post-image\" alt=\"\" decoding=\"async\" srcset=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-3gSwkA.jpg?w=258&amp;ssl=1 258w, https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-3gSwkA.jpg?resize=150%2C150&amp;ssl=1 150w, https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-3gSwkA.jpg?resize=200%2C200&amp;ssl=1 200w\" sizes=\"(max-width: 150px) 100vw, 150px\" data-attachment-id=\"2855\" data-permalink=\"https://jack-clark.net/2025/06/30/import-ai-418-100b-distributed-training-run-decentralized-robots-ai-myths/import-ai-418-100b-distributed-training-run-decentralized-robots-ai-myths-2/\" data-orig-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-3gSwkA.jpg?fit=258%2C258&amp;ssl=1\" data-orig-size=\"258,258\" data-comments-opened=\"1\" data-image-meta=\"{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}\" data-image-title=\"Import AI 418: 100b distributed training run; decentralized robots; AI myths\" data-image-description=\"\" data-image-caption=\"\" data-medium-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-3gSwkA.jpg?fit=258%2C258&amp;ssl=1\" data-large-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-3gSwkA.jpg?fit=258%2C258&amp;ssl=1\" />Welcome to Import AI, a newsletter about AI research. Import AI runs on lattes, ramen, and feedback from readers. If you’d like to support this, please subscribe. Subscribe now Better video models with radial attention:…Efficiency improvements for internet-generated media…Researchers with MIT, NVIDIA, Princeton, UC Berkeley, Stanford and startup First Intelligence have built and released Radial [&#8230;]",
+    "date": "Mon, 30 Jun 2025 12:31:24 +0000",
+    "category": "AI News",
+    "imageUrl": "/images/blog/import-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "jack-clark.net"
+  },
+  {
+    "id": "QUkgaW4gQXVzdHJhbGlh4oCUT3BlbkFJ4oCZcyBFY29ub21pYyBCbHVlcHJpbnQ=",
+    "title": "AI in Australia—OpenAI’s Economic Blueprint",
+    "excerpt": "Today, OpenAI, in partnership with Mandala Partners, is sharing the OpenAI AI Economic Blueprint for Australia. At a time when boosting productivity has emerged as a national priority for Australia, t...",
+    "content": "Today, OpenAI, in partnership with Mandala Partners, is sharing the OpenAI AI Economic Blueprint for Australia. At a time when boosting productivity has emerged as a national priority for Australia, the Blueprint provides a clear, actionable plan for how Australia can unlock the full economic and social potential of artificial intelligence.",
+    "date": "Mon, 30 Jun 2025 07:00:00 GMT",
+    "category": "AI News",
+    "imageUrl": "/images/blog/openai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "openai.com"
+  },
+  {
+    "id": "SW1wb3J0IEFJIDQxNzogUnVzc2lhbiBMTE1zOyBIdWF3ZWnigJlzIERHWCByaXZhbDsgYW5kIDI0IHRva2VucyBmb3IgdHJhaW5pbmcgQUlz",
+    "title": "Import AI 417: Russian LLMs; Huawei’s DGX rival; and 24 tokens for training AIs",
+    "excerpt": "<img width=\"150\" height=\"150\" src=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258...",
+    "content": "<img width=\"150\" height=\"150\" src=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-8dJXBI.jpg?resize=150%2C150&amp;ssl=1\" class=\"attachment-thumbnail size-thumbnail wp-post-image\" alt=\"\" decoding=\"async\" loading=\"lazy\" srcset=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-8dJXBI.jpg?w=258&amp;ssl=1 258w, https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-8dJXBI.jpg?resize=150%2C150&amp;ssl=1 150w, https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-8dJXBI.jpg?resize=200%2C200&amp;ssl=1 200w\" sizes=\"auto, (max-width: 150px) 100vw, 150px\" data-attachment-id=\"2850\" data-permalink=\"https://jack-clark.net/2025/06/23/import-ai-417-russian-llms-huaweis-dgx-rival-and-24-tokens-for-training-ais/import-ai-417-russian-llms-huaweis-dgx-rival-and-24-tokens-for-training-ais-2/\" data-orig-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-8dJXBI.jpg?fit=258%2C258&amp;ssl=1\" data-orig-size=\"258,258\" data-comments-opened=\"1\" data-image-meta=\"{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}\" data-image-title=\"Import AI 417: Russian LLMs; Huawei&#8217;s DGX rival; and 24 tokens for training AIs\" data-image-description=\"\" data-image-caption=\"\" data-medium-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-8dJXBI.jpg?fit=258%2C258&amp;ssl=1\" data-large-file=\"https://i0.wp.com/jack-clark.net/wp-content/uploads/2025/06/https3A2F2Fsubstack-post-media.s3.amazonaws.com2Fpublic2Fimages2Fd6d17996-2bef-40a4-abe3-be72a0e8a227_258x258-8dJXBI.jpg?fit=258%2C258&amp;ssl=1\" />Welcome to Import AI, a newsletter about AI research. Import AI runs on lattes, ramen, and feedback from readers. If you’d like to support this, please subscribe. Subscribe now A wild Russian LLM family appears (and they&#8217;re not very good):…It&#8217;s a US vs China world, based on GigaChat&#8217;s scores…Russian technology company SaluteDevices has published details [&#8230;]",
+    "date": "Mon, 23 Jun 2025 12:31:12 +0000",
+    "category": "AI News",
+    "imageUrl": "/images/blog/import-ai.png",
+    "tags": [
+      "AI",
+      "Technology",
+      "Innovation",
+      "Research"
+    ],
+    "source": "jack-clark.net"
+  },
+  {
+    "id": "ai-weekly-april-6-12-2025",
+    "title": "AI Weekly Blog Post for April 6–12, 2025",
+    "date": "2025-04-13T12:00:00Z",
+    "author": "Strategic Sync Team",
+    "category": "AI News",
+    "excerpt": "This week in AI: Alphabet's $75B investment, new AI agent technology, UK's AI action plan, robot half marathon, and more.",
+    "content": "# AI Weekly Blog Post for April 6–12, 2025\n\n## 💰 Major Investments & Strategic Moves\n\n### Alphabet's $75 Billion AI Infrastructure Investment\nAlphabet CEO Sundar Pichai reaffirmed the company's plan to invest approximately $75 billion in capital spending in 2025, focusing on expanding data center capacity to support its AI initiatives, including the development of AI platforms like Gemini.\n\n### Alphabet and Nvidia Invest in Safe Superintelligence\nAlphabet and Nvidia have invested in a promising AI startup, Safe Superintelligence (SSI), co-founded by Ilya Sutskever, former chief scientist at OpenAI. SSI has quickly become a significant player in the AI industry, recently valued at $32 billion in a funding round.\n\n## 🧠 AI Innovations & Scientific Breakthroughs\n\n### Google Cloud Next 2025 Announcements\nAt the Google Cloud Next 2025 conference, Google introduced several advancements, including the Ironwood TPU, Gemini 2.5 models, Agentspace, Agent2Agent Protocol, Vertex AI Agent Engine, and Gemini Code Assist.\n\n### AI Discovers New Battery Material\nIn collaboration with Microsoft, researchers at the Pacific Northwest National Laboratory have used AI to discover a new material that could reduce lithium use in batteries by up to 70%.\n\n## 🌍 Global AI Initiatives & Policies\n\n### UK Launches AI Opportunities Action Plan\nThe United Kingdom has announced an ambitious strategy to integrate AI across the country, aiming to boost economic growth and enhance public services. The plan includes establishing \"AI Growth Zones\" and has garnered £14 billion ($18.5 billion) in support from major technology companies.\n\n## 🏃‍♂️ Robotics & AI in Action\n\n### Humanoid Robot Half Marathon Postponed\nThe world's first humanoid robot half marathon, scheduled in Beijing, has been postponed to April 19 due to forecasted strong winds. The event aims to showcase advancements in AI and robotics.\n\n## 📈 AI Trends & Reports\n\n### AI Index Report 2025 Released\nThe eighth edition of the AI Index Report has been published, providing comprehensive analyses of AI's impact across society, the economy, and global governance.",
+    "imageUrl": "",
+    "tags": [
+      "AI",
+      "Technology",
+      "Google",
+      "Robotics",
+      "Research"
+    ]
+  },
+  {
+    "id": "ai-revolutionizing-healthcare",
+    "title": "How AI is Revolutionizing Healthcare in 2025",
+    "date": "2025-03-15T09:30:00Z",
+    "author": "Dr. Sarah Johnson",
+    "category": "Industry Updates",
+    "excerpt": "Artificial intelligence is transforming healthcare delivery, from diagnosis to treatment planning and patient care.",
+    "content": "# How AI is Revolutionizing Healthcare in 2025\n\nArtificial intelligence continues to make remarkable strides in healthcare, revolutionizing how medical professionals diagnose conditions, plan treatments, and care for patients.\n\n## Diagnostic Precision\n\nAI algorithms now analyze medical images with greater accuracy than human radiologists in many cases. These systems can detect subtle patterns in X-rays, MRIs, and CT scans that might escape the human eye, leading to earlier diagnosis and improved patient outcomes.\n\n## Personalized Treatment Plans\n\nBy analyzing vast datasets of patient records, genetic information, and treatment outcomes, AI systems can recommend highly personalized treatment plans. These recommendations consider a patient's unique genetic makeup, medical history, lifestyle factors, and potential drug interactions.\n\n## Streamlined Administrative Processes\n\nIn addition to clinical applications, AI is reducing the administrative burden on healthcare providers. Natural language processing (NLP) systems are automating medical documentation, allowing doctors to spend more time with patients and less time on paperwork.\n\n## Remote Monitoring and Care\n\nAI-powered remote monitoring tools are enabling more effective telehealth solutions. Patients can be monitored continuously in their homes, with AI systems analyzing data in real-time and alerting healthcare providers to potential concerns before they become emergencies.\n\n## Looking Ahead\n\nThe integration of AI in healthcare is just beginning. As these technologies continue to evolve, we can expect even more innovative applications that improve patient care, reduce costs, and make healthcare more accessible to all.",
+    "imageUrl": "",
+    "tags": [
+      "Healthcare",
+      "AI",
+      "Medical Technology",
+      "Patient Care"
+    ]
+  },
+  {
     "id": "VHJhbnNmb3JtaW5nIGZpbmFuY2lhbCBhbmFseXNpcyB3aXRoIENyZWRpdEFJIG9uIEFtYXpvbiBCZWRyb2NrOiBPY3R1c+KAmXMgam91cm5leSB3aXRoIEFXUw==",
     "title": "Transforming financial analysis with CreditAI on Amazon Bedrock: Octus's journey with AWS",
     "excerpt": "In the fast-paced and dynamic world of finance, access to real-time, accurate, and comprehensive credit intelligence is a necessity for investment professionals. Traditional methods of financial analysis, often manual and time-consuming, are rapidly being replaced by automated solutions.",
@@ -30,28 +351,6 @@
     "source": "aws.amazon.com"
   },
   {
-    "id": "ai-weekly-april-6-12-2025",
-    "title": "AI Weekly Blog Post for April 6–12, 2025",
-    "date": "2025-04-13T12:00:00Z",
-    "author": "Strategic Sync Team",
-    "category": "AI News",
-    "excerpt": "This week in AI: Alphabet's $75B investment, new AI agent technology, UK's AI action plan, robot half marathon, and more.",
-    "content": "# AI Weekly Blog Post for April 6–12, 2025\n\n## 💰 Major Investments & Strategic Moves\n\n### Alphabet's $75 Billion AI Infrastructure Investment\nAlphabet CEO Sundar Pichai reaffirmed the company's plan to invest approximately $75 billion in capital spending in 2025, focusing on expanding data center capacity to support its AI initiatives, including the development of AI platforms like Gemini.\n\n### Alphabet and Nvidia Invest in Safe Superintelligence\nAlphabet and Nvidia have invested in a promising AI startup, Safe Superintelligence (SSI), co-founded by Ilya Sutskever, former chief scientist at OpenAI. SSI has quickly become a significant player in the AI industry, recently valued at $32 billion in a funding round.\n\n## 🧠 AI Innovations & Scientific Breakthroughs\n\n### Google Cloud Next 2025 Announcements\nAt the Google Cloud Next 2025 conference, Google introduced several advancements, including the Ironwood TPU, Gemini 2.5 models, Agentspace, Agent2Agent Protocol, Vertex AI Agent Engine, and Gemini Code Assist.\n\n### AI Discovers New Battery Material\nIn collaboration with Microsoft, researchers at the Pacific Northwest National Laboratory have used AI to discover a new material that could reduce lithium use in batteries by up to 70%.\n\n## 🌍 Global AI Initiatives & Policies\n\n### UK Launches AI Opportunities Action Plan\nThe United Kingdom has announced an ambitious strategy to integrate AI across the country, aiming to boost economic growth and enhance public services. The plan includes establishing \"AI Growth Zones\" and has garnered £14 billion ($18.5 billion) in support from major technology companies.\n\n## 🏃‍♂️ Robotics & AI in Action\n\n### Humanoid Robot Half Marathon Postponed\nThe world's first humanoid robot half marathon, scheduled in Beijing, has been postponed to April 19 due to forecasted strong winds. The event aims to showcase advancements in AI and robotics.\n\n## 📈 AI Trends & Reports\n\n### AI Index Report 2025 Released\nThe eighth edition of the AI Index Report has been published, providing comprehensive analyses of AI's impact across society, the economy, and global governance.",
-    "imageUrl": "",
-    "tags": ["AI", "Technology", "Google", "Robotics", "Research"]
-  },
-  {
-    "id": "ai-revolutionizing-healthcare",
-    "title": "How AI is Revolutionizing Healthcare in 2025",
-    "date": "2025-03-15T09:30:00Z",
-    "author": "Dr. Sarah Johnson",
-    "category": "Industry Updates",
-    "excerpt": "Artificial intelligence is transforming healthcare delivery, from diagnosis to treatment planning and patient care.",
-    "content": "# How AI is Revolutionizing Healthcare in 2025\n\nArtificial intelligence continues to make remarkable strides in healthcare, revolutionizing how medical professionals diagnose conditions, plan treatments, and care for patients.\n\n## Diagnostic Precision\n\nAI algorithms now analyze medical images with greater accuracy than human radiologists in many cases. These systems can detect subtle patterns in X-rays, MRIs, and CT scans that might escape the human eye, leading to earlier diagnosis and improved patient outcomes.\n\n## Personalized Treatment Plans\n\nBy analyzing vast datasets of patient records, genetic information, and treatment outcomes, AI systems can recommend highly personalized treatment plans. These recommendations consider a patient's unique genetic makeup, medical history, lifestyle factors, and potential drug interactions.\n\n## Streamlined Administrative Processes\n\nIn addition to clinical applications, AI is reducing the administrative burden on healthcare providers. Natural language processing (NLP) systems are automating medical documentation, allowing doctors to spend more time with patients and less time on paperwork.\n\n## Remote Monitoring and Care\n\nAI-powered remote monitoring tools are enabling more effective telehealth solutions. Patients can be monitored continuously in their homes, with AI systems analyzing data in real-time and alerting healthcare providers to potential concerns before they become emergencies.\n\n## Looking Ahead\n\nThe integration of AI in healthcare is just beginning. As these technologies continue to evolve, we can expect even more innovative applications that improve patient care, reduce costs, and make healthcare more accessible to all.",
-    "imageUrl": "",
-    "tags": ["Healthcare", "AI", "Medical Technology", "Patient Care"]
-  },
-  {
     "id": "effective-ai-implementation-strategies",
     "title": "Effective AI Implementation Strategies for Businesses",
     "date": "2025-02-20T14:45:00Z",
@@ -60,6 +359,10 @@
     "excerpt": "Learn the key strategies that successful businesses are using to implement AI solutions effectively.",
     "content": "# Effective AI Implementation Strategies for Businesses\n\nImplementing artificial intelligence in your business goes beyond simply adopting new technology. It requires thoughtful planning, clear objectives, and a strategic approach to integration.\n\n## Start with Clear Business Objectives\n\nThe most successful AI implementations begin with clearly defined business problems or opportunities. Rather than implementing AI for its own sake, identify specific areas where AI can add value.\n\n## Build the Right Team\n\nEffective AI implementation requires a diverse team with complementary skills. This typically includes data scientists, engineers, domain experts, project managers, and executive sponsors.\n\n## Ensure Data Readiness\n\nAI systems are only as good as the data they're trained on. Before implementing AI, assess your data infrastructure and quality.\n\n## Start Small and Scale Gradually\n\nSuccessful businesses often begin with pilot projects that demonstrate value quickly and build momentum.\n\n## Conclusion\n\nEffective AI implementation requires a thoughtful, strategic approach that aligns technology with business objectives and organizational culture.",
     "imageUrl": "",
-    "tags": ["Business Strategy", "AI Implementation", "Digital Transformation"]
+    "tags": [
+      "Business Strategy",
+      "AI Implementation",
+      "Digital Transformation"
+    ]
   }
 ]

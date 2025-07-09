@@ -69,6 +69,11 @@ export default function Blog() {
   const [searchTerm, setSearchTerm] = useState('');
   const [mounted, setMounted] = useState(false);
   const [featuredPost, setFeaturedPost] = useState<BlogPost | null>(null);
+  
+  // Newsletter state
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [newsletterMessage, setNewsletterMessage] = useState('');
 
   useEffect(() => {
     setMounted(true);
@@ -122,6 +127,50 @@ export default function Blog() {
       </div>
     </div>
   );
+
+  // Newsletter subscription handler
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newsletterEmail || !newsletterEmail.includes('@')) {
+      setNewsletterStatus('error');
+      setNewsletterMessage('Please enter a valid email address');
+      return;
+    }
+
+    setNewsletterStatus('loading');
+    setNewsletterMessage('');
+    
+    try {
+      console.log('Submitting email:', newsletterEmail);
+      
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: newsletterEmail }),
+      });
+
+      console.log('Response status:', response.status);
+      
+      const data = await response.json();
+      console.log('Response data:', data);
+
+      if (response.ok) {
+        setNewsletterStatus('success');
+        setNewsletterMessage(data.message);
+        setNewsletterEmail('');
+      } else {
+        setNewsletterStatus('error');
+        setNewsletterMessage(data.message || 'Failed to subscribe');
+      }
+    } catch (error) {
+      console.error('Newsletter error:', error);
+      setNewsletterStatus('error');
+      setNewsletterMessage('Failed to subscribe. Please try again.');
+    }
+  };
 
   if (!mounted) {
     return null;
@@ -258,23 +307,26 @@ export default function Blog() {
 
           {/* Search and Filter */}
           <div className="mb-12 bg-white p-6 rounded-2xl shadow-lg">
-            <div className="flex flex-col lg:flex-row gap-6 justify-between items-center">
-              <div className="w-full lg:w-1/2">
+            <div className="flex flex-col gap-6">
+              {/* Search Box - Made Smaller */}
+              <div className="w-full max-w-md mx-auto">
                 <div className="relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">🔍</span>
                   <input
                     type="text"
-                    placeholder="Search articles, topics, or keywords..."
+                    placeholder="Search articles..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-12 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-lg"
+                    className="w-full px-12 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-base"
                   />
                 </div>
               </div>
-              <div className="flex gap-2 overflow-x-auto pb-2 lg:pb-0 w-full lg:w-auto">
+              
+              {/* Category Tabs - More Prominent */}
+              <div className="flex flex-wrap gap-3 justify-center">
                 <button
                   onClick={() => setFilter('all')}
-                  className={`px-6 py-3 rounded-xl transition-all font-medium ${
+                  className={`px-5 py-2 rounded-xl transition-all font-medium text-sm ${
                     filter === 'all'
                       ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg'
                       : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -286,7 +338,7 @@ export default function Blog() {
                   <button
                     key={category}
                     onClick={() => setFilter(category)}
-                    className={`px-6 py-3 rounded-xl whitespace-nowrap transition-all font-medium ${
+                    className={`px-5 py-2 rounded-xl whitespace-nowrap transition-all font-medium text-sm ${
                       filter === category
                         ? 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white shadow-lg'
                         : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -404,20 +456,36 @@ export default function Blog() {
               <p className="text-xl mb-8 max-w-2xl mx-auto text-slate-300 leading-relaxed">
                 Subscribe to our newsletter to receive the latest AI insights, industry trends, and expert analysis directly to your inbox.
               </p>
-              <form className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
+              
+              <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-4 justify-center max-w-lg mx-auto">
                 <input
                   type="email"
                   placeholder="Your email address"
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
                   className="px-6 py-4 rounded-xl text-gray-900 flex-grow border-0 focus:ring-2 focus:ring-purple-500 transition-all text-lg"
                   required
+                  disabled={newsletterStatus === 'loading'}
                 />
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 px-8 py-4 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-lg text-lg"
+                  disabled={newsletterStatus === 'loading'}
+                  className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 px-8 py-4 rounded-xl font-semibold transition-all transform hover:scale-105 shadow-lg text-lg disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Subscribe
+                  {newsletterStatus === 'loading' ? 'Subscribing...' : 'Subscribe'}
                 </button>
               </form>
+              
+              {newsletterMessage && (
+                <div className={`mt-4 p-3 rounded-lg text-sm ${
+                  newsletterStatus === 'success' 
+                    ? 'bg-green-500/20 text-green-300' 
+                    : 'bg-red-500/20 text-red-300'
+                }`}>
+                  {newsletterMessage}
+                </div>
+              )}
+              
               <p className="text-sm text-slate-400 mt-4">
                 Join 10,000+ AI professionals. No spam, unsubscribe anytime.
               </p>

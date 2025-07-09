@@ -14,9 +14,14 @@ import { getCache, setCache, CacheEntry } from '../../../utils/cache';
 
 const parser = new Parser();
 const xmlParser = new xml2js.Parser();
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-});
+
+// Initialize OpenAI client only if API key is available
+let openai: OpenAI | null = null;
+if (process.env.OPENAI_API_KEY) {
+  openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY
+  });
+}
 
 // RSS feeds for AI news - expanded for more diversity
 const RSS_FEEDS = [
@@ -172,6 +177,7 @@ async function _setLegacyCache(key: string, value: string) {
 // Cost tracking
 const costTracker = {
   dailySpent: 0,
+  dailySpent: 0,
   dailyLimit: 5, // $5 daily limit
   lastReset: new Date().toDateString(),
   
@@ -205,7 +211,7 @@ const openAIProvider: AIProvider = {
   name: 'openai',
   costPerToken: 0.000002, // $0.002 per 1K tokens for GPT-3.5-turbo
   async generateContent(title: string, content: string) {
-    if (!process.env.OPENAI_API_KEY) throw new Error('OpenAI API key not configured');
+    if (!openai) throw new Error('OpenAI API key not configured');
     
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
@@ -255,54 +261,53 @@ function generateCacheKey(content: string): string {
   return crypto.createHash('md5').update(content).digest('hex');
 }
 
-// Function to check if cached content is still valid (less than 7 days old)
+// Function to check if cached content is still valid
 function isCacheValid(cachedData: any): boolean {
-  if (!cachedData || !cachedData.timestamp) return false;
-  const age = Date.now() - cachedData.timestamp;
-  return age < 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+  const cacheAge = Date.now() - cachedData.timestamp;
+  const maxAge = 24 * 60 * 60 * 1000; // 24 hours
+  return cacheAge < maxAge;
 }
 
 async function generateBlogPost(title: string, content: string): Promise<string> {
-  // Check cache first
-  const cacheKey = generateCacheKey(content);
-  const cachedContent = await getCache(cacheKey);
+  // Generate cache key
+  const cacheKey = generateCacheKey(title + content);
   
-  if (cachedContent && isCacheValid(cachedContent)) {
-    console.log('Using cached content');
-    return cachedContent.content;
+  // Try to get cached content
+  try {
+    const cachedData = await getCache(cacheKey);
+    if (cachedData && isCacheValid(cachedData)) {
+      console.log(`Using cached content for: ${title}`);
+      return cachedData.content;
+    }
+  } catch (error) {
+    console.log('Cache miss or error, generating new content');
   }
 
-  // Try each AI provider in sequence
-  const providers = [
-    { name: 'OpenAI', generate: generateWithOpenAI },
-    { name: 'Google AI', generate: generateWithGoogleAI },
-    { name: 'Anthropic', generate: generateWithAnthropic }
-  ];
-
-  let lastError = null;
-  for (const provider of providers) {
+  // Try AI providers in order
+  for (const provider of aiProviders) {
     try {
-      console.log(`Attempting to generate content with ${provider.name}`);
-      const generatedContent = await provider.generate(title, content);
+      console.log(`Trying ${provider.name} for: ${title}`);
+      const generatedContent = await provider.generateContent(title, content);
       
-      // Cache the successful result
-      await setCache(cacheKey, {
-        content: generatedContent,
-        timestamp: Date.now(),
-        provider: provider.name
-      });
-
-      return generatedContent;
+      if (generatedContent && generatedContent.trim().length > 0) {
+        // Cache the generated content
+        try {
+          await setCache(cacheKey, generatedContent);
+        } catch (error) {
+          console.warn('Failed to cache content:', error);
+        }
+        
+        return generatedContent;
+      }
     } catch (error) {
-      console.error(`Error with ${provider.name}:`, error);
-      lastError = error;
-      continue; // Try next provider
+      console.log(`${provider.name} failed for ${title}:`, error.message);
+      continue;
     }
   }
 
-  // If all providers fail, return a default message
-  console.error('All providers failed:', lastError);
-  return `# ${title}\n\n${content}\n\nThis content could not be processed by AI due to technical limitations.`;
+  // Fallback: return original content if all AI providers fail
+  console.log(`All AI providers failed for ${title}, using original content`);
+  return content;
 }
 
 // Rate limiting helper
@@ -349,9 +354,8 @@ async function processFeed(feed: string) {
     const xml = await response.text();
     const result = await xmlParser.parseStringPromise(xml);
     
-    // Increase the number of posts to process per feed for better weekly updates
-    // Since we're now running weekly instead of daily, we'll process more posts
-    const items = (result.rss?.channel?.[0]?.item || []).slice(0, 3); // Process 3 posts per feed
+    // Process 3 posts per feed
+    const items = (result.rss?.channel?.[0]?.item || []).slice(0, 3);
 
     const articles = [];
     for (const item of items) {
@@ -368,16 +372,17 @@ async function processFeed(feed: string) {
         // Generate tags based on title and category
         const tags = generateTags(title, category);
 
-        // Wait for rate limiting
-        await rateLimiter.wait();
+        // Try to generate enhanced content, fallback to original if AI fails
+        let generatedContent;
+        try {
+          await rateLimiter.wait();
+          generatedContent = await generateBlogPost(title, content);
+        } catch (error) {
+          console.log(`AI generation failed for ${title}, using original content`);
+          generatedContent = content;
+        }
 
-        // Generate blog post with increased timeout (120 seconds)
-        const generatedPost = await Promise.race([
-          generateBlogPost(title, content),
-          new Promise((_, reject) => setTimeout(() => reject(new Error('Blog post generation timeout')), 120000))
-        ]);
-
-        if (!generatedPost) {
+        if (!generatedContent) {
           console.log(`Skipping post "${title}" due to null generated content`);
           continue;
         }
@@ -388,8 +393,8 @@ async function processFeed(feed: string) {
         const article = {
           id,
           title,
-          excerpt: (generatedPost as string).substring(0, 200) + '...',
-          content: generatedPost,
+          excerpt: (generatedContent as string).substring(0, 200) + '...',
+          content: generatedContent,
           date,
           category,
           imageUrl,
@@ -437,9 +442,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       await new Promise(resolve => setTimeout(resolve, 2000));
     }
 
-    // Fetch tweets
-    const tweets = await fetchTweets();
-    articles.push(...tweets);
+    // Fetch tweets (only if Twitter credentials are available)
+    let tweets = [];
+    if (process.env.TWITTER_API_KEY) {
+      try {
+        tweets = await fetchTweets();
+        articles.push(...tweets);
+      } catch (error) {
+        console.error('Error fetching tweets:', error);
+      }
+    }
 
     // Read existing articles
     const blogPostsPath = path.join(process.cwd(), 'data', 'blog-posts.json');
@@ -466,15 +478,23 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     // Save to file
     await fs.writeFile(blogPostsPath, JSON.stringify(limitedArticles, null, 2));
 
-    console.log(`Blog update process completed at ${new Date().toISOString()}`);
+    console.log(`Blog update completed successfully. Total articles: ${limitedArticles.length}`);
+    console.log(`New articles added: ${articles.length}`);
 
     return res.status(200).json({
-      message: 'Blog posts updated successfully',
-      newPosts: articles.length,
-      totalPosts: limitedArticles.length
+      success: true,
+      message: 'Blog updated successfully',
+      totalArticles: limitedArticles.length,
+      newArticles: articles.length,
+      timestamp: new Date().toISOString()
     });
+
   } catch (error) {
-    console.error('Error updating blog posts:', error);
-    return res.status(500).json({ message: 'Error updating blog posts', error: error instanceof Error ? error.message : 'Unknown error' });
+    console.error('Error updating blog:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error updating blog',
+      error: error.message
+    });
   }
 } 

@@ -12,8 +12,14 @@
       "use": "@vercel/next"
     }
   ],
-  "crons": [{
-    "path": "/api/blog/update",
-    "schedule": "0 10 * * 1"
-  }]
+  "crons": [
+    {
+      "path": "/api/blog/update",
+      "schedule": "0 10 * * 1"
+    },
+    {
+      "path": "/api/newsletter/send?token=newsletter-secret-2025",
+      "schedule": "0 12 * * 1"
+    }
+  ]
 } 
