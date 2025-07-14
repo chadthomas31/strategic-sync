@@ -303,7 +303,8 @@ async function generateBlogPost(title: string, content: string): Promise<string>
         return generatedContent;
       }
     } catch (error) {
-      console.log(`${provider.name} failed for ${title}:`, error.message);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.log(`${provider.name} failed for ${title}:`, errorMessage);
       continue;
     }
   }
@@ -494,10 +495,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   } catch (error) {
     console.error('Error updating blog:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return res.status(500).json({
       success: false,
       message: 'Error updating blog',
-      error: error.message
+      error: errorMessage
     });
   }
 } 
