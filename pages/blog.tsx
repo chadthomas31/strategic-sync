@@ -17,6 +17,8 @@ interface BlogPost {
   tags: string[];
   author?: string;
   formattedDate?: string;
+  link?: string;
+  source?: string;
 }
 
 function formatDate(dateStr: string): string {
@@ -297,6 +299,20 @@ export default function Blog() {
                             Read Article →
                           </span>
                         </div>
+                        {featuredPost.link && (
+                          <div className="mt-4 pt-3 border-t border-gray-100">
+                            <a
+                              href={featuredPost.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <span>🔗</span>
+                              <span>Read Original Article</span>
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -379,8 +395,94 @@ export default function Blog() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map(post => (
-                <Link href={`/blog/${encodeURIComponent(post.id)}`} key={post.id}>
-                  <article className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col transform hover:-translate-y-2 cursor-pointer">
+                <div key={post.id}>
+                  {post.link ? (
+                    <a 
+                      href={post.link} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="block"
+                    >
+                      <article className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col transform hover:-translate-y-2 cursor-pointer">
+                        <div className="h-48 overflow-hidden rounded-t-2xl relative">
+                          {post.imageUrl ? (
+                            <Image
+                              src={post.imageUrl}
+                              alt={post.title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+                          ) : (
+                            <PlaceholderImage category={post.category} title={post.title} />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <div className="absolute top-4 left-4">
+                            <span className="bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-sm font-semibold">
+                              {post.category}
+                            </span>
+                          </div>
+                          <div className="absolute top-4 right-4">
+                            <span className="bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                              🔗 External
+                            </span>
+                          </div>
+                        </div>
+                        <div className="p-6 flex-grow flex flex-col">
+                          <h2 className="text-xl font-bold mb-3 text-gray-900 group-hover:text-purple-600 transition-colors leading-tight">
+                            {post.title}
+                          </h2>
+                          <p className="text-gray-600 mb-4 flex-grow leading-relaxed">
+                            {post.excerpt
+                              ? post.excerpt.replace(/[#*]/g, '').substring(0, 150) + '...'
+                              : post.content
+                                ? post.content.replace(/[#*]/g, '').substring(0, 150) + '...'
+                                : 'No summary available.'}
+                          </p>
+                          <div className="mt-auto space-y-4">
+                            <div className="flex items-center gap-4 text-sm text-gray-500">
+                              <div className="flex items-center gap-1">
+                                📅 {post.formattedDate}
+                              </div>
+                              <div className="flex items-center gap-1">
+                                ⏱️ {getReadingTime(post.content)}m
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                              <div className="flex gap-2">
+                                {post.tags.slice(0, 2).map(tag => (
+                                  <span
+                                    key={tag}
+                                    className="bg-gray-100 text-gray-600 px-2 py-1 rounded-lg text-xs font-medium"
+                                  >
+                                    🏷️ {tag}
+                                  </span>
+                                ))}
+                              </div>
+                              <div className="text-purple-600 font-medium group-hover:translate-x-1 transition-transform">
+                                ↗️
+                              </div>
+                            </div>
+                            {post.link && (
+                              <div className="mt-4 pt-3 border-t border-gray-100">
+                                <a
+                                  href={post.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors w-full justify-center"
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <span>🔗</span>
+                                  <span>Read Original</span>
+                                </a>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </article>
+                    </a>
+                  ) : (
+                    <Link href={`/blog/${encodeURIComponent(post.id)}`}>
+                      <article className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 h-full flex flex-col transform hover:-translate-y-2 cursor-pointer">
                     <div className="h-48 overflow-hidden rounded-t-2xl relative">
                       {post.imageUrl ? (
                         <Image
@@ -434,10 +536,26 @@ export default function Blog() {
                             →
                           </div>
                         </div>
+                        {post.link && (
+                          <div className="mt-4 pt-3 border-t border-gray-100">
+                            <a
+                              href={post.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors w-full justify-center"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <span>🔗</span>
+                              <span>Read Original</span>
+                            </a>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </article>
                 </Link>
+                  )}
+                </div>
               ))}
             </div>
           )}

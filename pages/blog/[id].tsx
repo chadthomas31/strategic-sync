@@ -198,21 +198,29 @@ export default function BlogPost({ post, relatedPosts }: Props) {
               dangerouslySetInnerHTML={{ __html: processContent(post.content || post.excerpt || 'No article content available.') }}
             />
             
-            {(post.link && (
-              (!post.content || post.content.trim() === '' || post.content.trim() === post.excerpt.trim())
-            )) && (
-              <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-                <a
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-                >
-                  Read the full article at {post.source || 'original source'}
-                </a>
+            {post.link && (
+              <div className="mt-8 pt-6 border-t border-gray-200">
+                <div className="text-center">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Read the Original Article</h3>
+                  <a
+                    href={post.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+                  >
+                    <span>🔗</span>
+                    <span>Read Full Article</span>
+                    <span>↗</span>
+                  </a>
+                  {post.source && (
+                    <p className="text-gray-500 text-sm mt-3">
+                      Originally published on {post.source}
+                    </p>
+                  )}
+                </div>
               </div>
             )}
-            {post.source && (
+            {post.source && !post.link && (
               <div className="mt-4">
                 <p className="text-gray-500 text-sm">
                   Source: {post.source}

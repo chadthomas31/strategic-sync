@@ -403,7 +403,8 @@ async function processFeed(feed: string) {
           category,
           imageUrl,
           tags,
-          source: new URL(feed).hostname
+          source: new URL(feed).hostname,
+          link: item.link ? item.link[0] : null
         };
 
         articles.push(article);
