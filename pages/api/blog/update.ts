@@ -177,7 +177,6 @@ async function _setLegacyCache(key: string, value: string) {
 // Cost tracking
 const costTracker = {
   dailySpent: 0,
-  dailySpent: 0,
   dailyLimit: 5, // $5 daily limit
   lastReset: new Date().toDateString(),
   
