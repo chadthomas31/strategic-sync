@@ -291,7 +291,11 @@ async function generateBlogPost(title: string, content: string): Promise<string>
       if (generatedContent && generatedContent.trim().length > 0) {
         // Cache the generated content
         try {
-          await setCache(cacheKey, generatedContent);
+          await setCache(cacheKey, {
+            content: generatedContent,
+            timestamp: Date.now(),
+            provider: provider.name
+          });
         } catch (error) {
           console.warn('Failed to cache content:', error);
         }
