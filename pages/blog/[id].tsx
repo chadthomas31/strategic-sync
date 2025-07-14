@@ -292,19 +292,16 @@ export default function BlogPost({ post, relatedPosts }: Props) {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const dataDirectory = path.join('data');
-    const filePath = path.join(dataDirectory, 'blog-cache.json');
-
+    const filePath = path.join(dataDirectory, 'blog-posts.json');
     const fileContents = await fs.readFile(filePath, 'utf8');
-    const { posts } = JSON.parse(fileContents);
+    const posts = JSON.parse(fileContents);
 
     const idParam = params?.id;
     const postId = Array.isArray(idParam) ? decodeURIComponent(idParam[0]) : decodeURIComponent(idParam ?? '');
     const post = posts.find((p: BlogPost) => p.id === postId);
 
     if (!post) {
-      return {
-        notFound: true,
-      };
+      return { notFound: true };
     }
 
     // Format the date on the server side
