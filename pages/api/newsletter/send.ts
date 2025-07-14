@@ -22,7 +22,7 @@ const SUBSCRIBERS_FILE = path.join('data', 'newsletter-subscribers.json');
 const BLOG_POSTS_FILE = path.join('data', 'blog-posts.json');
 
 // Email transporter setup
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: parseInt(process.env.SMTP_PORT || '587'),
   secure: false,
