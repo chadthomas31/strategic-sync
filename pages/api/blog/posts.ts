@@ -26,7 +26,7 @@ const RSS_FEED_URLS = [
   // 'https://spectrum.ieee.org/rss/ai-fulltext.xml', // IEEE Spectrum AI (404 as of July 2025)
 ];
 const TWITTER_USERNAME = 'OpenAI'; // Example public account, change as needed
-const CACHE_FILE = path.join('data', 'blog-cache.json');
+const CACHE_FILE = path.join('data', 'blog-posts.json');
 const CACHE_DURATION = 7 * 24 * 60 * 60 * 1000; // 1 week in ms
 
 async function fetchRSSPosts() {
@@ -91,16 +91,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const dataDirectory = path.join('data');
     await fs.mkdir(dataDirectory, { recursive: true });
 
-    // Try to read cache
-    let cache = { timestamp: 0, posts: [] };
+    // Try to read existing posts
+    let existingPosts: any[] = [];
     try {
       const cacheContent = await fs.readFile(CACHE_FILE, 'utf8');
-      cache = JSON.parse(cacheContent);
+      existingPosts = JSON.parse(cacheContent);
     } catch {}
 
-    const now = Date.now();
-    if (cache.posts.length > 0 && now - cache.timestamp < CACHE_DURATION) {
-      return res.status(200).json(cache.posts);
+    // If we have existing posts, return them
+    if (existingPosts.length > 0) {
+      return res.status(200).json(existingPosts);
     }
 
     // Fetch new posts
@@ -124,7 +124,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const posts = [...rssPosts, ...twitterPosts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     // Cache new results
-    await fs.writeFile(CACHE_FILE, JSON.stringify({ timestamp: now, posts }), 'utf8');
+    await fs.writeFile(CACHE_FILE, JSON.stringify(posts), 'utf8');
     return res.status(200).json(posts);
   } catch (error) {
     console.error('Error aggregating blog posts:', error);
