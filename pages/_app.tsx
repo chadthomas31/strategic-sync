@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Script
-        src="https://www.googletagmanager.com/gtag/js?id=G-NEFKHVYLQB"
+        src="https://www.googletagmanager.com/gtag/js?id=G-99N4YNXSSS"
         strategy="afterInteractive"
       />
       <Script id="gtag-init" strategy="afterInteractive">
@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-NEFKHVYLQB');
+          gtag('config', 'G-99N4YNXSSS');
         `}
       </Script>
       <Navbar />
