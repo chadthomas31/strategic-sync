@@ -1,60 +1,140 @@
-import React, { useState, useEffect, ReactNode } from "react";
-import Navbar from "../components/Navbar";
-import StrategicSyncHero from "../components/StrategicSyncHero";
-import SEO from '../components/SEO'
-import { siteUrl } from '../seo.config'
-import { FiArrowUp, FiCpu, FiTrendingUp, FiShield, FiBarChart, FiDatabase, FiSettings, FiAward, FiUsers, FiTarget } from "react-icons/fi";
-import dynamic from 'next/dynamic';
-import { HTMLMotionProps } from "framer-motion";
-import { format, parseISO } from "date-fns";
-import Link from "next/link";
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { 
+  FiArrowUp, FiCpu, FiTrendingUp, FiShield, 
+  FiBarChart, FiDatabase, FiSettings, FiArrowRight,
+  FiCheck, FiMail, FiPhone, FiMapPin,
+  FiZap, FiTarget, FiUsers, FiAward
+} from 'react-icons/fi';
+import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
+import SEO from '../components/SEO';
 
-// Client-side only components with NoSSR
-const ClientSideMotion = dynamic(
-  () => import('../components/ClientSideMotion').then((mod) => mod.default),
-  { ssr: false }
-);
+// Dynamic imports
+const StrategicSyncHero = dynamic(() => import('../components/StrategicSyncHero'), { ssr: false });
 
+// Animated section wrapper
+const AnimatedSection: React.FC<{ 
+  children: React.ReactNode; 
+  className?: string;
+  delay?: number;
+}> = ({ children, className = '', delay = 0 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 60 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 60 }}
+      transition={{ duration: 0.8, delay, ease: [0.4, 0, 0.2, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// Service card component
+const ServiceCard: React.FC<{
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  index: number;
+}> = ({ icon, title, description, index }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="card-feature group cursor-pointer"
+    >
+      <div className="icon-glow mb-6">{icon}</div>
+      <h3 className="heading-md mb-3 group-hover:text-[#00f0ff] transition-colors">
+        {title}
+      </h3>
+      <p className="text-[#a0a0a0] leading-relaxed">{description}</p>
+      <div className="mt-6 flex items-center text-[#00f0ff] opacity-0 group-hover:opacity-100 transform translate-x-0 group-hover:translate-x-2 transition-all">
+        <span className="text-sm font-medium">Learn more</span>
+        <FiArrowRight className="ml-2" />
+      </div>
+    </motion.div>
+  );
+};
+
+// Case study card
+const CaseStudyCard: React.FC<{
+  company: string;
+  industry: string;
+  result: string;
+  metric: string;
+  index: number;
+}> = ({ company, industry, result, metric, index }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.6, delay: index * 0.15 }}
+      className="relative group"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-[#00f0ff]/10 to-[#ffd700]/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#111] rounded-2xl border border-[rgba(255,255,255,0.08)] p-8 h-full hover:border-[rgba(0,240,255,0.3)] transition-all duration-500">
+        <div className="text-[#666] text-sm uppercase tracking-widest mb-2">{industry}</div>
+        <h3 className="text-xl font-semibold mb-4">{company}</h3>
+        <div className="stat-number text-4xl mb-2">{metric}</div>
+        <p className="text-[#a0a0a0]">{result}</p>
+      </div>
+    </motion.div>
+  );
+};
+
+// Testimonial card
+const TestimonialCard: React.FC<{
+  name: string;
+  role: string;
+  content: string;
+  index: number;
+}> = ({ name, role, content, index }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      className="testimonial-card"
+    >
+      <p className="testimonial-quote">{content}</p>
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#00f0ff] to-[#ffd700] flex items-center justify-center text-[#0a0a0a] font-bold text-lg">
+          {name.charAt(0)}
+        </div>
+        <div>
+          <div className="font-semibold">{name}</div>
+          <div className="text-[#666] text-sm">{role}</div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Form status interface
 interface FormStatus {
   isSubmitting: boolean;
   isSubmitted: boolean;
   error: string | null;
 }
-
-interface Service {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-}
-
-interface CaseStudy {
-  company: string;
-  challenge: string;
-  solution: string;
-  results: string;
-  icon: React.ReactNode;
-}
-
-interface BlogPost {
-  title: string;
-  excerpt: string;
-  date: string;
-  image: string;
-  category: string;
-}
-
-interface Testimonial {
-  name: string;
-  role: string;
-  content: string;
-  image: string;
-}
-
-// Static components for server-side rendering
-const StaticContent: React.FC<{ children: ReactNode; className?: string }> = ({ children, className = "" }) => (
-  <div className={className}>{children}</div>
-);
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
@@ -74,19 +154,16 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
     const handleScroll = () => {
-      setShowScroll(window.scrollY > 300);
+      setShowScroll(window.scrollY > 500);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,9 +173,7 @@ export default function Home() {
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
@@ -108,15 +183,9 @@ export default function Home() {
         throw new Error(data.message || 'Failed to send message');
       }
 
-      // Clear form after successful submission
       setFormData({ name: '', email: '', subject: '', message: '' });
-      setFormStatus({
-        isSubmitting: false,
-        isSubmitted: true,
-        error: null
-      });
+      setFormStatus({ isSubmitting: false, isSubmitted: true, error: null });
 
-      // Reset success message after 5 seconds
       setTimeout(() => {
         setFormStatus(prev => ({ ...prev, isSubmitted: false }));
       }, 5000);
@@ -130,549 +199,502 @@ export default function Home() {
     }
   };
 
-  const services: Service[] = [
+  // Services data
+  const services = [
     {
-      icon: <FiCpu className="w-8 h-8 mb-4 text-blue-500" />,
-      title: "AI Integration",
-      description: "Custom AI solutions tailored to your business needs, from chatbots to predictive analytics."
+      icon: <FiCpu className="w-6 h-6" />,
+      title: 'AI Integration',
+      description: 'Seamlessly integrate cutting-edge AI solutions into your existing infrastructure for maximum impact.'
     },
     {
-      icon: <FiTrendingUp className="w-8 h-8 mb-4 text-blue-500" />,
-      title: "Business Intelligence",
-      description: "Transform your data into actionable insights with our advanced analytics solutions."
+      icon: <FiTrendingUp className="w-6 h-6" />,
+      title: 'Business Intelligence',
+      description: 'Transform raw data into strategic insights that drive growth and competitive advantage.'
     },
     {
-      icon: <FiShield className="w-8 h-8 mb-4 text-blue-500" />,
-      title: "AI Security",
-      description: "Ensure your AI implementations are secure and compliant with industry standards."
+      icon: <FiShield className="w-6 h-6" />,
+      title: 'AI Security',
+      description: 'Enterprise-grade security protocols to protect your AI implementations and sensitive data.'
     },
     {
-      icon: <FiBarChart className="w-8 h-8 mb-4 text-blue-500" />,
-      title: "Performance Optimization",
-      description: "Enhance your business processes with AI-driven optimization strategies."
+      icon: <FiBarChart className="w-6 h-6" />,
+      title: 'Performance Analytics',
+      description: 'Real-time monitoring and optimization to ensure peak AI system performance.'
     },
     {
-      icon: <FiDatabase className="w-8 h-8 mb-4 text-blue-500" />,
-      title: "Data Management",
-      description: "Comprehensive data solutions for collecting, processing, and utilizing business data."
+      icon: <FiDatabase className="w-6 h-6" />,
+      title: 'Data Engineering',
+      description: 'Build robust data pipelines that fuel your AI initiatives with quality information.'
     },
     {
-      icon: <FiSettings className="w-8 h-8 mb-4 text-blue-500" />,
-      title: "AI Consulting",
-      description: "Expert guidance on implementing AI solutions in your business workflow."
+      icon: <FiSettings className="w-6 h-6" />,
+      title: 'Strategic Consulting',
+      description: 'Expert guidance on AI roadmap development and digital transformation strategy.'
     }
   ];
 
-  const blogPosts: BlogPost[] = [
+  // Case studies data
+  const caseStudies = [
     {
-      title: "The Future of AI in Business",
-      excerpt: "Discover how artificial intelligence is reshaping the business landscape and what it means for your company.",
-      date: "2024-03-15",
-      image: "/images/blog/ai-future.png",
-      category: "AI Trends"
+      company: 'Fortune 500 Retailer',
+      industry: 'Retail',
+      result: 'Inventory optimization through predictive AI',
+      metric: '-32%'
     },
     {
-      title: "Maximizing ROI with AI Solutions",
-      excerpt: "Learn how businesses are achieving remarkable returns on investment through strategic AI implementation.",
-      date: "2024-03-10",
-      image: "/images/blog/roi.png",
-      category: "Business Strategy"
+      company: 'FinTech Startup',
+      industry: 'Finance',
+      result: 'Customer service automation with AI chatbots',
+      metric: '+85%'
     },
     {
-      title: "AI Security Best Practices",
-      excerpt: "Essential security measures to protect your AI implementations and maintain data integrity.",
-      date: "2024-03-05",
-      image: "/images/blog/security.png",
-      category: "Security"
+      company: 'Healthcare Network',
+      industry: 'Healthcare',
+      result: 'Diagnostic accuracy improvement via ML',
+      metric: '4.2x'
     }
   ];
 
-  const testimonials: Testimonial[] = [
+  // Testimonials data
+  const testimonials = [
     {
-      name: "Sarah Johnson",
-      role: "CTO, TechCorp",
-      content: "Strategic Sync transformed our business operations with their AI solutions. We've seen a 40% increase in efficiency.",
-      image: "/testimonials/sarah.jpg"
+      name: 'Sarah Johnson',
+      role: 'CTO, TechCorp',
+      content: 'Strategic Sync transformed our operations. The ROI exceeded our expectations within the first quarter.'
     },
     {
-      name: "Michael Chen",
-      role: "CEO, InnovateX",
-      content: "The team's expertise in AI integration is unmatched. They delivered exactly what we needed, when we needed it.",
-      image: "/testimonials/michael.jpg"
+      name: 'Michael Chen',
+      role: 'CEO, InnovateX',
+      content: 'Their expertise in AI integration is unmatched. They delivered exactly what we needed, when we needed it.'
     },
     {
-      name: "Emily Rodriguez",
-      role: "Director of Operations, DataFlow",
-      content: "Their AI consulting services helped us identify and implement the perfect solutions for our unique challenges.",
-      image: "/testimonials/emily.jpg"
+      name: 'Emily Rodriguez',
+      role: 'Director of Ops, DataFlow',
+      content: 'The team\'s strategic approach helped us identify opportunities we didn\'t know existed.'
     }
   ];
 
-  const caseStudies: CaseStudy[] = [
+  // Why choose us data
+  const whyChooseUs = [
     {
-      company: "Global Retail Corp",
-      challenge: "Inventory Management",
-      solution: "AI-Powered Predictive Analytics",
-      results: "32% reduction in stockouts, 45% improvement in inventory turnover",
-      icon: <FiTarget className="w-12 h-12 text-blue-500" />
+      icon: <FiZap className="w-6 h-6" />,
+      title: 'Rapid Implementation',
+      description: 'Get from strategy to production in weeks, not months.'
     },
     {
-      company: "FinTech Solutions",
-      challenge: "Customer Service",
-      solution: "Advanced AI Chatbot Integration",
-      results: "85% faster response time, 60% reduction in support tickets",
-      icon: <FiUsers className="w-12 h-12 text-blue-500" />
+      icon: <FiTarget className="w-6 h-6" />,
+      title: 'Measurable Results',
+      description: 'Clear KPIs and ROI tracking from day one.'
     },
     {
-      company: "Healthcare Plus",
-      challenge: "Patient Data Analysis",
-      solution: "Machine Learning Analytics Platform",
-      results: "40% faster diagnosis rates, 25% improvement in patient outcomes",
-      icon: <FiAward className="w-12 h-12 text-blue-500" />
+      icon: <FiUsers className="w-6 h-6" />,
+      title: 'Dedicated Team',
+      description: 'Expert consultants assigned to your success.'
+    },
+    {
+      icon: <FiAward className="w-6 h-6" />,
+      title: 'Proven Track Record',
+      description: '200+ successful AI implementations.'
     }
   ];
-
-  const renderSection = (content: ReactNode, animationProps: HTMLMotionProps<"div"> = {}) => {
-    return (
-      <ClientSideMotion
-        className="w-full"
-        animationProps={{
-          ...animationProps,
-          initial: mounted && animationProps.initial !== undefined ? animationProps.initial : { opacity: 0 },
-          animate: mounted && animationProps.animate !== undefined ? animationProps.animate : { opacity: 1 },
-          whileInView: mounted && animationProps.whileInView !== undefined ? animationProps.whileInView : { opacity: 1 },
-          whileHover: mounted && animationProps.whileHover !== undefined ? animationProps.whileHover : { scale: 1 },
-        }}
-      >
-        {content}
-      </ClientSideMotion>
-    );
-  };
 
   return (
     <>
       <SEO
-        title="Home – Strategic Sync AI Consulting & Implementation Services"
-        description="Unlock the power of AI-driven solutions to streamline operations, boost efficiency, and drive growth for your business."
+        title="Strategic Sync | AI Consulting & Business Transformation"
+        description="Transform your business with AI that delivers measurable results. Strategic consulting, implementation, and optimization services."
         path="/"
         image="/images/og-image.jpg"
       />
-      <div className="min-h-screen">
-        {/* Navbar */}
-        <div className="relative z-30">
-          <Navbar />
-        </div>
 
-        {/* New Hero Section with Terminal Animation */}
+      <div className="bg-[#0a0a0a] min-h-screen">
+        {/* Hero Section */}
         <section id="home">
           <StrategicSyncHero />
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-20 px-4 bg-gray-50">
-          {renderSection(
-            <div className="max-w-7xl mx-auto">
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold mb-4">Our Services</h2>
-                <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                  Comprehensive AI solutions tailored to elevate your business performance
-                  and drive sustainable growth.
+        <section id="services" className="section section-mesh">
+          <div className="container relative z-10">
+            <AnimatedSection className="text-center mb-16">
+              <span className="text-[#00f0ff] text-sm font-medium uppercase tracking-widest mb-4 block">
+                What We Do
+              </span>
+              <h2 className="heading-xl mb-6">
+                AI Solutions That <span className="text-gradient-cyan">Drive Results</span>
+              </h2>
+              <p className="text-xl text-[#a0a0a0] max-w-2xl mx-auto">
+                Comprehensive AI services designed to transform every aspect of your business operations.
+              </p>
+            </AnimatedSection>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {services.map((service, index) => (
+                <ServiceCard key={service.title} {...service} index={index} />
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Why Choose Us Section */}
+        <section className="section section-dark">
+          <div className="container">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <AnimatedSection>
+                <span className="text-[#ffd700] text-sm font-medium uppercase tracking-widest mb-4 block">
+                  Why Strategic Sync
+                </span>
+                <h2 className="heading-xl mb-6">
+                  The Strategic <span className="text-gradient-gold">Advantage</span>
+                </h2>
+                <p className="text-xl text-[#a0a0a0] mb-8">
+                  We combine deep AI expertise with business acumen to deliver solutions that 
+                  create lasting competitive advantages.
                 </p>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {services.map((service, index) => (
-                  <div key={service.title} className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                    {renderSection(
-                      <>
-                        {service.icon}
-                        <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
-                        <p className="text-gray-600">{service.description}</p>
-                      </>,
-                      {
-                        initial: { opacity: 0, y: 20 },
-                        whileInView: { opacity: 1, y: 0 },
-                        transition: { delay: index * 0.1 },
-                        viewport: { once: true }
-                      }
-                    )}
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  {whyChooseUs.map((item, index) => (
+                    <motion.div
+                      key={item.title}
+                      initial={{ opacity: 0, x: -20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      viewport={{ once: true }}
+                      className="flex items-start gap-4"
+                    >
+                      <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[rgba(255,215,0,0.1)] flex items-center justify-center text-[#ffd700]">
+                        {item.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-semibold mb-1">{item.title}</h4>
+                        <p className="text-[#666] text-sm">{item.description}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.2}>
+                <div className="relative">
+                  {/* Background glow */}
+                  <div className="absolute -inset-8 bg-gradient-to-r from-[#ffd700]/10 via-transparent to-[#00f0ff]/10 blur-3xl rounded-3xl" />
+                  
+                  {/* Stats grid */}
+                  <div className="relative grid grid-cols-2 gap-4">
+                    {[
+                      { value: '98%', label: 'Client Retention' },
+                      { value: '47%', label: 'Avg Efficiency Gain' },
+                      { value: '$50M+', label: 'Cost Savings' },
+                      { value: '8.2x', label: 'Average ROI' }
+                    ].map((stat, index) => (
+                      <motion.div
+                        key={stat.label}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3 + index * 0.1 }}
+                        viewport={{ once: true }}
+                        className="bg-gradient-to-br from-[#1a1a1a] to-[#111] rounded-2xl border border-[rgba(255,255,255,0.08)] p-6 text-center"
+                      >
+                        <div className="stat-number text-3xl">{stat.value}</div>
+                        <div className="text-[#666] text-sm mt-2">{stat.label}</div>
+                      </motion.div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </div>,
-            {
-              initial: { opacity: 0 },
-              whileInView: { opacity: 1 },
-              transition: { duration: 0.8 },
-              viewport: { once: true }
-            }
-          )}
+                </div>
+              </AnimatedSection>
+            </div>
+          </div>
         </section>
 
-        {/* Why Choose Section */}
-        <section className="py-20 px-4 bg-white">
-          <StaticContent className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">Why Choose Strategic Sync?</h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                We combine cutting-edge AI technology with deep business expertise to deliver
-                solutions that drive real results.
+        {/* Case Studies Section */}
+        <section className="section section-mesh">
+          <div className="container relative z-10">
+            <AnimatedSection className="text-center mb-16">
+              <span className="text-[#00f0ff] text-sm font-medium uppercase tracking-widest mb-4 block">
+                Success Stories
+              </span>
+              <h2 className="heading-xl mb-6">
+                Transformations That <span className="text-gradient-cyan">Speak Volumes</span>
+              </h2>
+              <p className="text-xl text-[#a0a0a0] max-w-2xl mx-auto">
+                Real results from real businesses that trusted us with their AI journey.
               </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              {renderSection(
-                <div className="bg-gray-50 p-8 rounded-xl">
-                  <h3 className="text-2xl font-semibold mb-4">Expert Team</h3>
-                  <ul className="space-y-3">
-                    <li className="flex items-center">
-                      <span className="text-blue-500 mr-2">✓</span>
-                      Experienced AI specialists and data scientists
-                    </li>
-                    <li className="flex items-center">
-                      <span className="text-blue-500 mr-2">✓</span>
-                      Industry-specific knowledge and expertise
-                    </li>
-                    <li className="flex items-center">
-                      <span className="text-blue-500 mr-2">✓</span>
-                      Dedicated support and consultation
-                    </li>
-                  </ul>
-                </div>,
-                {
-                  initial: { opacity: 0, x: -20 },
-                  whileInView: { opacity: 1, x: 0 },
-                  transition: { delay: 0.2 },
-                  viewport: { once: true }
-                }
-              )}
-
-              {renderSection(
-                <div className="bg-gray-50 p-8 rounded-xl">
-                  <h3 className="text-2xl font-semibold mb-4">Proven Results</h3>
-                  <ul className="space-y-3">
-                    <li className="flex items-center">
-                      <span className="text-blue-500 mr-2">✓</span>
-                      Measurable ROI and performance metrics
-                    </li>
-                    <li className="flex items-center">
-                      <span className="text-blue-500 mr-2">✓</span>
-                      Customized solutions for your specific needs
-                    </li>
-                    <li className="flex items-center">
-                      <span className="text-blue-500 mr-2">✓</span>
-                      Continuous optimization and improvements
-                    </li>
-                  </ul>
-                </div>,
-                {
-                  initial: { opacity: 0, x: 20 },
-                  whileInView: { opacity: 1, x: 0 },
-                  transition: { delay: 0.4 },
-                  viewport: { once: true }
-                }
-              )}
-            </div>
-          </StaticContent>
-        </section>
-
-        {/* Success Stories Section */}
-        <section className="py-20 px-4 bg-gray-50">
-          <StaticContent className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">Success Stories</h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                See how we&apos;ve helped businesses achieve remarkable results with AI solutions.
-              </p>
-            </div>
+            </AnimatedSection>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {caseStudies.map((study, index) => (
-                <div key={study.company}>
-                  {renderSection(
-                    <div className="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
-                      <div className="flex justify-center mb-6">{study.icon}</div>
-                      <h3 className="text-xl font-semibold mb-2">{study.company}</h3>
-                      <p className="text-gray-600 mb-4">Challenge: {study.challenge}</p>
-                      <p className="text-blue-600 mb-4">Solution: {study.solution}</p>
-                      <div className="bg-blue-50 p-4 rounded-lg">
-                        <p className="font-semibold text-blue-800">Results:</p>
-                        <p className="text-blue-600">{study.results}</p>
-                      </div>
-                    </div>,
-                    {
-                      initial: { opacity: 0, y: 20 },
-                      whileInView: { opacity: 1, y: 0 },
-                      transition: { delay: index * 0.1 },
-                      viewport: { once: true },
-                      whileHover: { y: -5 }
-                    }
-                  )}
-                </div>
+                <CaseStudyCard key={study.company} {...study} index={index} />
               ))}
             </div>
-          </StaticContent>
+
+            <AnimatedSection className="mt-12 text-center">
+              <Link href="/services" className="btn-secondary inline-flex">
+                View All Case Studies
+                <FiArrowRight className="ml-2" />
+              </Link>
+            </AnimatedSection>
+          </div>
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-20 px-4 bg-white">
-          <StaticContent className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">What Our Clients Say</h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Hear from businesses that have transformed their operations with our AI solutions.
-              </p>
-            </div>
+        <section className="section section-dark">
+          <div className="container">
+            <AnimatedSection className="text-center mb-16">
+              <span className="text-[#ffd700] text-sm font-medium uppercase tracking-widest mb-4 block">
+                Client Voices
+              </span>
+              <h2 className="heading-xl mb-6">
+                What Our <span className="text-gradient-gold">Partners Say</span>
+              </h2>
+            </AnimatedSection>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {testimonials.map((testimonial, index) => (
-                <div key={testimonial.name}>
-                  {renderSection(
-                    <div className="bg-gray-50 p-8 rounded-xl relative">
-                      <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                        <div className="w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center">
-                          <span className="text-3xl">❝</span>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 mb-6 mt-6 italic">&ldquo;{testimonial.content}&rdquo;</p>
-                      <div className="flex items-center">
-                        <div className="flex-1">
-                          <h4 className="font-semibold">{testimonial.name}</h4>
-                          <p className="text-gray-500 text-sm">{testimonial.role}</p>
-                        </div>
-                      </div>
-                    </div>,
-                    {
-                      initial: { opacity: 0, y: 20 },
-                      whileInView: { opacity: 1, y: 0 },
-                      transition: { delay: index * 0.1 },
-                      viewport: { once: true },
-                      whileHover: { y: -5 }
-                    }
-                  )}
-                </div>
+                <TestimonialCard key={testimonial.name} {...testimonial} index={index} />
               ))}
             </div>
-          </StaticContent>
-        </section>
-
-        {/* Blog Section */}
-        <section id="blog" className="py-20 px-4 bg-gray-50">
-          <StaticContent className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold mb-4">Latest Insights</h2>
-              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                Stay updated with the latest trends and insights in AI and business technology.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {blogPosts.map((post, index) => (
-                <div key={post.title}>
-                  {renderSection(
-                    <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                      <div className="h-48 bg-gray-200 relative">
-                        {post.image && (
-                          <Image
-                            src={post.image}
-                            alt={post.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            className="object-cover"
-                            priority={index === 0}
-                          />
-                        )}
-                      </div>
-                      <div className="p-6">
-                        <div className="text-sm text-blue-600 mb-2">{post.category}</div>
-                        <h3 className="text-xl font-semibold mb-3">{post.title}</h3>
-                        <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                        <div className="flex justify-between items-center">
-                          <span className="text-sm text-gray-500">
-                            {format(parseISO(post.date), 'MMM d, yyyy')}
-                          </span>
-                          <Link href="/blog" className="text-blue-600 hover:text-blue-800 font-semibold">
-                            Read More →
-                          </Link>
-                        </div>
-                      </div>
-                    </div>,
-                    {
-                      initial: { opacity: 0, y: 20 },
-                      whileInView: { opacity: 1, y: 0 },
-                      transition: { delay: index * 0.1 },
-                      viewport: { once: true },
-                      whileHover: { y: -5 }
-                    }
-                  )}
-                </div>
-              ))}
-            </div>
-          </StaticContent>
+          </div>
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="min-h-screen flex flex-col items-center justify-center bg-gray-300 pt-24 px-4 md:px-0">
-          <StaticContent className="max-w-5xl w-full">
-            <h2 className="text-4xl font-bold text-center mb-8">Contact Us</h2>
-            <p className="text-gray-600 text-center mb-8">
-              Have questions? We&apos;d love to hear from you. Send us a message and we&apos;ll respond as soon as possible.
-            </p>
-            
-            <form className="space-y-6 bg-white p-8 rounded-lg shadow-lg relative max-w-3xl mx-auto" onSubmit={handleSubmit}>
-              {formStatus.isSubmitted && (
-                <div className="absolute top-0 left-0 right-0 bg-green-500 text-white p-3 rounded-t-lg text-center">
-                  Message sent successfully!
+        <section id="contact" className="section section-mesh">
+          <div className="container relative z-10">
+            <div className="grid lg:grid-cols-2 gap-16">
+              {/* Contact Info */}
+              <AnimatedSection>
+                <span className="text-[#00f0ff] text-sm font-medium uppercase tracking-widest mb-4 block">
+                  Get In Touch
+                </span>
+                <h2 className="heading-xl mb-6">
+                  Ready to <span className="text-gradient-cyan">Transform?</span>
+                </h2>
+                <p className="text-xl text-[#a0a0a0] mb-8">
+                  Let&apos;s discuss how AI can revolutionize your business. 
+                  Our experts are ready to help you take the next step.
+                </p>
+
+                <div className="space-y-6">
+                  <a href="tel:949-529-2424" className="flex items-center gap-4 text-[#a0a0a0] hover:text-[#00f0ff] transition-colors group">
+                    <div className="w-12 h-12 rounded-xl bg-[rgba(0,240,255,0.1)] flex items-center justify-center text-[#00f0ff] group-hover:bg-[rgba(0,240,255,0.2)] transition-colors">
+                      <FiPhone className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-[#666]">Phone</div>
+                      <div className="font-medium text-white">949-529-2424</div>
+                    </div>
+                  </a>
+
+                  <a href="mailto:contact@strategicsync.com" className="flex items-center gap-4 text-[#a0a0a0] hover:text-[#00f0ff] transition-colors group">
+                    <div className="w-12 h-12 rounded-xl bg-[rgba(0,240,255,0.1)] flex items-center justify-center text-[#00f0ff] group-hover:bg-[rgba(0,240,255,0.2)] transition-colors">
+                      <FiMail className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-[#666]">Email</div>
+                      <div className="font-medium text-white">contact@strategicsync.com</div>
+                    </div>
+                  </a>
+
+                  <div className="flex items-center gap-4 text-[#a0a0a0]">
+                    <div className="w-12 h-12 rounded-xl bg-[rgba(0,240,255,0.1)] flex items-center justify-center text-[#00f0ff]">
+                      <FiMapPin className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-[#666]">Location</div>
+                      <div className="font-medium text-white">San Clemente, California</div>
+                    </div>
+                  </div>
                 </div>
-              )}
-              {formStatus.error && (
-                <div className="absolute top-0 left-0 right-0 bg-red-500 text-white p-3 rounded-t-lg text-center">
-                  {formStatus.error}
+              </AnimatedSection>
+
+              {/* Contact Form */}
+              <AnimatedSection delay={0.2}>
+                <div className="card-glass relative overflow-hidden">
+                  {/* Success/Error messages */}
+                  {formStatus.isSubmitted && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute top-0 left-0 right-0 bg-gradient-to-r from-[#00f0ff] to-[#00b8d4] text-[#0a0a0a] p-4 font-medium flex items-center justify-center gap-2"
+                    >
+                      <FiCheck className="w-5 h-5" />
+                      Message sent successfully!
+                    </motion.div>
+                  )}
+                  {formStatus.error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute top-0 left-0 right-0 bg-red-500 text-white p-4 font-medium text-center"
+                    >
+                      {formStatus.error}
+                    </motion.div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-6 pt-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="name" className="form-label">Name</label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          placeholder="John Doe"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          className="form-input"
+                          placeholder="john@company.com"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label htmlFor="subject" className="form-label">Subject</label>
+                      <input
+                        type="text"
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="How can we help?"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="message" className="form-label">Message</label>
+                      <textarea
+                        id="message"
+                        name="message"
+                        value={formData.message}
+                        onChange={handleInputChange}
+                        rows={4}
+                        className="form-input resize-none"
+                        placeholder="Tell us about your project..."
+                        required
+                      />
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={formStatus.isSubmitting}
+                      className={`btn-primary w-full justify-center ${
+                        formStatus.isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
+                      }`}
+                    >
+                      {formStatus.isSubmitting ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Message
+                          <FiArrowRight className="ml-2" />
+                        </>
+                      )}
+                    </button>
+                  </form>
                 </div>
-              )}
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                  placeholder="Your name"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
-                  Subject
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                  placeholder="What is this regarding?"
-                  required
-                />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
-                  placeholder="Your message here..."
-                  required
-                ></textarea>
-              </div>
-              
-              <button
-                type="submit"
-                disabled={formStatus.isSubmitting}
-                className={`w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300 ${
-                  formStatus.isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
-                }`}
-              >
-                {formStatus.isSubmitting ? 'Sending...' : 'Send Message'}
-              </button>
-            </form>
-            
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-12 place-items-center px-4">
-              {renderSection(
-                <a href="https://maps.google.com/?q=San+Clemente,+CA" target="_blank" rel="noopener noreferrer" className="cursor-pointer w-full">
-                  <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-[300px] flex flex-col items-center text-center hover:shadow-xl transition-all duration-300">
-                    <div className="text-blue-600 text-2xl mb-3">📍</div>
-                    <h3 className="font-semibold mb-2">Company</h3>
-                    <p className="text-gray-600">Strategic Sync</p>
-                    <p className="text-gray-600">San Clemente, CA</p>
-                  </div>
-                </a>,
-                {
-                  initial: { opacity: 0 },
-                  whileInView: { opacity: 1 },
-                  transition: { duration: 0.8 },
-                  viewport: { once: true }
-                }
-              )}
-              
-              {renderSection(
-                <a href="tel:949-529-2424" className="cursor-pointer w-full">
-                  <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-[300px] flex flex-col items-center text-center hover:shadow-xl transition-all duration-300">
-                    <div className="text-blue-600 text-2xl mb-3">📞</div>
-                    <h3 className="font-semibold mb-2">Phone</h3>
-                    <p className="text-gray-600">949-529-2424</p>
-                    <p className="text-blue-600 text-sm mt-2">Click to call</p>
-                  </div>
-                </a>,
-                {
-                  initial: { opacity: 0 },
-                  whileInView: { opacity: 1 },
-                  transition: { duration: 0.8 },
-                  viewport: { once: true }
-                }
-              )}
-              
-              {renderSection(
-                <a href="mailto:contact@strategicsync.com" className="cursor-pointer w-full">
-                  <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-[300px] flex flex-col items-center text-center hover:shadow-xl transition-all duration-300">
-                    <div className="text-blue-600 text-2xl mb-3">✉️</div>
-                    <h3 className="font-semibold mb-2">Email</h3>
-                    <p className="text-gray-600 break-words">contact@strategicsync.com</p>
-                    <p className="text-blue-600 text-sm mt-2">Click to email</p>
-                  </div>
-                </a>,
-                {
-                  initial: { opacity: 0 },
-                  whileInView: { opacity: 1 },
-                  transition: { duration: 0.8 },
-                  viewport: { once: true }
-                }
-              )}
+              </AnimatedSection>
             </div>
-          </StaticContent>
+          </div>
         </section>
+
+        {/* Footer */}
+        <footer className="footer">
+          <div className="container">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+              {/* Brand */}
+              <div className="md:col-span-2">
+                <Image
+                  src="/images/concept_logo_4.png"
+                  alt="Strategic Sync"
+                  width={120}
+                  height={120}
+                  className="brightness-0 invert opacity-80 mb-4"
+                />
+                <p className="text-[#666] max-w-sm">
+                  Transforming businesses through strategic AI implementation. 
+                  Your partner in digital evolution.
+                </p>
+              </div>
+
+              {/* Quick Links */}
+              <div>
+                <h4 className="font-semibold mb-4">Quick Links</h4>
+                <ul className="space-y-2">
+                  {['Services', 'Blog', 'Contact', 'Booking'].map((link) => (
+                    <li key={link}>
+                      <Link href={`/${link.toLowerCase()}`} className="footer-link">
+                        {link}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Contact */}
+              <div>
+                <h4 className="font-semibold mb-4">Contact</h4>
+                <ul className="space-y-2 text-[#666]">
+                  <li>San Clemente, CA</li>
+                  <li>
+                    <a href="tel:949-529-2424" className="footer-link">949-529-2424</a>
+                  </li>
+                  <li>
+                    <a href="mailto:contact@strategicsync.com" className="footer-link">
+                      contact@strategicsync.com
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Bottom bar */}
+            <div className="pt-8 border-t border-[rgba(255,255,255,0.05)] flex flex-col md:flex-row justify-between items-center gap-4">
+              <p className="text-[#666] text-sm">
+                © {new Date().getFullYear()} Strategic Sync. All rights reserved.
+              </p>
+              <div className="flex gap-6">
+                <a href="#" className="text-[#666] hover:text-[#00f0ff] transition-colors text-sm">
+                  Privacy Policy
+                </a>
+                <a href="#" className="text-[#666] hover:text-[#00f0ff] transition-colors text-sm">
+                  Terms of Service
+                </a>
+              </div>
+            </div>
+          </div>
+        </footer>
 
         {/* Scroll to top button */}
         {mounted && showScroll && (
-          <ClientSideMotion
-            animationProps={{
-              className: "fixed bottom-24 right-5 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300",
-              initial: { opacity: 0, y: 50 },
-              animate: { opacity: 1, y: 0 },
-              transition: { duration: 0.5 },
-              onClick: () => window.scrollTo({ top: 0, behavior: "smooth" })
-            }}
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.8 }}
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-[#00f0ff] text-[#0a0a0a] flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-110 transition-all z-50"
           >
-            <FiArrowUp size={24} />
-          </ClientSideMotion>
+            <FiArrowUp className="w-5 h-5" />
+          </motion.button>
         )}
       </div>
     </>

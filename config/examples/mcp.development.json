@@ -1,0 +1,67 @@
+{
+  "version": "1.0.0",
+  "environment": "development",
+  "global": {
+    "timeout": 10000,
+    "retryConfig": {
+      "maxAttempts": 2,
+      "initialDelay": 500,
+      "backoffMultiplier": 1.5,
+      "maxDelay": 5000,
+      "jitter": true
+    },
+    "logging": {
+      "level": "debug",
+      "format": "text",
+      "auditEnabled": false
+    }
+  },
+  "mcpServers": {
+    "local-dev": {
+      "name": "Local Development MCP Server",
+      "type": "http",
+      "url": "http://localhost:4001",
+      "headers": {
+        "X-API-Key": "${MCP_DEV_API_KEY}",
+        "X-Environment": "development"
+      },
+      "timeout": 5000,
+      "description": "Local development server for testing",
+      "enabled": true,
+      "priority": 10,
+      "healthCheck": {
+        "enabled": true,
+        "interval": 60000,
+        "timeout": 3000,
+        "endpoint": "/health",
+        "expectedStatus": 200
+      },
+      "fallback": {
+        "enabled": false,
+        "cacheEnabled": true,
+        "cacheTtl": 60000
+      },
+      "security": {
+        "allowedOrigins": ["http://localhost:3000", "http://localhost:8080"],
+        "rateLimiting": {
+          "enabled": false
+        },
+        "encryption": {
+          "enabled": false
+        }
+      }
+    },
+    "mock-server": {
+      "name": "Mock MCP Server",
+      "type": "http",
+      "url": "http://localhost:4002",
+      "timeout": 3000,
+      "description": "Mock server for testing fallback scenarios",
+      "enabled": false,
+      "priority": 90,
+      "healthCheck": {
+        "enabled": false
+      }
+    }
+  }
+}

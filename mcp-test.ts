@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
 
 // Global MCP server URL from environment variable
-const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://localhost:4001/mcp';
+const MCP_SERVER_URL = process.env.MCP_SERVER_URL || 'http://172.16.23.99:4001';
 
 // Wrap the code in an async function
 async function main() {

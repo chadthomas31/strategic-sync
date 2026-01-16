@@ -1,0 +1,116 @@
+{
+  "version": "1.0.0",
+  "environment": "production",
+  "global": {
+    "timeout": 30000,
+    "retryConfig": {
+      "maxAttempts": 3,
+      "initialDelay": 1000,
+      "backoffMultiplier": 2.0,
+      "maxDelay": 30000,
+      "jitter": true
+    },
+    "logging": {
+      "level": "info",
+      "format": "json",
+      "auditEnabled": true
+    }
+  },
+  "mcpServers": {
+    "professional-mcp": {
+      "name": "Professional MCP Server",
+      "type": "https",
+      "url": "${MCP_PROFESSIONAL_URL}",
+      "headers": {
+        "Authorization": "Bearer ${MCP_PROFESSIONAL_API_TOKEN}",
+        "X-Environment": "production",
+        "X-Client-Version": "1.0.0"
+      },
+      "timeout": 30000,
+      "description": "Production MCP server with secure authentication and high availability",
+      "enabled": true,
+      "priority": 10,
+      "retryConfig": {
+        "maxAttempts": 5,
+        "initialDelay": 2000,
+        "backoffMultiplier": 2.0,
+        "maxDelay": 30000,
+        "jitter": true
+      },
+      "healthCheck": {
+        "enabled": true,
+        "interval": 30000,
+        "timeout": 5000,
+        "endpoint": "/health",
+        "expectedStatus": 200
+      },
+      "fallback": {
+        "enabled": true,
+        "serverKey": "professional-mcp-backup",
+        "cacheEnabled": true,
+        "cacheTtl": 300000
+      },
+      "security": {
+        "allowedOrigins": [
+          "https://www.strategicsync.com",
+          "https://app.strategicsync.com"
+        ],
+        "rateLimiting": {
+          "enabled": true,
+          "requestsPerMinute": 1000
+        },
+        "encryption": {
+          "enabled": true,
+          "algorithm": "AES-256-GCM"
+        }
+      }
+    },
+    "professional-mcp-backup": {
+      "name": "Professional MCP Backup Server",
+      "type": "https",
+      "url": "${MCP_PROFESSIONAL_BACKUP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${MCP_PROFESSIONAL_API_TOKEN}",
+        "X-Environment": "production",
+        "X-Client-Version": "1.0.0"
+      },
+      "timeout": 30000,
+      "description": "Backup MCP server for failover scenarios",
+      "enabled": true,
+      "priority": 20,
+      "retryConfig": {
+        "maxAttempts": 3,
+        "initialDelay": 1500,
+        "backoffMultiplier": 1.8,
+        "maxDelay": 20000,
+        "jitter": true
+      },
+      "healthCheck": {
+        "enabled": true,
+        "interval": 45000,
+        "timeout": 8000,
+        "endpoint": "/health",
+        "expectedStatus": 200
+      },
+      "fallback": {
+        "enabled": true,
+        "cacheEnabled": true,
+        "cacheTtl": 600000
+      },
+      "security": {
+        "allowedOrigins": [
+          "https://www.strategicsync.com",
+          "https://app.strategicsync.com"
+        ],
+        "rateLimiting": {
+          "enabled": true,
+          "requestsPerMinute": 500
+        },
+        "encryption": {
+          "enabled": true,
+          "algorithm": "AES-256-GCM"
+        }
+      }
+    }
+  }
+}

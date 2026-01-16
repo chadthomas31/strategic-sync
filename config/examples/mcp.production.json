@@ -1,0 +1,110 @@
+{
+  "version": "1.0.0",
+  "environment": "production",
+  "global": {
+    "timeout": 30000,
+    "retryConfig": {
+      "maxAttempts": 5,
+      "initialDelay": 2000,
+      "backoffMultiplier": 2.0,
+      "maxDelay": 30000,
+      "jitter": true
+    },
+    "logging": {
+      "level": "info",
+      "format": "json",
+      "auditEnabled": true
+    }
+  },
+  "mcpServers": {
+    "primary-prod": {
+      "name": "Production MCP Primary Server",
+      "type": "https",
+      "url": "${MCP_PROD_PRIMARY_URL}",
+      "headers": {
+        "Authorization": "Bearer ${MCP_PROD_API_TOKEN}",
+        "X-Environment": "production",
+        "X-Client-Version": "1.0.0"
+      },
+      "timeout": 30000,
+      "description": "Primary production MCP server with high availability",
+      "enabled": true,
+      "priority": 10,
+      "retryConfig": {
+        "maxAttempts": 3,
+        "initialDelay": 1000,
+        "backoffMultiplier": 2.0,
+        "maxDelay": 15000,
+        "jitter": true
+      },
+      "healthCheck": {
+        "enabled": true,
+        "interval": 30000,
+        "timeout": 5000,
+        "endpoint": "/health",
+        "expectedStatus": 200
+      },
+      "fallback": {
+        "enabled": true,
+        "serverKey": "secondary-prod",
+        "cacheEnabled": true,
+        "cacheTtl": 300000
+      },
+      "security": {
+        "allowedOrigins": ["https://www.strategicsync.com", "https://app.strategicsync.com"],
+        "rateLimiting": {
+          "enabled": true,
+          "requestsPerMinute": 1000
+        },
+        "encryption": {
+          "enabled": true,
+          "algorithm": "AES-256-GCM"
+        }
+      }
+    },
+    "secondary-prod": {
+      "name": "Production MCP Secondary Server",
+      "type": "https",
+      "url": "${MCP_PROD_SECONDARY_URL}",
+      "headers": {
+        "Authorization": "Bearer ${MCP_PROD_API_TOKEN}",
+        "X-Environment": "production",
+        "X-Client-Version": "1.0.0"
+      },
+      "timeout": 30000,
+      "description": "Secondary production MCP server for failover",
+      "enabled": true,
+      "priority": 20,
+      "retryConfig": {
+        "maxAttempts": 2,
+        "initialDelay": 2000,
+        "backoffMultiplier": 1.5,
+        "maxDelay": 10000,
+        "jitter": true
+      },
+      "healthCheck": {
+        "enabled": true,
+        "interval": 45000,
+        "timeout": 8000,
+        "endpoint": "/health",
+        "expectedStatus": 200
+      },
+      "fallback": {
+        "enabled": true,
+        "cacheEnabled": true,
+        "cacheTtl": 600000
+      },
+      "security": {
+        "allowedOrigins": ["https://www.strategicsync.com", "https://app.strategicsync.com"],
+        "rateLimiting": {
+          "enabled": true,
+          "requestsPerMinute": 500
+        },
+        "encryption": {
+          "enabled": true,
+          "algorithm": "AES-256-GCM"
+        }
+      }
+    }
+  }
+}

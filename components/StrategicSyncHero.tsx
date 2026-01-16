@@ -1,123 +1,98 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, useInView } from 'framer-motion';
+import Link from 'next/link';
 
-interface CommandOutput {
-  text: string;
-  delay: number;
-  class?: string;
-}
+// Particle component for floating elements
+const Particle: React.FC<{ delay: number; size: number; x: number; y: number }> = ({ delay, size, x, y }) => (
+  <motion.div
+    className="absolute rounded-full"
+    style={{
+      width: size,
+      height: size,
+      left: `${x}%`,
+      top: `${y}%`,
+      background: 'radial-gradient(circle, rgba(0, 240, 255, 0.6) 0%, transparent 70%)',
+    }}
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{
+      opacity: [0, 1, 0],
+      scale: [0.5, 1, 0.5],
+      y: [0, -100, -200],
+    }}
+    transition={{
+      duration: 8,
+      delay,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    }}
+  />
+);
 
-interface Command {
-  command: string;
-  delay: number;
-  output: CommandOutput[];
-}
-
-interface TerminalItem {
-  type: 'command' | 'output' | 'spacer' | 'prompt';
-  text?: string;
-  class?: string;
-  typing?: boolean;
-}
-
-const TERMINAL_COMMANDS: Command[] = [
-  {
-    command: 'strategicsync --analyze-operations --client="Fortune500Retail"',
-    delay: 1000,
-    output: [
-      { text: 'Analyzing operational inefficiencies...', delay: 800, class: 'text-blue-300' },
-      { text: '|-- Inventory management: 23% waste reduction opportunity', delay: 600, class: 'text-yellow-400 font-semibold' },
-      { text: '|-- Customer service: 40% response time improvement potential', delay: 600, class: 'text-yellow-400 font-semibold' },
-      { text: '\\-- Supply chain: $2.3M annual cost savings identified', delay: 600, class: 'text-yellow-400 font-semibold' }
-    ]
-  },
-  {
-    command: 'strategicsync --implement-ai-strategy --focus="customer-experience"',
-    delay: 2000,
-    output: [
-      { text: 'Deploying AI strategy framework...', delay: 800, class: 'text-blue-300' },
-      { text: '✓ Chatbot integration: +35% customer satisfaction', delay: 700, class: 'text-green-400 font-semibold' },
-      { text: '✓ Predictive analytics: +28% retention rate', delay: 700, class: 'text-green-400 font-semibold' },
-      { text: '✓ Personalization engine: +42% conversion rate', delay: 700, class: 'text-green-400 font-semibold' }
-    ]
-  },
-  {
-    command: 'strategicsync --roi-report --timeframe="6months"',
-    delay: 2500,
-    output: [
-      { text: 'Strategic AI Implementation Results:', delay: 800, class: 'text-green-300 font-bold text-lg' },
-      { text: '• Cost Reduction: $5.2M annually', delay: 600, class: 'text-yellow-400 font-semibold' },
-      { text: '• Efficiency Gains: 34% average improvement', delay: 600, class: 'text-yellow-400 font-semibold' },
-      { text: '• Revenue Growth: +18% quarter-over-quarter', delay: 600, class: 'text-yellow-400 font-semibold' },
-      { text: '• Time-to-Market: 50% faster product launches', delay: 600, class: 'text-yellow-400 font-semibold' }
-    ]
-  },
-  {
-    command: 'strategicsync --status',
-    delay: 2000,
-    output: [
-      { text: 'Ready to transform your business? Contact Strategic Sync...', delay: 1000, class: 'text-green-400 font-semibold animate-pulse' }
-    ]
-  }
-];
-
-const StrategicSyncHero: React.FC = () => {
-  const [terminalContent, setTerminalContent] = useState<TerminalItem[]>([]);
-  const [showCursor, setShowCursor] = useState(true);
-
-  // Use useMemo to memoize the commands array
-  const commands = useMemo(() => TERMINAL_COMMANDS, []);
+// Animated counter for stats
+const AnimatedCounter: React.FC<{ value: string; label: string; suffix?: string }> = ({ value, label, suffix = '' }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [displayValue, setDisplayValue] = useState('0');
 
   useEffect(() => {
-    const runAnimation = async () => {
-      for (let i = 0; i < commands.length; i++) {
-        await new Promise(resolve => setTimeout(resolve, commands[i].delay));
-        
-        // Type command
-        setTerminalContent(prev => [...prev, { type: 'command', text: commands[i].command, typing: true }]);
-        
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        // Update to show complete command
-        setTerminalContent(prev => {
-          const updated = [...prev];
-          updated[updated.length - 1] = { type: 'command', text: commands[i].command, typing: false };
-          return updated;
-        });
-        
-        // Add output lines
-        for (let j = 0; j < commands[i].output.length; j++) {
-          await new Promise(resolve => setTimeout(resolve, commands[i].output[j].delay));
-          setTerminalContent(prev => [...prev, { 
-            type: 'output', 
-            text: commands[i].output[j].text, 
-            class: commands[i].output[j].class 
-          }]);
-        }
-        
-        // Add spacing
-        setTerminalContent(prev => [...prev, { type: 'spacer' }]);
-      }
+    if (isInView) {
+      const numericValue = parseFloat(value.replace(/[^0-9.]/g, ''));
+      const duration = 2000;
+      const steps = 60;
+      const increment = numericValue / steps;
+      let current = 0;
       
-      // Add final prompt
-      setTerminalContent(prev => [...prev, { type: 'prompt' }]);
-    };
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= numericValue) {
+          setDisplayValue(value);
+          clearInterval(timer);
+        } else {
+          if (value.includes('M')) {
+            setDisplayValue(`$${Math.floor(current)}M`);
+          } else if (value.includes('%')) {
+            setDisplayValue(`${Math.floor(current)}%`);
+          } else if (value.includes('+')) {
+            setDisplayValue(`${Math.floor(current)}+`);
+          } else {
+            setDisplayValue(Math.floor(current).toString());
+          }
+        }
+      }, duration / steps);
 
-    const timer = setTimeout(runAnimation, 1000);
-    return () => clearTimeout(timer);
-  }, [commands]);
+      return () => clearInterval(timer);
+    }
+  }, [isInView, value]);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 500);
-    return () => clearInterval(interval);
-  }, []);
-
-  const FloatingIcon: React.FC<{ icon: string; className: string }> = ({ icon, className }) => (
-    <div className={`absolute text-2xl opacity-10 animate-bounce ${className}`}>
-      {icon}
+  return (
+    <div ref={ref} className="stat-item">
+      <div className="stat-number">{displayValue}{suffix}</div>
+      <div className="stat-label">{label}</div>
     </div>
   );
+};
+
+const StrategicSyncHero: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start start', 'end start'],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+
+  const springY = useSpring(y, { stiffness: 100, damping: 30 });
+
+  // Generate particles
+  const particles = Array.from({ length: 20 }, (_, i) => ({
+    id: i,
+    delay: Math.random() * 5,
+    size: Math.random() * 6 + 2,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+  }));
 
   const handleContactClick = () => {
     const contactSection = document.getElementById('contact');
@@ -134,111 +109,229 @@ const StrategicSyncHero: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
-      {/* Floating Background Elements */}
-      <FloatingIcon icon="⚡" className="top-20 left-10 animate-pulse" />
-      <FloatingIcon icon="🚀" className="top-32 right-20 animation-delay-1000" />
-      <FloatingIcon icon="📊" className="bottom-40 left-16 animation-delay-2000" />
-      <FloatingIcon icon="🎯" className="bottom-20 right-32 animation-delay-3000" />
-      <FloatingIcon icon="💡" className="top-1/2 left-12 animation-delay-4000" />
+    <section ref={containerRef} className="hero">
+      {/* Animated background elements */}
+      <div className="hero-grid" />
+      <div className="orb orb-cyan" />
+      <div className="orb orb-gold" />
+      <div className="orb orb-ember" />
 
-      <div className="container mx-auto px-6 py-12 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
-          
-          {/* Brand Section */}
-          <div className="space-y-8">
-            <div className="space-y-6">
-              <h1 className="text-6xl lg:text-7xl font-bold bg-gradient-to-r from-cyan-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent leading-tight">
-                Strategic Sync
-              </h1>
-              <p className="text-xl lg:text-2xl text-slate-300 leading-relaxed">
-                Transform your business with AI that delivers measurable results. 
-                We don&apos;t just implement technology—we architect strategic advantages.
-              </p>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <button 
-                onClick={handleContactClick}
-                className="bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-purple-700 hover:to-cyan-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-              >
-                Start Your AI Transformation
-              </button>
-              <button 
-                onClick={handleServicesClick}
-                className="border-2 border-purple-500 text-purple-300 hover:bg-purple-500 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
-              >
-                View Our Services
-              </button>
-            </div>
-            
-            <div className="grid grid-cols-3 gap-6 pt-8">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-cyan-400">$50M+</div>
-                <div className="text-slate-400">Cost Savings Generated</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-purple-400">200+</div>
-                <div className="text-slate-400">AI Implementations</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-yellow-400">85%</div>
-                <div className="text-slate-400">ROI Improvement</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Terminal Section */}
-          <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-2xl border border-slate-700/50 overflow-hidden">
-            {/* Terminal Header */}
-            <div className="bg-slate-700/80 px-4 py-3 flex items-center gap-3">
-              <div className="flex gap-2">
-                <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              </div>
-              <div className="text-slate-300 font-medium">Strategic Sync AI Console</div>
-            </div>
-            
-            {/* Terminal Body */}
-            <div className="p-6 font-mono text-sm h-96 overflow-y-auto bg-slate-900/90">
-              {terminalContent.map((item, index) => {
-                if (item.type === 'command') {
-                  return (
-                    <div key={index} className="flex items-center mb-2">
-                      <span className="text-purple-400 mr-2 font-bold">{'>'}</span>
-                      <span className="text-cyan-300 font-medium">
-                        {item.typing ? (
-                          <span className="animate-pulse">{item.text}</span>
-                        ) : (
-                          item.text
-                        )}
-                      </span>
-                    </div>
-                  );
-                } else if (item.type === 'output') {
-                  return (
-                    <div key={index} className={`ml-4 mb-1 ${item.class || 'text-slate-300'}`}>
-                      {item.text}
-                    </div>
-                  );
-                } else if (item.type === 'spacer') {
-                  return <div key={index} className="h-4"></div>;
-                } else if (item.type === 'prompt') {
-                  return (
-                    <div key={index} className="flex items-center">
-                      <span className="text-purple-400 mr-2 font-bold">{'>'}</span>
-                      {showCursor && <span className="w-2 h-5 bg-purple-400 animate-pulse"></span>}
-                    </div>
-                  );
-                }
-                return null;
-              })}
-            </div>
-          </div>
-        </div>
+      {/* Floating particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {particles.map((particle) => (
+          <Particle key={particle.id} {...particle} />
+        ))}
       </div>
-    </div>
+
+      {/* Main content */}
+      <motion.div
+        className="container relative z-10"
+        style={{ y: springY, opacity, scale }}
+      >
+        <div className="grid lg:grid-cols-2 gap-16 items-center min-h-screen py-32">
+          {/* Left column - Text content */}
+          <div className="space-y-8">
+            {/* Eyebrow text */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[rgba(0,240,255,0.3)] bg-[rgba(0,240,255,0.05)]"
+            >
+              <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse" />
+              <span className="text-sm text-[#00f0ff] font-medium tracking-wide uppercase">
+                AI-Powered Business Transformation
+              </span>
+            </motion.div>
+
+            {/* Main heading */}
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="heading-display"
+            >
+              Where Strategy
+              <br />
+              <span className="text-gradient-cyan">Meets AI</span>
+            </motion.h1>
+
+            {/* Subheading */}
+            <motion.p
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-xl lg:text-2xl text-[#a0a0a0] max-w-xl leading-relaxed"
+            >
+              We don&apos;t just implement AI—we architect strategic advantages that 
+              transform how your business operates, competes, and wins.
+            </motion.p>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 pt-4"
+            >
+              <button onClick={handleContactClick} className="btn-primary">
+                Start Your Transformation
+                <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
+              <button onClick={handleServicesClick} className="btn-secondary">
+                Explore Services
+              </button>
+            </motion.div>
+
+            {/* Trust indicators */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+              className="pt-8 flex items-center gap-6 text-[#666]"
+            >
+              <div className="flex -space-x-3">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="w-10 h-10 rounded-full border-2 border-[#1a1a1a] bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] flex items-center justify-center text-xs font-bold text-[#00f0ff]"
+                  >
+                    {['G', 'M', 'A', 'F'][i - 1]}
+                  </div>
+                ))}
+              </div>
+              <span className="text-sm">
+                Trusted by <span className="text-white font-semibold">Fortune 500</span> companies
+              </span>
+            </motion.div>
+          </div>
+
+          {/* Right column - Visual element */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="relative hidden lg:block"
+          >
+            {/* Glowing card */}
+            <div className="relative">
+              {/* Background glow */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#00f0ff]/20 via-transparent to-[#ffd700]/20 blur-3xl rounded-3xl" />
+              
+              {/* Main visual card */}
+              <div className="relative bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] rounded-3xl border border-[rgba(255,255,255,0.08)] p-8 shadow-2xl">
+                {/* Terminal header */}
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f57]" />
+                  <div className="w-3 h-3 rounded-full bg-[#febc2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#28c840]" />
+                  <span className="ml-4 text-[#666] text-sm font-mono">strategic-sync-ai.console</span>
+                </div>
+
+                {/* Animated code/metrics display */}
+                <div className="space-y-4 font-mono text-sm">
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1 }}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="text-[#00f0ff]">→</span>
+                    <span className="text-[#a0a0a0]">Analyzing business operations...</span>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 1.5 }}
+                    className="pl-6 space-y-2"
+                  >
+                    <div className="flex justify-between">
+                      <span className="text-[#666]">efficiency_gain:</span>
+                      <span className="text-[#28c840] font-bold">+47%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#666]">cost_reduction:</span>
+                      <span className="text-[#28c840] font-bold">$2.4M</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[#666]">roi_multiplier:</span>
+                      <span className="text-[#28c840] font-bold">8.2x</span>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 2 }}
+                    className="flex items-center gap-3 pt-4 border-t border-[rgba(255,255,255,0.05)]"
+                  >
+                    <span className="text-[#ffd700]">✓</span>
+                    <span className="text-[#ffd700]">Strategy deployment successful</span>
+                  </motion.div>
+
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ delay: 2.5, duration: 1.5, repeat: Infinity }}
+                    className="flex items-center gap-2 text-[#00f0ff]"
+                  >
+                    <span>→</span>
+                    <span className="w-2 h-5 bg-[#00f0ff]" />
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Floating accent elements */}
+              <motion.div
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-[#00f0ff]/20 to-transparent rounded-2xl blur-sm"
+              />
+              <motion.div
+                animate={{ y: [0, 10, 0] }}
+                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-[#ffd700]/20 to-transparent rounded-2xl blur-sm"
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-8 py-12 border-t border-[rgba(255,255,255,0.05)]"
+        >
+          <AnimatedCounter value="$50M+" label="Cost Savings Generated" />
+          <AnimatedCounter value="200+" label="AI Implementations" />
+          <AnimatedCounter value="98%" label="Client Satisfaction" />
+          <AnimatedCounter value="8.2x" label="Average ROI" />
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+      >
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="flex flex-col items-center gap-2 text-[#666]"
+        >
+          <span className="text-xs uppercase tracking-widest">Scroll to explore</span>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+          </svg>
+        </motion.div>
+      </motion.div>
+    </section>
   );
 };
 

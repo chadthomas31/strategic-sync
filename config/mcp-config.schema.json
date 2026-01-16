@@ -1,0 +1,284 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCP Configuration Schema",
+  "description": "Schema for Model Context Protocol server configuration",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Configuration schema version"
+    },
+    "environment": {
+      "type": "string",
+      "enum": ["development", "staging", "production"],
+      "description": "Deployment environment"
+    },
+    "global": {
+      "type": "object",
+      "properties": {
+        "timeout": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000,
+          "default": 30000,
+          "description": "Default timeout in milliseconds"
+        },
+        "retryConfig": {
+          "$ref": "#/definitions/retryConfig"
+        },
+        "logging": {
+          "$ref": "#/definitions/loggingConfig"
+        }
+      }
+    },
+    "mcpServers": {
+      "type": "object",
+      "patternProperties": {
+        "^[a-zA-Z0-9_-]+$": {
+          "$ref": "#/definitions/mcpServer"
+        }
+      },
+      "minProperties": 1,
+      "description": "MCP server configurations"
+    }
+  },
+  "required": ["version", "environment", "mcpServers"],
+  "definitions": {
+    "mcpServer": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "description": "Human-readable server name"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["http", "https", "websocket", "stdio"],
+          "description": "Connection type"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Server URL (supports environment variable substitution)"
+        },
+        "headers": {
+          "type": "object",
+          "patternProperties": {
+            "^[a-zA-Z0-9_-]+$": {
+              "type": "string"
+            }
+          },
+          "description": "HTTP headers to include with requests"
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 300000,
+          "description": "Request timeout in milliseconds"
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Server description"
+        },
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether this server is enabled"
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 50,
+          "description": "Server priority (lower numbers = higher priority)"
+        },
+        "retryConfig": {
+          "$ref": "#/definitions/retryConfig"
+        },
+        "healthCheck": {
+          "$ref": "#/definitions/healthCheckConfig"
+        },
+        "fallback": {
+          "$ref": "#/definitions/fallbackConfig"
+        },
+        "security": {
+          "$ref": "#/definitions/securityConfig"
+        }
+      },
+      "required": ["name", "type", "url", "description"],
+      "additionalProperties": false
+    },
+    "retryConfig": {
+      "type": "object",
+      "properties": {
+        "maxAttempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "default": 3,
+          "description": "Maximum retry attempts"
+        },
+        "initialDelay": {
+          "type": "integer",
+          "minimum": 100,
+          "maximum": 10000,
+          "default": 1000,
+          "description": "Initial delay in milliseconds"
+        },
+        "backoffMultiplier": {
+          "type": "number",
+          "minimum": 1.0,
+          "maximum": 5.0,
+          "default": 2.0,
+          "description": "Backoff multiplier for exponential backoff"
+        },
+        "maxDelay": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 60000,
+          "default": 30000,
+          "description": "Maximum delay between retries"
+        },
+        "jitter": {
+          "type": "boolean",
+          "default": true,
+          "description": "Add random jitter to retry delays"
+        }
+      },
+      "additionalProperties": false
+    },
+    "healthCheckConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable health checks"
+        },
+        "interval": {
+          "type": "integer",
+          "minimum": 5000,
+          "maximum": 300000,
+          "default": 30000,
+          "description": "Health check interval in milliseconds"
+        },
+        "timeout": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 30000,
+          "default": 5000,
+          "description": "Health check timeout"
+        },
+        "endpoint": {
+          "type": "string",
+          "default": "/health",
+          "description": "Health check endpoint path"
+        },
+        "expectedStatus": {
+          "type": "integer",
+          "minimum": 200,
+          "maximum": 299,
+          "default": 200,
+          "description": "Expected HTTP status code"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fallbackConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable fallback mechanisms"
+        },
+        "serverKey": {
+          "type": "string",
+          "description": "Fallback server identifier"
+        },
+        "cacheEnabled": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable response caching for offline mode"
+        },
+        "cacheTtl": {
+          "type": "integer",
+          "minimum": 60000,
+          "maximum": 86400000,
+          "default": 300000,
+          "description": "Cache TTL in milliseconds"
+        }
+      },
+      "additionalProperties": false
+    },
+    "securityConfig": {
+      "type": "object",
+      "properties": {
+        "allowedOrigins": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Allowed origins for CORS"
+        },
+        "rateLimiting": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "requestsPerMinute": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000,
+              "default": 100
+            }
+          }
+        },
+        "encryption": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "default": false
+            },
+            "algorithm": {
+              "type": "string",
+              "enum": ["AES-256-GCM", "AES-128-GCM"],
+              "default": "AES-256-GCM"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "loggingConfig": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "string",
+          "enum": ["error", "warn", "info", "debug"],
+          "default": "info",
+          "description": "Logging level"
+        },
+        "format": {
+          "type": "string",
+          "enum": ["json", "text"],
+          "default": "json",
+          "description": "Log format"
+        },
+        "auditEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable audit logging"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

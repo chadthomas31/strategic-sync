@@ -1,6 +1,7 @@
 {
   "name": "strategic-sync",
   "version": "1.0.0",
+  "type": "module",
   "description": "Strategic Sync – AI Consulting Website. The official AI consulting platform for Strategic Sync. Built with Next.js, Tailwind CSS, and AI-powered features like Eleven Labs voice AI and a conversational chatbot. Hosted on Vercel.",
   "main": "index.js",
   "scripts": {
@@ -14,6 +15,7 @@
     "@anthropic-ai/sdk": "^0.39.0",
     "@calcom/embed-react": "^1.5.2",
     "@google/generative-ai": "^0.24.0",
+    "@modelcontextprotocol/sdk": "^1.17.1",
     "@modelcontextprotocol/server-filesystem": "^2025.3.28",
     "@tailwindcss/typography": "^0.5.16",
     "@types/dotenv": "^6.1.1",
