@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { FiMail, FiPhone, FiMapPin, FiArrowRight, FiCheck, FiChevronDown } from 'react-icons/fi';
+import { FiMail, FiPhone, FiMapPin, FiArrowRight, FiCheck, FiChevronDown, FiShield, FiClock, FiLock } from 'react-icons/fi';
 import SEO from '../components/SEO';
 
 // Animated section wrapper
-const AnimatedSection: React.FC<{ 
-  children: React.ReactNode; 
+const AnimatedSection: React.FC<{
+  children: React.ReactNode;
   className?: string;
   delay?: number;
 }> = ({ children, className = '', delay = 0 }) => {
@@ -126,7 +126,7 @@ export default function Contact() {
       question: 'Do you offer free consultations?',
       answer: (
         <>
-          Yes! We offer a complimentary 30-minute discovery call to understand your needs and explore how we can help. 
+          Yes! We offer a complimentary 30-minute discovery call to understand your needs and explore how we can help.
           <Link href="/booking" className="text-[#00f0ff] hover:underline ml-1">Book your free consultation here</Link>.
         </>
       )
@@ -167,7 +167,7 @@ export default function Contact() {
                 Let&apos;s Start a <span className="text-gradient-cyan">Conversation</span>
               </h1>
               <p className="text-xl text-[#a0a0a0] max-w-2xl mx-auto">
-                Ready to transform your business with AI? We&apos;re here to help you 
+                Ready to transform your business with AI? We&apos;re here to help you
                 every step of the way.
               </p>
             </AnimatedSection>
@@ -208,6 +208,7 @@ export default function Contact() {
                   rel={item.external ? 'noopener noreferrer' : undefined}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -4 }}
                   transition={{ delay: index * 0.1 }}
                   viewport={{ once: true }}
                   className="card-feature group text-center"
@@ -221,13 +222,30 @@ export default function Contact() {
               ))}
             </div>
 
-            {/* Contact Form */}
-            <div className="grid lg:grid-cols-2 gap-16">
-              {/* Form */}
-              <AnimatedSection>
+            {/* Contact Form + FAQ */}
+            <div className="grid lg:grid-cols-5 gap-12">
+              {/* Form - takes 3 columns for prominence */}
+              <AnimatedSection className="lg:col-span-3">
                 <div className="card-glass relative overflow-hidden">
-                  <h2 className="heading-md mb-6">Send Us a Message</h2>
-                  
+                  {/* Trust signals strip above form */}
+                  <div className="flex flex-wrap gap-4 mb-8 pb-6 border-b border-[rgba(255,255,255,0.06)]">
+                    <div className="flex items-center gap-2 text-sm text-[#a0a0a0]">
+                      <FiClock className="text-[#00f0ff] flex-shrink-0" />
+                      <span>Response within 24 hours</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#a0a0a0]">
+                      <FiLock className="text-[#00f0ff] flex-shrink-0" />
+                      <span>100% confidential</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-[#a0a0a0]">
+                      <FiShield className="text-[#00f0ff] flex-shrink-0" />
+                      <span>No obligation</span>
+                    </div>
+                  </div>
+
+                  <h2 className="heading-md mb-2">Send Us a Message</h2>
+                  <p className="text-[#666] mb-6 text-sm">Tell us about your project and we will get back to you with a tailored plan.</p>
+
                   {/* Success/Error messages */}
                   {status.isSubmitted && (
                     <motion.div
@@ -236,7 +254,7 @@ export default function Contact() {
                       className="mb-6 bg-gradient-to-r from-[#00f0ff] to-[#00b8d4] text-[#0a0a0a] p-4 rounded-xl font-medium flex items-center gap-2"
                     >
                       <FiCheck className="w-5 h-5" />
-                      Message sent successfully! We&apos;ll get back to you soon.
+                      Message sent successfully! We&apos;ll get back to you within 24 hours.
                     </motion.div>
                   )}
                   {status.error && (
@@ -302,15 +320,17 @@ export default function Contact() {
                         onChange={handleChange}
                         rows={5}
                         className="form-input resize-none"
-                        placeholder="Tell us about your project..."
+                        placeholder="Tell us about your project, goals, and timeline..."
                         required
                       />
                     </div>
 
-                    <button
+                    <motion.button
                       type="submit"
                       disabled={status.isSubmitting}
-                      className={`btn-primary w-full justify-center ${
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`btn-primary w-full justify-center text-lg py-4 ${
                         status.isSubmitting ? 'opacity-70 cursor-not-allowed' : ''
                       }`}
                     >
@@ -328,17 +348,17 @@ export default function Contact() {
                           <FiArrowRight className="ml-2" />
                         </>
                       )}
-                    </button>
+                    </motion.button>
                   </form>
                 </div>
               </AnimatedSection>
 
-              {/* FAQ Section */}
-              <AnimatedSection delay={0.2}>
+              {/* FAQ Section - takes 2 columns */}
+              <AnimatedSection delay={0.2} className="lg:col-span-2">
                 <h2 className="heading-md mb-8">
                   Frequently Asked <span className="text-gradient-cyan">Questions</span>
                 </h2>
-                
+
                 <div className="space-y-0">
                   {faqs.map((faq, index) => (
                     <FAQItem
@@ -352,7 +372,10 @@ export default function Contact() {
                 </div>
 
                 {/* Book a call CTA */}
-                <div className="mt-12 p-6 bg-gradient-to-br from-[#1a1a1a] to-[#111] rounded-2xl border border-[rgba(255,255,255,0.08)]">
+                <motion.div
+                  whileHover={{ y: -2 }}
+                  className="mt-12 p-6 bg-gradient-to-br from-[#1a1a1a] to-[#111] rounded-2xl border border-[rgba(255,255,255,0.08)] hover:border-[rgba(0,240,255,0.2)] transition-all"
+                >
                   <h3 className="font-semibold text-lg mb-2">Prefer to talk?</h3>
                   <p className="text-[#a0a0a0] mb-4">
                     Schedule a free 30-minute discovery call with our team.
@@ -361,6 +384,19 @@ export default function Contact() {
                     Book a Call
                     <FiArrowRight className="ml-2" />
                   </Link>
+                </motion.div>
+
+                {/* Additional trust signal */}
+                <div className="mt-8 p-5 rounded-2xl border border-[rgba(255,215,0,0.15)] bg-[rgba(255,215,0,0.03)]">
+                  <div className="flex items-start gap-3">
+                    <FiShield className="text-[#ffd700] flex-shrink-0 mt-1 w-5 h-5" />
+                    <div>
+                      <p className="text-sm text-[#a0a0a0] leading-relaxed">
+                        Your information is treated with the highest level of confidentiality.
+                        We never share your data with third parties and all consultations are covered by NDA upon request.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </AnimatedSection>
             </div>
@@ -372,7 +408,7 @@ export default function Contact() {
           <div className="container">
             <div className="pt-8 border-t border-[rgba(255,255,255,0.05)] flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-[#666] text-sm">
-                © {new Date().getFullYear()} Strategic Sync. All rights reserved.
+                &copy; {new Date().getFullYear()} Strategic Sync. All rights reserved.
               </p>
               <div className="flex gap-6">
                 <Link href="/" className="text-[#666] hover:text-[#00f0ff] transition-colors text-sm">
