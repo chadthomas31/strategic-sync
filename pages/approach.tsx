@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import SEO from '../components/SEO'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
@@ -31,7 +32,7 @@ export default function Approach() {
           ))}
         </div>
         <div className="mt-16 text-center">
-          <a href="/contact#book" className="btn-ink">Book your diagnostic →</a>
+          <Link href="/contact#book" className="btn-ink">Book your diagnostic →</Link>
         </div>
       </section>
       <Footer />

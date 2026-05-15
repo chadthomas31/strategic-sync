@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next'
+import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import SEO from '../../components/SEO'
 import Navbar from '../../components/Navbar'
@@ -39,7 +40,7 @@ export default function IntegrationsIndex({ integrations }: { integrations: Inte
         <div className="grid md:grid-cols-3 gap-4">
           {filtered.map((i) => <IntegrationTile key={i.slug} {...i} />)}
         </div>
-        {filtered.length === 0 && <p className="body text-mute text-center py-16">No integrations match that filter. <a href="/contact#book" className="text-accent">Ask us about it →</a></p>}
+        {filtered.length === 0 && <p className="body text-mute text-center py-16">No integrations match that filter. <Link href="/contact#book" className="text-accent">Ask us about it →</Link></p>}
       </div>
       <Footer />
     </>

@@ -65,7 +65,7 @@ export default function Home({ services, cases, integrations }: Props) {
         <div className="grid md:grid-cols-[120px_1fr_1fr] gap-12 mb-16">
           <div className="kicker">§ 02 — Services</div>
           <h2 className="display-l">Three ways<br/>we <em className="text-accent serif italic">get hired.</em></h2>
-          <p className="body pt-3.5">Each engagement starts with a 30-minute diagnostic call. If we can't ship measurable value inside 30 days, we won't take the project.</p>
+          <p className="body pt-3.5">Each engagement starts with a 30-minute diagnostic call. If we can&apos;t ship measurable value inside 30 days, we won&apos;t take the project.</p>
         </div>
         <div className="grid md:grid-cols-3 border-t border-rule">
           {services.map((s, i) => (
