@@ -1,49 +1,20 @@
+// pages/robots.txt.tsx
 import { GetServerSideProps } from 'next'
 
-function RobotsTxt() {
-  // This function will not be executed
-  return null
-}
-
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://strategicsync.com'
-
-  const robotsTxt = `User-agent: *
+  const txt = `User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: ${baseUrl}/sitemap.xml
-
-# Crawl-delay
-Crawl-delay: 1
-
-# Disallow admin pages
-Disallow: /admin/
-Disallow: /private/
-Disallow: /_next/
 Disallow: /api/
+Disallow: /client-login
+Disallow: /seo-dashboard
 
-# Allow specific API endpoints for SEO
-Allow: /api/blog/posts
-
-# Block AI training bots (optional)
-User-agent: ChatGPT-User
-Disallow: /
-
-User-agent: GPTBot
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /`
-
+Sitemap: https://strategicsync.com/sitemap.xml
+`
   res.setHeader('Content-Type', 'text/plain')
-  res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate')
-  res.write(robotsTxt)
+  res.setHeader('Cache-Control', 'public, s-maxage=86400')
+  res.write(txt)
   res.end()
-
-  return {
-    props: {},
-  }
+  return { props: {} }
 }
 
-export default RobotsTxt 
+export default function Robots() { return null }

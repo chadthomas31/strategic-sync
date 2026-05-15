@@ -1,8 +1,13 @@
+// next.config.cjs
+const withMDX = require('@next/mdx')({ extension: /\.mdx?$/ })
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  pageExtensions: ['ts', 'tsx', 'mdx'],
   reactStrictMode: true,
   swcMinify: true,
   images: {
+    formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {
         protocol: 'https',
@@ -15,15 +20,20 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  experimental: {
-    optimizeCss: true,
-  },
-  // Configure output for Vercel deployment
   distDir: '.next',
   generateEtags: false,
   poweredByHeader: false,
   trailingSlash: false,
   productionBrowserSourceMaps: false,
-};
+  async redirects() {
+    return [
+      { source: '/blog', destination: '/journal', permanent: true },
+      { source: '/blog/:slug*', destination: '/journal/:slug*', permanent: true },
+      { source: '/booking', destination: '/contact#book', permanent: true },
+      { source: '/client-login', destination: '/contact#book', permanent: false },
+      { source: '/seo-dashboard', destination: '/', permanent: false },
+    ]
+  },
+}
 
-module.exports = nextConfig;
+module.exports = withMDX(nextConfig)

@@ -1,0 +1,56 @@
+[
+  {
+    "slug": "ai-voice-agents",
+    "name": "AI Voice Agents",
+    "tagline": "Replace your $300/mo answering service.",
+    "description": "AI receptionists deployed on your existing phone number — bookings, intake, screening, multilingual — with full call recordings and CRM sync.",
+    "tags": ["FreeSWITCH", "OpenAI Realtime", "Twilio"],
+    "starting": "From $1,495 / mo",
+    "timeline": "Live in 2 weeks",
+    "deliverables": [
+      "AI receptionist deployed on your existing number",
+      "Custom intake script + brand voice",
+      "CRM/calendar sync (HubSpot, Cal.com, Salesforce, etc.)",
+      "Multilingual (English, Spanish baseline)",
+      "Full call recordings + transcripts",
+      "Monthly tuning + script updates"
+    ],
+    "buyerProfile": "Practices, dealerships, contractors, service businesses spending $300+/mo on answering services or losing after-hours calls."
+  },
+  {
+    "slug": "workflow-integration",
+    "name": "Workflow Integration",
+    "tagline": "Connect the tools you already pay for.",
+    "description": "Wire CRMs, billing, calendars, docs, and Slack into a single agent that knows your business and acts on its behalf.",
+    "tags": ["n8n", "Anthropic", "Webhooks"],
+    "starting": "From $4,500 (one-time sprint)",
+    "timeline": "2-week build",
+    "deliverables": [
+      "Discovery + integration audit",
+      "n8n + Anthropic agent connecting your stack",
+      "Custom prompt library + guardrails",
+      "Slack/email/SMS handoff for human review",
+      "Documentation + 1hr training session",
+      "30 days of post-launch tuning"
+    ],
+    "buyerProfile": "Ops leaders at SMBs whose team manually moves data between 3+ SaaS tools daily."
+  },
+  {
+    "slug": "custom-systems",
+    "name": "Custom Systems",
+    "tagline": "When off-the-shelf doesn't fit.",
+    "description": "Bespoke agents, internal dashboards, RAG pipelines on your own data. We build, document, and train your team to own it.",
+    "tags": ["Next.js", "Supabase", "RAG"],
+    "starting": "Project-based, from $15,000",
+    "timeline": "4–12 weeks",
+    "deliverables": [
+      "Discovery + technical architecture doc",
+      "MVP build (Next.js + Supabase + your stack)",
+      "RAG pipeline if document search is in scope",
+      "Auth + role-based access",
+      "Production deploy (Vercel) + monitoring",
+      "Code handoff + 2hr engineering training"
+    ],
+    "buyerProfile": "Teams with proprietary data or workflows where SaaS won't bend to their model."
+  }
+]

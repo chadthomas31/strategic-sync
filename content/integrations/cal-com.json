@@ -1,0 +1,12 @@
+{
+  "slug": "cal-com",
+  "name": "Cal.com",
+  "category": "Scheduling",
+  "useCase": "Agents book real availability — no double-booking, no back-and-forth.",
+  "details": [
+    "Live availability lookup during a phone or chat conversation.",
+    "Multi-host round-robin assignment based on lead context.",
+    "Automatic timezone handling and confirmation/reminder emails."
+  ],
+  "relatedServices": ["ai-voice-agents", "workflow-integration"]
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "freeswitch",
+  "name": "FreeSWITCH",
+  "category": "Telephony",
+  "useCase": "Open-source PBX where AI voice agents live and route calls.",
+  "details": [
+    "AI agents run as FreeSWITCH dialplan extensions, not external bots.",
+    "Direct SIP integration with Twilio, Telnyx, and direct PSTN providers.",
+    "Full call recordings + Graylog audit trail by default."
+  ],
+  "relatedServices": ["ai-voice-agents", "custom-systems"]
+}
