@@ -52,6 +52,7 @@
     "vercel": "^41.0.2"
   },
   "devDependencies": {
+    "@lhci/cli": "^0.15.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
     "@types/node": "^20.19.4",
