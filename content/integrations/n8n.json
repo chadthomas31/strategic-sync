@@ -1,0 +1,12 @@
+{
+  "slug": "n8n",
+  "name": "n8n",
+  "category": "Workflow",
+  "useCase": "Self-hosted workflow engine that orchestrates multi-system flows.",
+  "details": [
+    "Self-hosted on your VPS — your data never leaves your infrastructure.",
+    "400+ built-in integrations connect to your existing SaaS stack.",
+    "Branching, error handling, and retry logic for production-grade flows."
+  ],
+  "relatedServices": ["workflow-integration", "custom-systems"]
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "twilio",
+  "name": "Twilio",
+  "category": "Telephony",
+  "useCase": "SIP trunking, SMS, and number provisioning for voice agents.",
+  "details": [
+    "Bring your own number or port-in to Twilio for AI agent termination.",
+    "SMS conversations as an extension of voice agent context.",
+    "Programmable Voice for fallbacks when agents need to hand off."
+  ],
+  "relatedServices": ["ai-voice-agents"]
+}

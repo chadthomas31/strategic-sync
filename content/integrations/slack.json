@@ -1,0 +1,12 @@
+{
+  "slug": "slack",
+  "name": "Slack",
+  "category": "Comms",
+  "useCase": "Agent escalations, daily summaries, and human-in-the-loop reviews.",
+  "details": [
+    "Channel posts when agents detect uncertainty thresholds or VIP callers.",
+    "Daily/weekly digest of agent activity, bookings, and unresolved issues.",
+    "Slash commands to query the agent directly from any channel."
+  ],
+  "relatedServices": ["workflow-integration"]
+}

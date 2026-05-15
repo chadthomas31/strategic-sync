@@ -1,0 +1,12 @@
+{
+  "slug": "stripe",
+  "name": "Stripe",
+  "category": "Billing",
+  "useCase": "Agents create invoices, subscriptions, and process payments.",
+  "details": [
+    "Voice agents collect card details over the phone with PCI-safe redirects.",
+    "Workflow agents reconcile invoices, retry failed charges, and email receipts.",
+    "Customer portal links generated on-demand inside agent conversations."
+  ],
+  "relatedServices": ["workflow-integration", "custom-systems"]
+}
