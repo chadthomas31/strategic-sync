@@ -195,10 +195,10 @@ export default function Navbar() {
                   <div className="mt-8 text-center">
                     <p className="text-[#666] text-sm">Ready to transform your business?</p>
                     <a
-                      href="tel:949-529-2424"
+                      href="tel:949-998-2424"
                       className="text-[#00f0ff] font-medium mt-2 block hover:underline"
                     >
-                      949-529-2424
+                      949-998-2424
                     </a>
                   </div>
                 </motion.div>

@@ -196,8 +196,8 @@ export default function Contact() {
                 {
                   icon: <FiPhone className="w-6 h-6" />,
                   title: 'Phone',
-                  value: '(949) 529-2424',
-                  href: 'tel:949-529-2424',
+                  value: '(949) 998-2424',
+                  href: 'tel:949-998-2424',
                   external: false
                 }
               ].map((item, index) => (

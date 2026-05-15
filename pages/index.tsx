@@ -474,13 +474,13 @@ export default function Home() {
                 </p>
 
                 <div className="space-y-6">
-                  <a href="tel:949-529-2424" className="flex items-center gap-4 text-[#a0a0a0] hover:text-[#00f0ff] transition-colors group">
+                  <a href="tel:949-998-2424" className="flex items-center gap-4 text-[#a0a0a0] hover:text-[#00f0ff] transition-colors group">
                     <div className="w-12 h-12 rounded-xl bg-[rgba(0,240,255,0.1)] flex items-center justify-center text-[#00f0ff] group-hover:bg-[rgba(0,240,255,0.2)] transition-colors">
                       <FiPhone className="w-5 h-5" />
                     </div>
                     <div>
                       <div className="text-sm text-[#666]">Phone</div>
-                      <div className="font-medium text-white">949-529-2424</div>
+                      <div className="font-medium text-white">949-998-2424</div>
                     </div>
                   </a>
 
@@ -656,7 +656,7 @@ export default function Home() {
                 <ul className="space-y-2 text-[#666]">
                   <li>San Clemente, CA</li>
                   <li>
-                    <a href="tel:949-529-2424" className="footer-link">949-529-2424</a>
+                    <a href="tel:949-998-2424" className="footer-link">949-998-2424</a>
                   </li>
                   <li>
                     <a href="mailto:contact@strategicsync.com" className="footer-link">

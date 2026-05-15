@@ -75,7 +75,7 @@ export default function SEO({
     foundingDate: '2024',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+1-949-529-2424',
+      telephone: '+1-949-998-2424',
       contactType: 'customer service',
       email: 'contact@strategicsync.com',
     },

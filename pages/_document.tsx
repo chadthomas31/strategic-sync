@@ -10,7 +10,7 @@ export default function Document() {
     logo: 'https://strategicsync.com/images/logo.png',
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+1-949-529-2424',
+      telephone: '+1-949-998-2424',
       contactType: 'Customer Support',
       availableLanguage: 'English',
       areaServed: 'US',
@@ -63,7 +63,7 @@ export default function Document() {
     name: 'Strategic Sync',
     description: 'Expert AI consulting and implementation services for business transformation',
     url: 'https://strategicsync.com',
-    telephone: '+1-949-529-2424',
+    telephone: '+1-949-998-2424',
     email: 'info@strategicsync.com',
     priceRange: '$$',
     areaServed: {

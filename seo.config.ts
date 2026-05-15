@@ -20,7 +20,7 @@ export const primaryKeywords = [
 // Business information
 export const businessInfo = {
   name: 'Strategic Sync',
-  phone: '+1-949-529-2424',
+  phone: '+1-949-998-2424',
   email: 'contact@strategicsync.com',
   address: {
     city: 'San Clemente',
