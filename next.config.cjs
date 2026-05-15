@@ -30,6 +30,8 @@ const nextConfig = {
       { source: '/blog', destination: '/journal', permanent: true },
       { source: '/blog/:slug*', destination: '/journal/:slug*', permanent: true },
       { source: '/booking', destination: '/contact#book', permanent: true },
+      { source: '/client-login', destination: '/contact#book', permanent: false },
+      { source: '/seo-dashboard', destination: '/', permanent: false },
     ]
   },
 }
