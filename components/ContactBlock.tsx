@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import Cal, { getCalApi } from '@calcom/embed-react'
 
-export default function ContactBlock({ calLink = 'strategicsync/30min' }: { calLink?: string }) {
+export default function ContactBlock({ calLink = 'strategicsync/it-service-call' }: { calLink?: string }) {
   useEffect(() => {
     ;(async () => {
       try {
@@ -35,7 +35,7 @@ export default function ContactBlock({ calLink = 'strategicsync/30min' }: { calL
   return (
     <div className="max-w-wrap mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-12 md:gap-16">
       <div id="book">
-        <div className="kicker mb-4">Book a 30-min diagnostic</div>
+        <div className="kicker mb-4">Book an IT service call</div>
         <h2 className="display-l mb-6">Skip the form. <em className="text-accent">Pick a slot.</em></h2>
         <div className="border border-rule">
           <Cal calLink={calLink} style={{ width: '100%', height: '600px' }} config={{ theme: 'light' }} />
@@ -48,7 +48,7 @@ export default function ContactBlock({ calLink = 'strategicsync/30min' }: { calL
             className="w-full bg-transparent border-b border-rule py-3 text-ink placeholder:text-mute focus:outline-none focus:border-accent" />
           <input required type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="w-full bg-transparent border-b border-rule py-3 text-ink placeholder:text-mute focus:outline-none focus:border-accent" />
-          <textarea required placeholder="What are you trying to ship?" rows={6} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
+          <textarea required placeholder="What do you need help with? (slow PC, WiFi, cameras, office network…)" rows={6} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })}
             className="w-full bg-transparent border-b border-rule py-3 text-ink placeholder:text-mute focus:outline-none focus:border-accent resize-none" />
           <button type="submit" disabled={status === 'sending'} className="btn-ink">
             {status === 'sending' ? 'Sending…' : status === 'sent' ? 'Sent ✓' : 'Send note →'}

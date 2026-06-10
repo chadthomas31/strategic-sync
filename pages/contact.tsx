@@ -12,7 +12,7 @@ export default function Contact() {
       <Navbar />
       <Hero kicker="§ 08 — Contact" headline={<>Let&apos;s get it<br/><em className="serif italic text-accent">fixed.</em></>} sub="Tell us what's going on — a slow computer, dead WiFi, a network to set up, cameras to install. Book online or call (949) 998-2424 and we'll get you scheduled." />
       <section className="py-16">
-        <ContactBlock calLink="strategicsync/30min" />
+        <ContactBlock calLink="strategicsync/it-service-call" />
       </section>
       <Footer />
     </>

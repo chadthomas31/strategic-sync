@@ -23,7 +23,7 @@ export default function Footer() {
           <ul className="space-y-2 text-[13px]">
             <li><Link href="/work" className="text-ink hover:text-accent no-underline">Work</Link></li>
             <li><Link href="/approach" className="text-ink hover:text-accent no-underline">Approach</Link></li>
-            <li><Link href="/journal" className="text-ink hover:text-accent no-underline">Journal</Link></li>
+            <li><Link href="/journal" className="text-ink hover:text-accent no-underline">Tech Tips</Link></li>
             <li><Link href="/pricing" className="text-ink hover:text-accent no-underline">Pricing</Link></li>
           </ul>
         </div>

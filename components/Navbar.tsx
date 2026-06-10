@@ -7,7 +7,7 @@ const links = [
   { href: '/work', label: 'Work' },
   { href: '/approach', label: 'Approach' },
   { href: '/integrations', label: 'Brands' },
-  { href: '/journal', label: 'Journal' },
+  { href: '/journal', label: 'Tech Tips' },
   { href: '/pricing', label: 'Pricing' },
 ]
 

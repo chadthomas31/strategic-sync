@@ -13,15 +13,15 @@ export default function JournalIndex({ posts }: { posts: Post[] }) {
   return (
     <>
       <SEO
-        title="Journal — Field Notes from Strategic Sync"
-        description="Field notes on AI automation, integration patterns, and what we're building."
+        title="Tech Tips — Computer, WiFi & IT Advice"
+        description="Plain-English tech tips from an Orange County IT pro — computer repair, WiFi, security cameras, backups, and small-business IT."
         jsonLd={[
-          breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Journal', href: '/journal' }]),
+          breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Tech Tips', href: '/journal' }]),
           itemListSchema(posts.map((p) => ({ name: p.title, href: `/journal/${p.slug}` }))),
         ]}
       />
       <Navbar />
-      <Hero kicker="§ 06 — Journal" headline={<>Field <em className="serif italic text-accent">notes.</em></>} sub="What we're building, what surprised us, what we'd do differently." />
+      <Hero kicker="§ 06 — Tech Tips" headline={<>Tech <em className="serif italic text-accent">tips.</em></>} sub="Straight answers to the questions we get all the time — slow computers, dead WiFi, backups, cameras, and keeping a small office running." />
       <section className="max-w-wrap mx-auto px-6 md:px-12 pb-32 border-t border-rule">
         {posts.length === 0 ? (
           <p className="body text-mute py-16 text-center">First post coming soon.</p>
