@@ -1,0 +1,12 @@
+{
+  "slug": "ubiquiti-unifi",
+  "name": "Ubiquiti UniFi",
+  "category": "Networking",
+  "useCase": "Pro-grade UniFi networks designed, installed, and tuned.",
+  "details": [
+    "UniFi access points, switches, and gateways installed and configured.",
+    "Seamless whole-property WiFi with VLANs and guest networks.",
+    "Remote management so we can fix issues without a truck roll."
+  ],
+  "relatedServices": ["networking-wifi", "it-support"]
+}

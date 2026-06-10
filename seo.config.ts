@@ -4,9 +4,9 @@ import { DefaultSeoProps } from 'next-seo'
 export const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://strategicsync.com'
 
 const defaultSEO: DefaultSeoProps = {
-  defaultTitle: 'Strategic Sync — AI Automation & Integration',
+  defaultTitle: 'Strategic Sync — IT Services, Computer Repair & Networking · Orange County',
   titleTemplate: '%s · Strategic Sync',
-  description: 'We wire AI into the systems you already run — phones, CRMs, billing, workflows. San Clemente, CA.',
+  description: 'Orange County IT services — computer & Mac repair, networking and WiFi, IT support, and security camera installs. Same-day remote help. San Clemente, CA. (949) 998-2424.',
   canonical: siteUrl,
   openGraph: {
     type: 'website',

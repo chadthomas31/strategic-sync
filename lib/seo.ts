@@ -48,13 +48,14 @@ export const itemListSchema = (items: { name: string; href: string }[]) => ({
 
 export const localBusinessSchema = () => ({
   '@context': 'https://schema.org',
-  '@type': 'ProfessionalService',
+  '@type': ['ProfessionalService', 'ComputerStore'],
   name: 'Strategic Sync',
-  description: 'AI automation and integration for businesses with existing phone, CRM, and workflow systems.',
+  description: 'Orange County IT services — computer and Mac repair, networking and WiFi, IT support and managed IT, and security camera installs. Onsite across Orange County and remote support.',
   url: BASE,
   telephone: '+1-949-998-2424',
   email: 'contact@strategicsync.com',
-  priceRange: '$$$',
+  priceRange: '$$',
+  serviceType: ['Computer Repair', 'Networking', 'IT Support', 'Managed IT', 'Security Camera Installation', 'Smart Home Installation'],
   areaServed: { '@type': 'AdministrativeArea', name: 'Orange County, CA' },
   address: { '@type': 'PostalAddress', addressLocality: 'San Clemente', addressRegion: 'CA', addressCountry: 'US' },
   geo: { '@type': 'GeoCoordinates', latitude: 33.4269, longitude: -117.612 },

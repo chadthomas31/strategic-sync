@@ -1,0 +1,12 @@
+{
+  "slug": "microsoft-365",
+  "name": "Microsoft 365",
+  "category": "Software",
+  "useCase": "Email, Office apps, and OneDrive set up and supported for your business.",
+  "details": [
+    "Mailbox, domain, and email migration to Microsoft 365.",
+    "Outlook, Teams, and OneDrive setup across all your devices.",
+    "User accounts, security, and shared-file permissions managed."
+  ],
+  "relatedServices": ["it-support", "ai-integration"]
+}

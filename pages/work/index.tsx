@@ -13,15 +13,15 @@ export default function WorkIndex({ cases }: { cases: Case[] }) {
   return (
     <>
       <SEO
-        title="Work — Case Studies"
-        description="Selected case studies. AI voice agents, workflow integrations, custom systems shipped to production."
+        title="Work — Recent Jobs"
+        description="A sample of recent IT work across Orange County — network installs, virus and ransomware recovery, office setups, and WiFi fixes."
         jsonLd={[
           breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Work', href: '/work' }]),
           itemListSchema(cases.map((c) => ({ name: c.client, href: `/work/${c.slug}` }))),
         ]}
       />
       <Navbar />
-      <Hero kicker="§ 03 — Work" headline={<>Things we <em className="serif italic text-accent">shipped.</em></>} sub="Real systems running in production. Numbers are real. Names anonymized where contracts require." />
+      <Hero kicker="§ 03 — Work" headline={<>Recent <em className="serif italic text-accent">jobs.</em></>} sub="A sample of the kind of work we do across Orange County. Customer details anonymized for privacy." />
       <section className="max-w-wrap mx-auto px-6 md:px-12 pb-32">
         <div className="grid md:grid-cols-3 gap-6">
           {cases.map((c) => (

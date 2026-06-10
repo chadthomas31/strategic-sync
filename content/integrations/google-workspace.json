@@ -1,0 +1,12 @@
+{
+  "slug": "google-workspace",
+  "name": "Google Workspace",
+  "category": "Software",
+  "useCase": "Gmail, Drive, and Google business apps set up and supported.",
+  "details": [
+    "Business email on your own domain with Gmail.",
+    "Drive, shared drives, and file-sharing permissions configured.",
+    "Account setup, security, and migration from another email provider."
+  ],
+  "relatedServices": ["it-support", "ai-integration"]
+}

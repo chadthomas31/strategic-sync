@@ -11,15 +11,15 @@ export default function ServicesIndex({ services }: { services: Service[] }) {
   return (
     <>
       <SEO
-        title="Services — AI Automation & Integration"
-        description="AI Voice Agents, Workflow Integration, Custom Systems. Three productized service lines from Strategic Sync."
+        title="Services — Computer Repair, Networking & IT Support"
+        description="Computer & Mac repair, networking & WiFi, IT support & managed IT, security camera installs, and AI integration. Orange County, CA."
         jsonLd={[
           breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Services', href: '/services' }]),
           itemListSchema(services.map((s) => ({ name: s.name, href: `/services/${s.slug}` }))),
         ]}
       />
       <Navbar />
-      <Hero kicker="§ 02 — Services" headline={<>Three productized<br/><em className="serif italic text-accent">service lines.</em></>} sub="Each one solves a specific problem with a specific stack. Pick the one that matches what's on fire." />
+      <Hero kicker="§ 02 — Services" headline={<>What we<br/><em className="serif italic text-accent">fix &amp; set up.</em></>} sub="Computers, networks, IT support, and installs for homes and small businesses across Orange County. Pick what you need help with." />
       <div className="max-w-wrap mx-auto px-6 md:px-12 pb-32">
         <div className="border-t border-rule">
           {services.map((s, i) => (

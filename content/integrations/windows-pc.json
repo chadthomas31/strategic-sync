@@ -1,0 +1,12 @@
+{
+  "slug": "windows-pc",
+  "name": "Windows PC",
+  "category": "Computers",
+  "useCase": "Repair, tune-up, and setup for Windows desktops and laptops.",
+  "details": [
+    "Virus, malware, and ransomware removal plus cleanup.",
+    "Slow-PC tune-ups, SSD upgrades, and RAM installs.",
+    "Windows reinstalls, driver fixes, and data migration to a new machine."
+  ],
+  "relatedServices": ["computer-repair", "it-support"]
+}

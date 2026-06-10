@@ -1,0 +1,12 @@
+{
+  "slug": "eero-mesh",
+  "name": "eero Mesh WiFi",
+  "category": "Networking",
+  "useCase": "eero mesh systems set up to kill dead zones at home.",
+  "details": [
+    "Right-sized eero placement for full-home coverage.",
+    "Fast roaming so video calls don't drop room to room.",
+    "App setup, guest WiFi, and parental controls configured."
+  ],
+  "relatedServices": ["networking-wifi"]
+}

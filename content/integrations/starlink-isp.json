@@ -1,0 +1,12 @@
+{
+  "slug": "starlink-isp",
+  "name": "Starlink & ISP",
+  "category": "Networking",
+  "useCase": "Internet service and Starlink set up and integrated with your network.",
+  "details": [
+    "Starlink dish placement, mounting, and cabling.",
+    "Hand-off into your own router or mesh for better coverage and control.",
+    "ISP modem setup and troubleshooting slow or dropping connections."
+  ],
+  "relatedServices": ["networking-wifi", "it-support"]
+}

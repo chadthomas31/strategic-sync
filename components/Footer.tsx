@@ -7,14 +7,15 @@ export default function Footer() {
       <div className="max-w-wrap mx-auto px-6 md:px-12 py-16 grid grid-cols-2 md:grid-cols-4 gap-10">
         <div>
           <div className="kicker mb-4">Strategic Sync</div>
-          <p className="body-s max-w-[240px]">We wire AI into the systems you already run. San Clemente, CA.</p>
+          <p className="body-s max-w-[240px]">Orange County IT — computer repair, networking, IT support &amp; camera installs. San Clemente, CA.</p>
         </div>
         <div>
           <div className="kicker mb-4">Services</div>
           <ul className="space-y-2 text-[13px]">
-            <li><Link href="/services/ai-voice-agents" className="text-ink hover:text-accent no-underline">AI Voice Agents</Link></li>
-            <li><Link href="/services/workflow-integration" className="text-ink hover:text-accent no-underline">Workflow Integration</Link></li>
-            <li><Link href="/services/custom-systems" className="text-ink hover:text-accent no-underline">Custom Systems</Link></li>
+            <li><Link href="/services/computer-repair" className="text-ink hover:text-accent no-underline">Computer &amp; Mac Repair</Link></li>
+            <li><Link href="/services/networking-wifi" className="text-ink hover:text-accent no-underline">Networking &amp; WiFi</Link></li>
+            <li><Link href="/services/it-support" className="text-ink hover:text-accent no-underline">IT Support &amp; Managed IT</Link></li>
+            <li><Link href="/services/smart-home-security" className="text-ink hover:text-accent no-underline">Smart Home &amp; Cameras</Link></li>
           </ul>
         </div>
         <div>

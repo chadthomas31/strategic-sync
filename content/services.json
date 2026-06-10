@@ -1,56 +1,92 @@
 [
   {
-    "slug": "ai-voice-agents",
-    "name": "AI Voice Agents",
-    "tagline": "Replace your $300/mo answering service.",
-    "description": "AI receptionists deployed on your existing phone number — bookings, intake, screening, multilingual — with full call recordings and CRM sync.",
-    "tags": ["FreeSWITCH", "OpenAI Realtime", "Twilio"],
-    "starting": "From $1,495 / mo",
+    "slug": "computer-repair",
+    "name": "Computer & Mac Repair",
+    "tagline": "Slow, broken, or won't boot? We fix it.",
+    "description": "Diagnostics and repair for Windows PCs, Macs, and laptops — virus and malware removal, data recovery, hardware replacement, OS reinstalls, and speed tune-ups. Most jobs done same week.",
+    "tags": ["Windows", "macOS", "Data Recovery"],
+    "starting": "From $89 / diagnostic",
+    "timeline": "Same-week turnaround",
+    "deliverables": [
+      "Full hardware + software diagnostic",
+      "Virus, malware & spyware removal",
+      "Data backup and recovery",
+      "Hardware replacement (drives, RAM, batteries, screens)",
+      "OS reinstall + driver/update cleanup",
+      "Speed tune-up and startup optimization"
+    ],
+    "buyerProfile": "Homeowners and small businesses with a slow, infected, or dead computer who want it diagnosed and fixed without shipping it off or buying a new one."
+  },
+  {
+    "slug": "networking-wifi",
+    "name": "Networking & WiFi",
+    "tagline": "Kill the dead zones. Make the internet just work.",
+    "description": "Router, mesh WiFi, and wired network setup for homes and offices. We fix slow connections and dead zones, run and terminate cable, configure VPNs, and lock down your network so it stays fast and secure.",
+    "tags": ["Mesh WiFi", "Wiring", "VPN"],
+    "starting": "From $149 / visit",
+    "timeline": "Most setups in 1 visit",
+    "deliverables": [
+      "WiFi survey + dead-zone diagnosis",
+      "Router / mesh system setup and tuning",
+      "Ethernet cable run and termination",
+      "Business network with VLANs + guest WiFi",
+      "Secure remote access / VPN configuration",
+      "Network security hardening + password setup"
+    ],
+    "buyerProfile": "Homes and small offices fighting dead zones, slow WiFi, or a network that drops — who want it set up right once and left reliable."
+  },
+  {
+    "slug": "it-support",
+    "name": "IT Support & Managed IT",
+    "tagline": "Your on-call IT department — remote or onsite.",
+    "description": "Remote and onsite IT support for small businesses and busy households. Break-fix help when something goes wrong, plus monthly managed plans that keep your computers, backups, and updates handled so problems never pile up.",
+    "tags": ["Remote", "Onsite", "Managed IT"],
+    "starting": "From $95 / hour",
+    "timeline": "Same-day remote support",
+    "deliverables": [
+      "Remote + onsite troubleshooting",
+      "New computer setup + data migration",
+      "Email, printer, and software setup",
+      "Automated backups + monitoring",
+      "Windows / macOS updates and patching",
+      "Optional flat-rate monthly managed plan"
+    ],
+    "buyerProfile": "Small businesses and professionals who need reliable tech support without hiring a full-time IT person — and want someone to call when something breaks."
+  },
+  {
+    "slug": "smart-home-security",
+    "name": "Smart Home & Security Cameras",
+    "tagline": "Cameras, smart devices, and TVs — installed right.",
+    "description": "Professional install and setup of security cameras, smart-home devices, and home-office tech. We mount, wire, configure the app, and show you how to use it — no boxes left half-installed in a closet.",
+    "tags": ["Cameras", "Smart Home", "Installs"],
+    "starting": "From $129 / install",
+    "timeline": "Most installs in 1 visit",
+    "deliverables": [
+      "Security camera + NVR/DVR install",
+      "Smart doorbell and door-lock setup",
+      "Smart-home device config (lights, thermostats, hubs)",
+      "TV mounting + cable management",
+      "Mobile app setup + remote viewing",
+      "Walkthrough so you actually know how to use it"
+    ],
+    "buyerProfile": "Homeowners and small businesses who bought smart-home or camera gear and want it installed, configured, and working on their phone — done by a pro."
+  },
+  {
+    "slug": "ai-integration",
+    "name": "AI Integration",
+    "tagline": "Bring AI into the tools you already use.",
+    "description": "Already curious about AI for your business? We wire practical AI into your existing phones, CRM, and workflows — AI receptionists, automated intake, and time-saving automations — then train your team to run it.",
+    "tags": ["AI Assistant", "Automation", "Voice"],
+    "starting": "Custom quote",
     "timeline": "Live in 2 weeks",
     "deliverables": [
-      "AI receptionist deployed on your existing number",
-      "Custom intake script + brand voice",
-      "CRM/calendar sync (HubSpot, Cal.com, Salesforce, etc.)",
-      "Multilingual (English, Spanish baseline)",
-      "Full call recordings + transcripts",
-      "Monthly tuning + script updates"
+      "AI receptionist on your existing phone number",
+      "Automated intake, booking, and follow-up",
+      "Workflow automation across your apps",
+      "Call recordings + transcripts",
+      "Guardrails + human handoff",
+      "Training so your team owns it"
     ],
-    "buyerProfile": "Practices, dealerships, contractors, service businesses spending $300+/mo on answering services or losing after-hours calls."
-  },
-  {
-    "slug": "workflow-integration",
-    "name": "Workflow Integration",
-    "tagline": "Connect the tools you already pay for.",
-    "description": "Wire CRMs, billing, calendars, docs, and Slack into a single agent that knows your business and acts on its behalf.",
-    "tags": ["n8n", "Anthropic", "Webhooks"],
-    "starting": "From $4,500 (one-time sprint)",
-    "timeline": "2-week build",
-    "deliverables": [
-      "Discovery + integration audit",
-      "n8n + Anthropic agent connecting your stack",
-      "Custom prompt library + guardrails",
-      "Slack/email/SMS handoff for human review",
-      "Documentation + 1hr training session",
-      "30 days of post-launch tuning"
-    ],
-    "buyerProfile": "Ops leaders at SMBs whose team manually moves data between 3+ SaaS tools daily."
-  },
-  {
-    "slug": "custom-systems",
-    "name": "Custom Systems",
-    "tagline": "When off-the-shelf doesn't fit.",
-    "description": "Bespoke agents, internal dashboards, RAG pipelines on your own data. We build, document, and train your team to own it.",
-    "tags": ["Next.js", "Supabase", "RAG"],
-    "starting": "Project-based, from $15,000",
-    "timeline": "4–12 weeks",
-    "deliverables": [
-      "Discovery + technical architecture doc",
-      "MVP build (Next.js + Supabase + your stack)",
-      "RAG pipeline if document search is in scope",
-      "Auth + role-based access",
-      "Production deploy (Vercel) + monitoring",
-      "Code handoff + 2hr engineering training"
-    ],
-    "buyerProfile": "Teams with proprietary data or workflows where SaaS won't bend to their model."
+    "buyerProfile": "Local businesses spending on answering services or losing after-hours calls who want practical AI without a big enterprise project."
   }
 ]

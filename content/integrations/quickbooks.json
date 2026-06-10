@@ -1,0 +1,12 @@
+{
+  "slug": "quickbooks",
+  "name": "QuickBooks",
+  "category": "Software",
+  "useCase": "QuickBooks installed, updated, and kept running on your machines.",
+  "details": [
+    "Install, setup, and multi-user configuration.",
+    "Company-file backups so your books are never at risk.",
+    "Troubleshooting errors, updates, and moving QuickBooks to a new PC."
+  ],
+  "relatedServices": ["it-support", "ai-integration"]
+}

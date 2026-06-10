@@ -8,78 +8,78 @@ import { breadcrumbs } from '../lib/seo'
 
 const TIERS = [
   {
-    name: 'Voice Agent',
-    tagline: 'AI receptionist on your existing number.',
-    price: 'From $1,495',
-    priceNote: 'Per month, month-to-month',
+    name: 'By the Visit',
+    tagline: 'One-time repairs, setups, and installs.',
+    price: 'From $89',
+    priceNote: 'Diagnostic; repairs quoted up front',
     includes: [
-      'AI receptionist live in 2 weeks',
-      'Custom intake script + brand voice',
-      'CRM/calendar sync (HubSpot, Cal.com, etc.)',
-      'Multilingual (English + Spanish)',
-      'Full call recordings + transcripts',
-      'Monthly script tuning',
+      'Computer & Mac diagnostics ($89, applied to repair)',
+      'Virus / malware removal + tune-ups',
+      'Data backup and recovery',
+      'WiFi & networking setup (from $149)',
+      'Security camera & smart-home installs (from $129)',
+      'Up-front price — you approve before we start',
     ],
     excludes: [
-      'Custom integrations beyond standard CRMs (add Integration Sprint)',
-      'Long-term contract',
+      'Replacement parts (quoted separately at cost)',
+      'Ongoing monitoring (see Managed IT)',
     ],
-    cta: { label: 'Book diagnostic', href: '/contact#book' },
+    cta: { label: 'Book a service call', href: '/contact#book' },
     featured: true,
   },
   {
-    name: 'Integration Sprint',
-    tagline: '2-week build, fixed scope.',
-    price: 'From $4,500',
-    priceNote: 'One-time, fixed scope',
+    name: 'Hourly Support',
+    tagline: 'Onsite or remote, when you need a hand.',
+    price: '$95 / hr',
+    priceNote: 'Remote or onsite, billed in 15-min increments',
     includes: [
-      'Discovery + integration audit',
-      '1 production-grade workflow shipped',
-      'n8n + Anthropic agent setup',
-      'Slack/email/SMS handoff',
-      'Documentation + 1hr training',
-      '30 days post-launch tuning',
+      'Same-day remote support for most issues',
+      'New computer setup + data migration',
+      'Email, printer, and software troubleshooting',
+      'Onsite visits across Orange County',
+      'No trip charge within core service area',
+      'Honest assessment — no upselling',
     ],
     excludes: [
-      'Hosting (we deploy to your Vercel/n8n cloud)',
-      'Ongoing retainer (available separately)',
+      'After-hours emergency rate (quoted on request)',
+      'Parts and hardware (at cost)',
     ],
-    cta: { label: 'Scope a sprint', href: '/contact#book' },
+    cta: { label: 'Get support', href: '/contact#book' },
   },
   {
-    name: 'Custom Build',
-    tagline: 'Bespoke system, your codebase.',
-    price: 'From $15,000',
-    priceNote: 'Project-based',
+    name: 'Managed IT',
+    tagline: 'Flat monthly. We keep it all running.',
+    price: 'From $299 / mo',
+    priceNote: 'Per small office, scales with seats',
     includes: [
-      'Discovery + technical architecture doc',
-      'MVP build (Next.js + Supabase + your stack)',
-      'RAG pipeline if applicable',
-      'Auth + role-based access',
-      'Production deploy + monitoring',
-      'Code handoff + 2hr engineering training',
+      'Proactive monitoring of computers + network',
+      'Automated backups + security updates',
+      'Priority same-day support',
+      'Antivirus / endpoint protection managed',
+      'Quarterly check-in + tech roadmap',
+      'Discounted rates on projects + installs',
     ],
     excludes: [
-      'Ongoing maintenance (retainer available)',
-      'Third-party SaaS subscriptions',
+      'New hardware purchases (at cost)',
+      'Major one-time projects (quoted separately)',
     ],
-    cta: { label: 'Discuss your project', href: '/contact#book' },
+    cta: { label: 'Get a managed quote', href: '/contact#book' },
   },
 ]
 
 const FAQ_ITEMS = [
-  { q: "Why no enterprise contracts?", a: "Our work is supposed to make you independent, not locked in. Voice Agents are month-to-month so you can leave any time. Integration Sprints and Custom Builds end with documentation + training so your team owns it." },
-  { q: "What if I need more than what's listed?", a: "Every tier can be customized. Pricing here is a starting point. After a 30-min diagnostic call we'll send a fixed quote." },
-  { q: "Do you take equity?", a: "No. Cash only. We've found the founders most asking for equity-instead-of-fees are also the ones who couldn't pay even if they wanted to." },
-  { q: "How do you handle data security?", a: "All client data stays in your infrastructure (your Supabase, your n8n, your Vercel). We don't operate a multi-tenant SaaS — your stack is yours." },
+  { q: "Is the $89 diagnostic on top of the repair cost?", a: "No — if you go ahead with the repair, the $89 applies toward it. You only pay it on its own if you decide not to proceed." },
+  { q: "Do you charge a trip fee for onsite visits?", a: "No trip charge within our core Orange County service area. For longer drives we'll tell you any travel fee up front before booking." },
+  { q: "Can you give a price before starting?", a: "Yes. After a quick diagnosis we give you a flat quote. You approve the price before any work begins — no surprise bills." },
+  { q: "What does Managed IT actually cover?", a: "We monitor your computers and network, run backups and security updates automatically, and give you priority support — so problems get caught before they take you down. Pricing scales with how many computers you have." },
 ]
 
 export default function Pricing() {
   return (
     <>
-      <SEO title="Pricing — Productized AI Services" description="Voice Agent from $1,495/mo. Integration Sprint from $4,500. Custom Build from $15,000. Month-to-month, no enterprise contracts." jsonLd={[breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Pricing', href: '/pricing' }])]} />
+      <SEO title="Pricing — Repairs, Support & Managed IT" description="Computer diagnostics from $89. Onsite & remote support $95/hr. Managed IT from $299/mo. Up-front pricing, no surprise bills. Orange County, CA." jsonLd={[breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Pricing', href: '/pricing' }])]} />
       <Navbar />
-      <Hero kicker="§ 07 — Pricing" headline={<>Productized.<br/><em className="serif italic text-accent">No enterprise games.</em></>} sub="Three tiers. Real numbers. The price you see is the price you start at — final scope confirmed after a 30-min diagnostic." />
+      <Hero kicker="§ 07 — Pricing" headline={<>Clear pricing.<br/><em className="serif italic text-accent">No surprise bills.</em></>} sub="Pick how you want to work with us — one-time visit, hourly support, or a flat monthly plan. Every quote is confirmed before we start." />
       <section className="max-w-wrap mx-auto px-6 md:px-12 pb-32">
         <div className="grid md:grid-cols-3 gap-6 md:gap-8">
           {TIERS.map((t) => <PricingTier key={t.name} {...t} />)}

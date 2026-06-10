@@ -1,0 +1,12 @@
+{
+  "slug": "apple-macos",
+  "name": "Apple & macOS",
+  "category": "Computers",
+  "useCase": "Mac and MacBook repair, setup, and data transfer.",
+  "details": [
+    "macOS troubleshooting, slowdowns, and storage cleanup.",
+    "Drive, battery, and memory upgrades where supported.",
+    "Migration from old Mac or PC to a new Mac with everything intact."
+  ],
+  "relatedServices": ["computer-repair", "it-support"]
+}

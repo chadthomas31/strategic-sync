@@ -1,6 +1,6 @@
 [
-  { "label": "Calls handled / mo", "value": "12,400", "sub": "+38% QoQ" },
-  { "label": "Workflows live", "value": "47", "sub": "across 18 clients" },
-  { "label": "Avg time-to-deploy", "value": "11", "sub": "days from kickoff" },
-  { "label": "Uptime / 90d", "value": "99.94", "sub": "%" }
+  { "label": "Diagnostic", "value": "$89", "sub": "flat, applied to repair" },
+  { "label": "Remote support", "value": "Same", "sub": "day, most issues" },
+  { "label": "Service area", "value": "OC", "sub": "Orange County, CA" },
+  { "label": "Onsite + remote", "value": "7", "sub": "days a week" }
 ]

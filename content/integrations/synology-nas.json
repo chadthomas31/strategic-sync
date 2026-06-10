@@ -1,0 +1,12 @@
+{
+  "slug": "synology-nas",
+  "name": "Synology NAS",
+  "category": "Storage & Backup",
+  "useCase": "Network storage and automated backups for home and office.",
+  "details": [
+    "Synology NAS setup with the right drives and RAID for your needs.",
+    "Automated backups of every computer in the house or office.",
+    "Secure remote access to your files from anywhere."
+  ],
+  "relatedServices": ["it-support", "computer-repair"]
+}

@@ -1,0 +1,12 @@
+{
+  "slug": "ring-nest-cameras",
+  "name": "Ring & Nest",
+  "category": "Cameras & Smart Home",
+  "useCase": "Doorbells, cameras, and smart-home devices installed and on your phone.",
+  "details": [
+    "Ring and Nest doorbells and cameras mounted and wired.",
+    "Live view, recording, and motion alerts set up on your phone.",
+    "Smart thermostats, locks, and lights configured to work together."
+  ],
+  "relatedServices": ["smart-home-security"]
+}

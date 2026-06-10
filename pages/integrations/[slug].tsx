@@ -13,19 +13,19 @@ export default function IntegrationDetail({ integration, relatedServices }: Prop
   return (
     <>
       <SEO
-        title={`${integration.name} Integration`}
-        description={`How Strategic Sync wires AI into ${integration.name}. ${integration.useCase}`}
+        title={`${integration.name} Support & Setup`}
+        description={`Strategic Sync supports ${integration.name}. ${integration.useCase}`}
         canonical={`https://strategicsync.com/integrations/${integration.slug}`}
         jsonLd={[
-          serviceSchema({ name: `${integration.name} AI Integration`, description: integration.useCase, slug: integration.slug }),
-          breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Integrations', href: '/integrations' }, { name: integration.name, href: `/integrations/${integration.slug}` }]),
+          serviceSchema({ name: `${integration.name} Support & Setup`, description: integration.useCase, slug: integration.slug }),
+          breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Brands', href: '/integrations' }, { name: integration.name, href: `/integrations/${integration.slug}` }]),
         ]}
       />
       <Navbar />
-      <Hero kicker={`Integration · ${integration.category}`} headline={<>AI for <em className="serif italic text-accent">{integration.name}</em></>} sub={integration.useCase} primaryCta={{ label: `Wire ${integration.name} into your stack`, href: '/contact#book' }} />
+      <Hero kicker={`Brand · ${integration.category}`} headline={<>We service <em className="serif italic text-accent">{integration.name}</em></>} sub={integration.useCase} primaryCta={{ label: `Get help with ${integration.name}`, href: '/contact#book' }} />
       <section className="max-w-wrap mx-auto px-6 md:px-12 py-24 border-t border-rule grid md:grid-cols-2 gap-16">
         <div>
-          <div className="kicker mb-6">How we wire it</div>
+          <div className="kicker mb-6">What we handle</div>
           <ul className="space-y-4">
             {integration.details.map((d) => (
               <li key={d} className="body pl-6 relative before:absolute before:left-0 before:top-2 before:w-3 before:h-px before:bg-accent">{d}</li>

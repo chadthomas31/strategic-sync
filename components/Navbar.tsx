@@ -6,7 +6,7 @@ const links = [
   { href: '/services', label: 'Services' },
   { href: '/work', label: 'Work' },
   { href: '/approach', label: 'Approach' },
-  { href: '/integrations', label: 'Integrations' },
+  { href: '/integrations', label: 'Brands' },
   { href: '/journal', label: 'Journal' },
   { href: '/pricing', label: 'Pricing' },
 ]

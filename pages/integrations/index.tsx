@@ -19,18 +19,18 @@ export default function IntegrationsIndex({ integrations }: { integrations: Inte
   return (
     <>
       <SEO
-        title="Integrations — Tools We Wire AI Into"
-        description="Strategic Sync connects AI agents to FreeSWITCH, Twilio, OpenAI, Anthropic, HubSpot, Stripe, Cal.com, Slack, n8n, Supabase, and more."
+        title="Brands We Service — Hardware & Platforms We Support"
+        description="Strategic Sync services Windows PCs, Apple/macOS, Ubiquiti UniFi, Synology, eero, Ring & Nest cameras, Microsoft 365, Google Workspace, QuickBooks, and more across Orange County."
         jsonLd={[
-          breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Integrations', href: '/integrations' }]),
+          breadcrumbs([{ name: 'Home', href: '/' }, { name: 'Brands', href: '/integrations' }]),
           itemListSchema(integrations.map((i) => ({ name: i.name, href: `/integrations/${i.slug}` }))),
         ]}
       />
       <Navbar />
-      <Hero kicker="§ 05 — Integrations" headline={<>Every tool you<br/><em className="serif italic text-accent">already pay for.</em></>} sub="The directory of services we wire AI into. Don't see yours? We can probably still do it — most modern SaaS has webhooks or APIs we can hook into." />
+      <Hero kicker="§ 05 — Brands" headline={<>The gear &amp; tools<br/><em className="serif italic text-accent">we support.</em></>} sub="Hardware, platforms, and apps we set up and service. Don't see yours? Ask — we work on just about everything." />
       <div className="max-w-wrap mx-auto px-6 md:px-12 pb-32">
         <div className="flex flex-col md:flex-row gap-4 mb-8 items-start md:items-center">
-          <input type="search" placeholder="Search integrations…" value={q} onChange={(e) => setQ(e.target.value)} className="flex-1 bg-transparent border-b border-rule py-3 px-1 text-ink placeholder:text-mute focus:outline-none focus:border-accent" />
+          <input type="search" placeholder="Search brands…" value={q} onChange={(e) => setQ(e.target.value)} className="flex-1 bg-transparent border-b border-rule py-3 px-1 text-ink placeholder:text-mute focus:outline-none focus:border-accent" />
           <div className="flex gap-2 flex-wrap">
             {categories.map((c) => (
               <button key={c} onClick={() => setCat(c)} className={`mono text-[10px] tracking-[0.16em] uppercase px-3 py-1.5 border ${cat === c ? 'bg-ink text-paper border-ink' : 'border-rule text-ink-2 hover:border-ink'}`}>{c}</button>
