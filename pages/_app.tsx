@@ -3,7 +3,6 @@ import type { AppProps } from 'next/app'
 import Script from 'next/script'
 import { DefaultSeo } from 'next-seo'
 import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
 import defaultSEO from '../seo.config'
 import { fraunces, plexSans, plexMono } from '../lib/fonts'
 import '../styles/globals.css'
@@ -24,7 +23,6 @@ gtag('config', '${GA_ID}');`}
         <DefaultSeo {...defaultSEO} />
         <Component {...pageProps} />
         <Analytics />
-        <SpeedInsights />
       </div>
     </>
   )
