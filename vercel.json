@@ -3,7 +3,6 @@
   "buildCommand": "next build",
   "outputDirectory": ".next",
   "cleanUrls": true,
-  "public": false,
   "framework": "nextjs",
   "regions": ["iad1"],
   "crons": [
